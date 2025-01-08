@@ -241,7 +241,7 @@
                                 </div>
                                 <div class="col-md-12" wire:ignore>
                                     <div class="form-group">
-                                        <select class="form-control select2-multiple" multiple="multiple" style="width: 100%;"
+                                        <select class="form-control select2-multiple" multiple="multiple" style="width: 100%;" wire:model="tag_depart"
                                             data-placeholder="ແທັກພະເເນກ" id="tag_depart">
                                             @foreach ($departments as $item)
                                             <option value="{{$item['id']}}">{{$item['name']}}</option>
@@ -251,7 +251,7 @@
                                 </div>
                                 <div class="col-md-12" wire:ignore>
                                     <div class="form-group">
-                                        <select class="form-control select2-multiple" multiple="multiple" style="width: 100%;"
+                                        <select class="form-control select2-multiple" multiple="multiple" style="width: 100%;" wire:model="tag_sector"
                                             data-placeholder="ເເທັກຂະແໜງ" id="tag_sector">
                                             @foreach ($sectors as $item)
                                             <option value="{{$item['id']}}">{{$item['name']}}</option>
@@ -261,7 +261,7 @@
                                 </div>
                                 <div class="col-md-12" wire:ignore>
                                     <div class="form-group">
-                                        <select class="form-control select2-multiple" multiple="multiple" style="width: 100%;"
+                                        <select class="form-control select2-multiple" multiple="multiple" style="width: 100%;" wire:model="tag_user"
                                             data-placeholder="ເເທັກບຸກຄົນ" id="tag_alone">
                                             @foreach ($all_user as $item)
                                                 <option value="{{$item['id']}}">{{$item['emp_name']}} ({{$item['departname']}})</option>

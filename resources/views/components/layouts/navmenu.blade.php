@@ -68,6 +68,7 @@
                     <ul class="submenu">
                         <li><a href="{{route('unit')}}">ໜ່ວຍບໍລິການ</a></li> 
                         <li><a href="{{route('sector')}}">ຂະແໜງ</a></li> 
+                        <li><a href="{{route('roles')}}">ສິດການເຂົ້າເຖິງ</a></li> 
                      </ul>
                 </li> 
                 @endif

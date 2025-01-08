@@ -215,7 +215,7 @@
                                 </div>
                                 <div class="col-md-12" wire:ignore>
                                     <div class="form-group">
-                                        <select class="form-control select2-multiple" multiple="multiple" style="width: 100%;"
+                                        <select class="form-control select2-multiple" multiple="multiple" style="width: 100%;" wire:model="tag_depart"
                                             data-placeholder="ສົ່ງເຖິງພະເເນກ" id="tag_depart">
                                             @foreach ($departments as $item)
                                             <option value="{{$item['id']}}">{{$item['name']}}</option>
@@ -225,7 +225,7 @@
                                 </div>
                                 <div class="col-md-12" wire:ignore>
                                     <div class="form-group">
-                                        <select class="form-control select2-multiple" multiple="multiple" style="width: 100%;"
+                                        <select class="form-control select2-multiple" multiple="multiple" style="width: 100%;" wire:model="tag_sector"
                                             data-placeholder="ສົ່ງເຖິງຂະແໜງ" id="tag_sector">
                                             @foreach ($sectors as $item)
                                             <option value="{{$item['id']}}">{{$item['name']}}</option>
@@ -235,7 +235,7 @@
                                 </div>
                                 <div class="col-md-12" wire:ignore>
                                     <div class="form-group">
-                                        <select class="form-control select2-multiple" multiple="multiple" style="width: 100%;"
+                                        <select class="form-control select2-multiple" multiple="multiple" style="width: 100%;" wire:model="tag_user"
                                             data-placeholder="ສົ່ງເຖິງບຸກຄົນ" id="tag_alone">
                                             @foreach ($all_user as $item)
                                                 <option value="{{$item['id']}}">{{$item['emp_name']}} ({{$item['departname']}})</option>
@@ -249,7 +249,7 @@
                 </div>
                 <div class="card-footer">
                     <button class="btn btn-success" wire:click="store">ບັນທຶກ</button>
-                    <a href="{{route('document',$hiddenId)}}" class="btn btn-danger">ກັບຄືນ</a>
+                    <a href="{{route('tag-dpart')}}" class="btn btn-danger">ກັບຄືນ</a>
                 </div>
             </div>
         </div>

@@ -48,7 +48,10 @@ use Illuminate\Support\Facades\Route;
     Route::get('/docdock', App\Livewire\Settings\DocDockComponent::class)->name('docdock');
     Route::get('/unit', App\Livewire\Settings\UnitCompomemt::class)->name('unit');
     Route::get('/sector', App\Livewire\Settings\SectorComponent::class)->name('sector');
-    
+    Route::get('/roles', App\Livewire\Settings\Role\RolesComponent::class)->name('roles');
+    Route::get('/roles-create', App\Livewire\Settings\Role\CreateComponent::class)->name('roles-create');
+    Route::get('/roles-edit/{id}', App\Livewire\Settings\Role\EditComponent::class)->name('roles-edit');
+
     Route::get('/profile', App\Livewire\Auth\ProfileComponent::class)->name('profile');
     Route::get('/logout', App\Livewire\Auth\LoginComponent::class,'logout')->name('logout');
 

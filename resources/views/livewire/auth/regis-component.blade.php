@@ -146,6 +146,14 @@ Livewire.on('g_id', postId => {
             var data = $('#sector').select2("val");
             @this.set('sector_id', data);
         });
+        $("#unit").select2({
+            maximumSelectionLength: 1,
+            width: 'resolve'
+        });
+        $('#unit').on('change', function(e) {
+            var data = $('#unit').select2("val");
+            @this.set('sector_id', data);
+        });
     });
 });
 </script>

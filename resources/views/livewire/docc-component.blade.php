@@ -71,7 +71,7 @@
                                 <table border="1" width="100%">
                                     <thead>
                                         <tr class="text-center">
-                                            <th class="p-2">ລຳດັບ</th>
+                                            <th class="p-2">ລຳດັບ123</th>
                                             <th class="p-2">ວັນທີ</th>
                                             <th class="p-2">ຫົວຂໍ້</th>
                                             <th class="p-2">ຈາກພາກສ່ວນ</th>

@@ -18,29 +18,30 @@
         <div class="col-4">
             <div class="card">
                 @if ($editId)
-                <div class="card-header bg-warning py-3 text-white">
-                    <h5 class="card-title mb-0 text-white"><i class="mdi mdi-pencil-remove-outline"></i> ແກ້ໄຂຂໍ້ມູນ
-                    </h5>
-                </div>
+                    <div class="card-header bg-warning py-3 text-white">
+                        <h5 class="card-title mb-0 text-white"><i class="mdi mdi-pencil-remove-outline"></i> ແກ້ໄຂຂໍ້ມູນ
+                        </h5>
+                    </div>
                 @else
-                <div class="card-header bg-info py-3 text-white">
-                    <h5 class="card-title mb-0 text-white"><i class="mdi mdi-plus"></i> ເພີ່ມຂໍ້ມູນ </h5>
-                </div>
+                    <div class="card-header bg-info py-3 text-white">
+                        <h5 class="card-title mb-0 text-white"><i class="mdi mdi-plus"></i> ເພີ່ມຂໍ້ມູນ </h5>
+                    </div>
                 @endif
                 <div id="cardCollpase1" class="collapse show">
-                    <div wire:ignore.self>
+                    <div wire:ignore>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="form-group" wire:ignore>
-                                            <select class="form-control select2"
-                                                data-placeholder="ເລືອກສາຂາ" id="cate" wire:model="br_id">
-                                                @foreach ($this->data_brn as $item)
-                                                <option value="{{$item['id']}}">{{$item['name']}}</option>
-                                                @endforeach
-                                            </select>
+                                    <div class="form-group">
+                                        <select class="form-control select2-multiple" multiple="multiple"
+                                            data-placeholder="ເລືອກສາຂາ" id="cate" wire:model="br_id">
+                                            @foreach ($this->data_brn as $item)
+                                                <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                    @error('br_id') <span style="color: red" class="error">{{ $message }}</span>
+                                    @error('br_id')
+                                        <span style="color: red" class="error">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="col-12">
@@ -48,8 +49,9 @@
                                         <p>ຊື່ໜ່ວຍ</p>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror"
                                             wire:model="name" placeholder="ຊື່ກຸ່ມ" wire:keydown.enter="store" require>
-                                        @error('name') <span style="color: red"
-                                            class="error">{{ $message }}</span>@enderror
+                                        @error('name')
+                                            <span style="color: red" class="error">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -57,14 +59,12 @@
                         <div class="card-footer">
 
                             @if ($editId)
-                            <button class="btn btn-warning"
-                                wire:click="store">ອັບເດດ</button>
+                                <button class="btn btn-warning" wire:click="store">ອັບເດດ</button>
                             @else
-                            <button class="btn btn-success"
-                                wire:click="store">ບັນທຶກ</button>
+                                <button class="btn btn-success" wire:click="store">ບັນທຶກ</button>
                             @endif
 
-                            <a href="{{route('group')}}" class="btn btn-danger">ລ້າງຂໍ້ມູນ</a>
+                            <a href="{{ route('group') }}" class="btn btn-danger">ລ້າງຂໍ້ມູນ</a>
 
                         </div>
                     </div>
@@ -80,7 +80,8 @@
                             <tr>
                                 <td style="vertical-align: center;" class="text-right">ສະແດງ &emsp;</td>
                                 <td>
-                                    <select wire:model="dataQ" wire:click="dataQS" name="Q" id="Q" class="form-control">
+                                    <select wire:model="dataQ" wire:click="dataQS" name="Q" id="Q"
+                                        class="form-control">
                                         <option value="0">0</option>
                                         <option value="15">15</option>/
                                         <option value="50">50</option>
@@ -126,29 +127,28 @@
                                     <tbody>
                                         @php $no = 1; @endphp
                                         @forelse ($this->data as $item)
-                                        <tr class="text-center">
-                                            <td class="p-2">{{$no++}}</td>
-                                            <td class="p-2">{{$item['name']}}</td>
-                                            <td class="p-2">{{$item['brname']}}</td>
-                                            
-                                            <td class="p-2">
-                                                <div class="btn-group btn-group-justified text-white mb-2">
-                                                    <a
-                                                        class="btn btn-warning waves-effect waves-light"
-                                                        wire:click="edit({{$item['id']}})"><i
-                                                            class="mdi mdi-pencil-remove-outline"></i></a>
-                                                    <a
-                                                        class="btn btn-danger waves-effect waves-light"
-                                                        wire:click="delete({{$item['id']}})"><i
-                                                            class="mdi mdi-window-close"></i></a>
-                                                </div>
-                                            </td>
-                                           
-                                        </tr>
+                                            <tr class="text-center">
+                                                <td class="p-2">{{ $no++ }}</td>
+                                                <td class="p-2">{{ $item['name'] }}</td>
+                                                <td class="p-2">{{ $item['brname'] }}</td>
+
+                                                <td class="p-2">
+                                                    <div class="btn-group btn-group-justified text-white mb-2">
+                                                        <a class="btn btn-warning waves-effect waves-light"
+                                                            wire:click="edit({{ $item['id'] }})"><i
+                                                                class="mdi mdi-pencil-remove-outline"></i></a>
+                                                        <a class="btn btn-danger waves-effect waves-light"
+                                                            wire:click="delete({{ $item['id'] }})"><i
+                                                                class="mdi mdi-window-close"></i></a>
+                                                    </div>
+                                                </td>
+
+                                            </tr>
                                         @empty
-                                        <tr class="text-center">
-                                            <td colspan="8" style="color: #787878;" class="p-2">ບໍ່ມີຂໍ້ມູນ</td>
-                                        </tr>
+                                            <tr class="text-center">
+                                                <td colspan="8" style="color: #787878;" class="p-2">ບໍ່ມີຂໍ້ມູນ
+                                                </td>
+                                            </tr>
                                         @endforelse
                                     </tbody>
                                 </table>
@@ -160,7 +160,7 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <span><br> ລວມທັງໝົດ <span class="text-danger">{{$count}}</span> ລາຍການ</span>
+                        <span><br> ລວມທັງໝົດ <span class="text-danger">{{ $count }}</span> ລາຍການ</span>
                     </div>
                 </div>
             </div>
@@ -178,7 +178,7 @@
                 </div>
                 <div class="modal-body">
                     <h3><b>ທ່ານຕ້ອງການລົບຂໍ້ມູນນີ້ ຫຼື ບໍ່ ?</b></h3>
-                    <p>ລາຍລະອຽດ: <span class="text-danger">{{$delName}}</span></p>
+                    <p>ລາຍລະອຽດ: <span class="text-danger">{{ $delName }}</span></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">ປິດ</button>
@@ -194,23 +194,43 @@
 </div>
 
 @push('scripts')
-<script>
-window.addEventListener('show-del', event => {
-    $('#custom-modal').modal('show');
-})
-window.addEventListener('hide-del', event => {
-    $('#custom-modal').modal('hide');
-})
-// $(document).ready(function() {
-//             $('#cate').select2();
-//             $('#cate').on('change', function(e) {
-//                 var data = $('#cate').select2("val");
-//                 @this.set('br_id', data);
-//             });
-//         });
-$('#cate').on('change', function(e) {
-        var data = $('#cate').select2("val");
-        @this.set('br_id', data);
-    });
-</script>
+    <script>
+        window.addEventListener('show-del', event => {
+            $('#custom-modal').modal('show');
+        })
+        window.addEventListener('hide-del', event => {
+            $('#custom-modal').modal('hide');
+        })
+        // $(document).ready(function() {
+        //             $('#cate').select2();
+        //             $('#cate').on('change', function(e) {
+        //                 var data = $('#cate').select2("val");
+        //                 @this.set('br_id', data);
+        //             });
+        //         });
+        // $('#cate').on('change', function(e) {
+        //     var data = $('#cate').select2("val");
+        //     @this.set('br_id', data);
+        // });
+        $("#cate").select2({
+            maximumSelectionLength: 1,
+            width: 'resolve'
+        });
+        $('#cate').on('change', function(e) {
+            var data = $('#cate').select2("val");
+            @this.set('br_id', data);
+        });
+        Livewire.on('g_id', postId => {
+            jQuery(document).ready(function() {
+                $("#cate").select2({
+                    maximumSelectionLength: 1,
+                    width: 'resolve'
+                });
+                $('#cate').on('change', function(e) {
+                    var data = $('#cate').select2("val");
+                    @this.set('br_id', data);
+                });
+            });
+        })
+    </script>
 @endpush

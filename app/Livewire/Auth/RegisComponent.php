@@ -9,34 +9,37 @@ use Illuminate\Support\Facades\Http;
 
 class RegisComponent extends Component
 {
-    public $emp_name, $phone, $email, $name, $password, $confirm_password, $dpart_id = [], $sector_id = [];
-    public $departs = [], $sectors = [];
+    public $emp_name, $phone, $email, $name, $password, $confirm_password, $dpart_id = [], $sector_id = [], $unit_id = [];
+    public $departs = [], $sectors = [], $unit = [];
 
-    public function mount(){
+    public function mount()
+    {
         $response = Http::post('http://192.168.128.193:8080/api/all-departs', [
             'search' => ""
         ]);
-        
+
         $this->departs = $response['data'];
-        
     }
 
     public function render()
     {
-        if($this->dpart_id != []){
-            // dd('kk');
-            $response1 = Http::post('http://192.168.128.193:8080/api/dpart-sectors', [
-                'department_id' => $this->dpart_id[0],
+        if ($this->dpart_id != []) {
+            $response1 = Http::post('http://192.168.128.193:8080/api/dpart/' . $this->dpart_id[0]);
+            $res = Http::post('http://192.168.128.193:8080/api/sector-type', [
+                'type_id' => $response1['data']['type'],
             ]);
-            $this->sectors = $response1['data'];
+            $this->sectors = $res['data'];
             $this->dispatch('g_id');
-        }else{
+        } else {
             $this->sectors = [];
         }
+
+
         return view('livewire.auth.regis-component')->layout('components.layouts.regis.app');
     }
 
-    public function selectDpart(){
+    public function selectDpart()
+    {
         // dd('kk');
         $response1 = Http::post('http://192.168.128.193:8080/api/dpart-sectors', [
             'department_id' => $this->dpart_id[0],
@@ -45,23 +48,25 @@ class RegisComponent extends Component
         $this->dispatch('g_id');
     }
 
-    public function back(){
+    public function back()
+    {
         return redirect(route('login'));
     }
 
-    public function next(){
+    public function next()
+    {
         $this->validate([
-            'name'=>'required',
-            'emp_name'=>'required',
-            'phone'=>'required',
-            'email'=>'required',
-            'dpart_id'=>'required',
-            'password'=>'required',
-            'confirm_password'=>'required',
+            'name' => 'required',
+            'emp_name' => 'required',
+            'phone' => 'required',
+            'email' => 'required',
+            'dpart_id' => 'required',
+            'password' => 'required',
+            'confirm_password' => 'required',
         ]);
 
-        if($this->sector_id == []){
-            if($this->password == $this->confirm_password){
+        if ($this->sector_id == []) {
+            if ($this->password == $this->confirm_password) {
                 $response = Http::post('http://192.168.128.193:8080/api/register', [
                     'name' => $this->name,
                     'emp_name' => $this->emp_name,
@@ -71,16 +76,16 @@ class RegisComponent extends Component
                     'sector_id' => null,
                     'password' => $this->password,
                 ]);
-                if($response['message'] == 'success'){
-                    return redirect(route('regis-finish',$response['data']['id']));
-                }else{
+                if ($response['message'] == 'success') {
+                    return redirect(route('regis-finish', $response['data']['id']));
+                } else {
                     $this->dispatch('alert', type: 'warning', message: 'ເກີດຂໍ້ຜິດພາດກະລຸນາລອງໃໝ່!');
                 }
-            }else{
+            } else {
                 $this->dispatch('alert', type: 'warning', message: 'ກວດຄືນລະຫັດຜ່ານ ບໍ່ຕົງກັນ!');
             }
-        }else{
-            if($this->password == $this->confirm_password){
+        } else {
+            if ($this->password == $this->confirm_password) {
                 $response = Http::post('http://192.168.128.193:8080/api/register', [
                     'name' => $this->name,
                     'emp_name' => $this->emp_name,
@@ -90,17 +95,14 @@ class RegisComponent extends Component
                     'sector_id' => $this->sector_id[0],
                     'password' => $this->password,
                 ]);
-                if($response['message'] == 'success'){
-                    return redirect(route('regis-finish',$response['data']['id']));
-                }else{
+                if ($response['message'] == 'success') {
+                    return redirect(route('regis-finish', $response['data']['id']));
+                } else {
                     $this->dispatch('alert', type: 'warning', message: 'ເກີດຂໍ້ຜິດພາດກະລຸນາລອງໃໝ່!');
                 }
-            }else{
+            } else {
                 $this->dispatch('alert', type: 'warning', message: 'ກວດຄືນລະຫັດຜ່ານ ບໍ່ຕົງກັນ!');
             }
         }
-        
-        
-        
     }
 }
