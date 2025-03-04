@@ -29,7 +29,9 @@ class EditComponent extends Component
 
     public function mount($id)
     {
+
         $this->editId = $id;
+        // dd($this->editId);
         $this->token = Cookie::get('token');
         $this->user = Cookie::get('user_id');
         $this->user_id = Cookie::get('user_id');
@@ -37,7 +39,7 @@ class EditComponent extends Component
 
         $data = Http::withToken($this->token)->put('http://192.168.128.193:8080/api/doc-edit/' . $id);
         $this->datas = $data['data'];
-
+        // dd($this->datas);
         $this->hiddenId = $this->datas['type_id'];
         $this->type_id = $this->datas['type_id'];
 
@@ -85,7 +87,7 @@ class EditComponent extends Component
             'id' => $id,
         ]);
 
-
+        // dd($tag_sector['data']);
         $this->departments = $all_depart['data'];
         $this->sectors = $all_sector['data'];
         $this->all_user = $response['data'];
@@ -106,7 +108,7 @@ class EditComponent extends Component
         $this->note = $this->datas['note'];
         // dd($this->datas['docgroup_id']);
         // $this->k_id = $datas['k_id'];
-
+        // $this->docgroup_id = $this->datas['docgroup_id'];
 
         $a = array_push($this->docgroup_id, $this->datas['docgroup_id']);
         $b = array_push($this->sh_id, $this->datas['sh_id']);
@@ -133,7 +135,6 @@ class EditComponent extends Component
         } else {
             $this->disabled = 'disabled';
         }
-
         $this->selectType();
 
         return view('livewire.document.edit-component');
@@ -149,11 +150,11 @@ class EditComponent extends Component
         }
 
         if ($this->type_id == 1 || $this->type_id == 2) {
-            $this->dispatch('g_id');
+            // $this->dispatch('g_id');
             $this->hiddenType2 = 'none';
             $this->hiddenType3 = 'show';
         } else {
-            $this->dispatch('g_id');
+            // $this->dispatch('g_id');
             $this->hiddenType2 = 'show';
             $this->hiddenType3 = 'none';
         }
@@ -212,35 +213,93 @@ class EditComponent extends Component
 
 
                 if ($this->tag_depart != []) {
+                    $check = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-by-dep', [
+                        'id' => $this->editId
+                    ]);
+
                     foreach ($this->tag_depart as $item) {
-                        $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
-                            'doc_id' => $documents['data']['id'],
-                            'department_id' => $item,
-                            'sector_id' => null,
-                            'user_id' => null,
-                        ]);
+                        foreach ($check['data'] as $it) {
+                            if ($item != $it['department_id']) {
+                                $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
+                                    'doc_id' => $documents['data']['id'],
+                                    'department_id' => $item,
+                                    'sector_id' => null,
+                                    'user_id' => null,
+                                ]);
+                            }
+                        }
+                    }
+                } else {
+                    $check = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-by-dep', [
+                        'id' => $this->editId
+                    ]);
+                    if (!empty($check['data'])) {
+                        foreach ($check['data'] as $item) {
+                            $res = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-del-dep', [
+                                'doc_id' => $this->editId,
+                                'dep_id' => $item['id']
+                            ]);
+                        }
                     }
                 }
 
                 if ($this->tag_sector != []) {
+                    $check = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-by-dep', [
+                        'id' => $this->editId
+                    ]);
                     foreach ($this->tag_sector as $item) {
-                        $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
-                            'doc_id' => $documents['data']['id'],
-                            'department_id' => null,
-                            'sector_id' => $item,
-                            'user_id' => null,
-                        ]);
+                        foreach ($check['data'] as $it) {
+                            if ($item != $it['sector_id']) {
+                                $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
+                                    'doc_id' => $documents['data']['id'],
+                                    'department_id' => null,
+                                    'sector_id' => $item,
+                                    'user_id' => null,
+                                ]);
+                            }
+                        }
+                    }
+                } else {
+                    $check = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-by-dep', [
+                        'id' => $this->editId
+                    ]);
+                    if (!empty($check['data'])) {
+                        foreach ($check['data'] as $item) {
+                            $res = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-del-sec', [
+                                'doc_id' => $this->editId,
+                                'sec_id' => $item['id']
+                            ]);
+                        }
                     }
                 }
 
                 if ($this->tag_user != []) {
+                    $check = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-by-dep', [
+                        'id' => $this->editId
+                    ]);
                     foreach ($this->tag_user as $item) {
-                        $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
-                            'doc_id' => $documents['data']['id'],
-                            'department_id' => null,
-                            'sector_id' => null,
-                            'user_id' => $item,
-                        ]);
+                        foreach ($check['data'] as $it) {
+                            if ($item != $it['id']) {
+                                $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
+                                    'doc_id' => $documents['data']['id'],
+                                    'department_id' => null,
+                                    'sector_id' => null,
+                                    'user_id' => $item,
+                                ]);
+                            }
+                        }
+                    }
+                } else {
+                    $check = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-by-dep', [
+                        'id' => $this->editId
+                    ]);
+                    if (!empty($check['data'])) {
+                        foreach ($check['data'] as $item) {
+                            $res = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-del-us', [
+                                'doc_id' => $this->editId,
+                                'us_id' => $item['id']
+                            ]);
+                        }
                     }
                 }
 
@@ -269,35 +328,93 @@ class EditComponent extends Component
 
 
                 if ($this->tag_depart != []) {
+                    $check = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-by-dep', [
+                        'id' => $this->editId
+                    ]);
+
                     foreach ($this->tag_depart as $item) {
-                        $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
-                            'doc_id' => $documents['data']['id'],
-                            'department_id' => $item,
-                            'sector_id' => null,
-                            'user_id' => null,
-                        ]);
+                        foreach ($check['data'] as $it) {
+                            if ($item != $it['department_id']) {
+                                $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
+                                    'doc_id' => $documents['data']['id'],
+                                    'department_id' => $item,
+                                    'sector_id' => null,
+                                    'user_id' => null,
+                                ]);
+                            }
+                        }
+                    }
+                } else {
+                    $check = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-by-dep', [
+                        'id' => $this->editId
+                    ]);
+                    if (!empty($check['data'])) {
+                        foreach ($check['data'] as $item) {
+                            $res = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-del-dep', [
+                                'doc_id' => $this->editId,
+                                'dep_id' => $item['id']
+                            ]);
+                        }
                     }
                 }
 
                 if ($this->tag_sector != []) {
+                    $check = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-by-dep', [
+                        'id' => $this->editId
+                    ]);
                     foreach ($this->tag_sector as $item) {
-                        $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
-                            'doc_id' => $documents['data']['id'],
-                            'department_id' => null,
-                            'sector_id' => $item,
-                            'user_id' => null,
-                        ]);
+                        foreach ($check['data'] as $it) {
+                            if ($item != $it['sector_id']) {
+                                $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
+                                    'doc_id' => $documents['data']['id'],
+                                    'department_id' => null,
+                                    'sector_id' => $item,
+                                    'user_id' => null,
+                                ]);
+                            }
+                        }
+                    }
+                } else {
+                    $check = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-by-dep', [
+                        'id' => $this->editId
+                    ]);
+                    if (!empty($check['data'])) {
+                        foreach ($check['data'] as $item) {
+                            $res = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-del-sec', [
+                                'doc_id' => $this->editId,
+                                'sec_id' => $item['id']
+                            ]);
+                        }
                     }
                 }
 
                 if ($this->tag_user != []) {
+                    $check = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-by-dep', [
+                        'id' => $this->editId
+                    ]);
                     foreach ($this->tag_user as $item) {
-                        $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
-                            'doc_id' => $documents['data']['id'],
-                            'department_id' => null,
-                            'sector_id' => null,
-                            'user_id' => $item,
-                        ]);
+                        foreach ($check['data'] as $it) {
+                            if ($item != $it['id']) {
+                                $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
+                                    'doc_id' => $documents['data']['id'],
+                                    'department_id' => null,
+                                    'sector_id' => null,
+                                    'user_id' => $item,
+                                ]);
+                            }
+                        }
+                    }
+                } else {
+                    $check = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-by-dep', [
+                        'id' => $this->editId
+                    ]);
+                    if (!empty($check['data'])) {
+                        foreach ($check['data'] as $item) {
+                            $res = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-del-us', [
+                                'doc_id' => $this->editId,
+                                'us_id' => $item['id']
+                            ]);
+                        }
                     }
                 }
 
@@ -345,35 +462,92 @@ class EditComponent extends Component
                 ]);
 
                 if ($this->tag_depart != []) {
+                    $check = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-by-dep', [
+                        'id' => $this->editId
+                    ]);
                     foreach ($this->tag_depart as $item) {
-                        $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
-                            'doc_id' => $documents['data']['id'],
-                            'department_id' => $item,
-                            'sector_id' => null,
-                            'user_id' => null,
-                        ]);
+                        foreach ($check['data'] as $it) {
+                            if ($item != $it['department_id']) {
+                                $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
+                                    'doc_id' => $documents['data']['id'],
+                                    'department_id' => $item,
+                                    'sector_id' => null,
+                                    'user_id' => null,
+                                ]);
+                            }
+                        }
+                    }
+                } else {
+                    $check = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-by-dep', [
+                        'id' => $this->editId
+                    ]);
+                    if (!empty($check['data'])) {
+                        foreach ($check['data'] as $item) {
+                            $res = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-del-dep', [
+                                'doc_id' => $this->editId,
+                                'dep_id' => $item['id']
+                            ]);
+                        }
                     }
                 }
 
                 if ($this->tag_sector != []) {
+                    $check = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-by-dep', [
+                        'id' => $this->editId
+                    ]);
                     foreach ($this->tag_sector as $item) {
-                        $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
-                            'doc_id' => $documents['data']['id'],
-                            'department_id' => null,
-                            'sector_id' => $item,
-                            'user_id' => null,
-                        ]);
+                        foreach ($check['data'] as $it) {
+                            if ($item != $it['sector_id']) {
+                                $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
+                                    'doc_id' => $documents['data']['id'],
+                                    'department_id' => null,
+                                    'sector_id' => $item,
+                                    'user_id' => null,
+                                ]);
+                            }
+                        }
+                    }
+                } else {
+                    $check = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-by-dep', [
+                        'id' => $this->editId
+                    ]);
+                    if (!empty($check['data'])) {
+                        foreach ($check['data'] as $item) {
+                            $res = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-del-sec', [
+                                'doc_id' => $this->editId,
+                                'sec_id' => $item['id']
+                            ]);
+                        }
                     }
                 }
 
                 if ($this->tag_user != []) {
+                    $check = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-by-dep', [
+                        'id' => $this->editId
+                    ]);
                     foreach ($this->tag_user as $item) {
-                        $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
-                            'doc_id' => $documents['data']['id'],
-                            'department_id' => null,
-                            'sector_id' => null,
-                            'user_id' => $item,
-                        ]);
+                        foreach ($check['data'] as $it) {
+                            if ($item != $it['id']) {
+                                $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
+                                    'doc_id' => $documents['data']['id'],
+                                    'department_id' => null,
+                                    'sector_id' => null,
+                                    'user_id' => $item,
+                                ]);
+                            }
+                        }
+                    }
+                } else {
+                    $check = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-by-dep', [
+                        'id' => $this->editId
+                    ]);
+                    if (!empty($check['data'])) {
+                        foreach ($check['data'] as $item) {
+                            $res = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-del-us', [
+                                'doc_id' => $this->editId,
+                                'us_id' => $item['id']
+                            ]);
+                        }
                     }
                 }
 
@@ -402,35 +576,92 @@ class EditComponent extends Component
                 ]);
 
                 if ($this->tag_depart != []) {
+                    $check = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-by-dep', [
+                        'id' => $this->editId
+                    ]);
                     foreach ($this->tag_depart as $item) {
-                        $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
-                            'doc_id' => $documents['data']['id'],
-                            'department_id' => $item,
-                            'sector_id' => null,
-                            'user_id' => null,
-                        ]);
+                        foreach ($check['data'] as $it) {
+                            if ($item != $it['department_id']) {
+                                $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
+                                    'doc_id' => $documents['data']['id'],
+                                    'department_id' => $item,
+                                    'sector_id' => null,
+                                    'user_id' => null,
+                                ]);
+                            }
+                        }
+                    }
+                } else {
+                    $check = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-by-dep', [
+                        'id' => $this->editId
+                    ]);
+                    if (!empty($check['data'])) {
+                        foreach ($check['data'] as $item) {
+                            $res = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-del-dep', [
+                                'doc_id' => $this->editId,
+                                'dep_id' => $item['id']
+                            ]);
+                        }
                     }
                 }
 
                 if ($this->tag_sector != []) {
+                    $check = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-by-dep', [
+                        'id' => $this->editId
+                    ]);
                     foreach ($this->tag_sector as $item) {
-                        $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
-                            'doc_id' => $documents['data']['id'],
-                            'department_id' => null,
-                            'sector_id' => $item,
-                            'user_id' => null,
-                        ]);
+                        foreach ($check['data'] as $it) {
+                            if ($item != $it['sector_id']) {
+                                $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
+                                    'doc_id' => $documents['data']['id'],
+                                    'department_id' => null,
+                                    'sector_id' => $item,
+                                    'user_id' => null,
+                                ]);
+                            }
+                        }
+                    }
+                } else {
+                    $check = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-by-dep', [
+                        'id' => $this->editId
+                    ]);
+                    if (!empty($check['data'])) {
+                        foreach ($check['data'] as $item) {
+                            $res = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-del-sec', [
+                                'doc_id' => $this->editId,
+                                'sec_id' => $item['id']
+                            ]);
+                        }
                     }
                 }
 
                 if ($this->tag_user != []) {
+                    $check = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-by-dep', [
+                        'id' => $this->editId
+                    ]);
                     foreach ($this->tag_user as $item) {
-                        $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
-                            'doc_id' => $documents['data']['id'],
-                            'department_id' => null,
-                            'sector_id' => null,
-                            'user_id' => $item,
-                        ]);
+                        foreach ($check['data'] as $it) {
+                            if ($item != $it['id']) {
+                                $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
+                                    'doc_id' => $documents['data']['id'],
+                                    'department_id' => null,
+                                    'sector_id' => null,
+                                    'user_id' => $item,
+                                ]);
+                            }
+                        }
+                    }
+                } else {
+                    $check = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-by-dep', [
+                        'id' => $this->editId
+                    ]);
+                    if (!empty($check['data'])) {
+                        foreach ($check['data'] as $item) {
+                            $res = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-del-us', [
+                                'doc_id' => $this->editId,
+                                'us_id' => $item['id']
+                            ]);
+                        }
                     }
                 }
 

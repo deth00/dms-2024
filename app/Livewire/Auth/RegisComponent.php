@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Http;
 
 class RegisComponent extends Component
 {
-    public $emp_name, $phone, $email, $name, $password, $confirm_password, $dpart_id = [], $sector_id = [], $unit_id = [];
-    public $departs = [], $sectors = [], $unit = [];
+    public $emp_name, $phone, $email, $name, $password, $confirm_password, $dpart_id = [], $sector_id = [], $unit_id = [], $ori_id = [];
+    public $departs = [], $sectors = [], $unit = [], $depByid = [], $data_or = [];
 
     public function mount()
     {
@@ -24,7 +24,9 @@ class RegisComponent extends Component
     public function render()
     {
         if ($this->dpart_id != []) {
+            // dd($this->dpart_id);
             $response1 = Http::post('http://192.168.128.193:8080/api/dpart/' . $this->dpart_id[0]);
+            $this->depByid = $response1['data'];
             $res = Http::post('http://192.168.128.193:8080/api/sector-type', [
                 'type_id' => $response1['data']['type'],
             ]);
@@ -34,19 +36,21 @@ class RegisComponent extends Component
             $this->sectors = [];
         }
 
+        $res1  = Http::post('http://192.168.128.193:8080/api/organi');
+        $this->data_or = $res1['data'];
 
         return view('livewire.auth.regis-component')->layout('components.layouts.regis.app');
     }
 
-    public function selectDpart()
-    {
-        // dd('kk');
-        $response1 = Http::post('http://192.168.128.193:8080/api/dpart-sectors', [
-            'department_id' => $this->dpart_id[0],
-        ]);
-        $this->sectors = $response1['data'];
-        $this->dispatch('g_id');
-    }
+    // public function selectDpart()
+    // {
+    //     // dd('kk');
+    //     $response1 = Http::post('http://192.168.128.193:8080/api/dpart-sectors', [
+    //         'department_id' => $this->dpart_id[0],
+    //     ]);
+    //     $this->sectors = $response1['data'];
+    //     $this->dispatch('g_id');
+    // }
 
     public function back()
     {
@@ -55,12 +59,15 @@ class RegisComponent extends Component
 
     public function next()
     {
+        // $con = implode(",", $this->ori_id);
+        // dd($con);
         $this->validate([
             'name' => 'required',
             'emp_name' => 'required',
             'phone' => 'required',
             'email' => 'required',
             'dpart_id' => 'required',
+            // 'sector_id' => 'required',
             'password' => 'required',
             'confirm_password' => 'required',
         ]);
@@ -73,7 +80,9 @@ class RegisComponent extends Component
                     'phone' => $this->phone,
                     'email' => $this->email,
                     'depart_id' => $this->dpart_id[0],
+                    'branch_id' => $this->depByid['branch_id'],
                     'sector_id' => null,
+                    'organi_id' => null,
                     'password' => $this->password,
                 ]);
                 if ($response['message'] == 'success') {
@@ -93,8 +102,11 @@ class RegisComponent extends Component
                     'email' => $this->email,
                     'depart_id' => $this->dpart_id[0],
                     'sector_id' => $this->sector_id[0],
+                    // 'branch_id' => $this->depByid['branch_id'],
+                    'organi_id' => null,
                     'password' => $this->password,
                 ]);
+                // dd($this->emp_name);
                 if ($response['message'] == 'success') {
                     return redirect(route('regis-finish', $response['data']['id']));
                 } else {

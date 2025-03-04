@@ -34,7 +34,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <select class="form-control select2-multiple" multiple="multiple"
-                                            data-placeholder="ເລືອກສາຂາ" id="cate" wire:model="br_id">
+                                            data-placeholder="ເລືອກສາຂາ" id="cate" wire:model="role_id">
                                             @foreach ($this->data_brn as $item)
                                                 <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
                                             @endforeach

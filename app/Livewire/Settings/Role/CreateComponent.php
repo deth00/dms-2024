@@ -23,7 +23,11 @@ class CreateComponent extends Component
 
     public function store()
     {
-   
+        $a = ['a','b','c'];
+        $b = ['d','e','f'];
+        $this->selectedtypes = array_merge($a , $b);
+        $cccc = implode(",", $this->selectedtypes);
+        dd($cccc);
         try {
             // $this->validate([
             //     'name' => 'required',

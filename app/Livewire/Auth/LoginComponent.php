@@ -17,6 +17,7 @@ class LoginComponent extends Component
 
     public function render()
     {
+        // dd(Cookie::get('token'));
         return view('livewire.auth.login-component')->layout('components.layouts.login.app');
     }
 
@@ -43,6 +44,8 @@ class LoginComponent extends Component
                 $users_cookie = Cookie::queue('user_name', $response['user']['name']);
                 $roles_cookie = Cookie::queue('role_id', $response['user']['role_id']);
                 $departs_cookie = Cookie::queue('dpart_id', $response['user']['dpart_id']);
+                $organi_cookie = Cookie::queue('organi_id', $response['user']['organi_id']);
+                $organi_type_cookie = Cookie::queue('organi_type', $response['user']['organi_type']);
                 session()->flash('success', 'ເຂົ້າສູ່ລະບົບສຳເລັດ');
                 return redirect(route('dashboard'));
         }

@@ -2,10 +2,11 @@
 
 namespace App\Livewire;
 
-use Cookie;
+
 use Livewire\Component;
 use App\Models\Docc;
 use App\Models\DocGroup;
+use Illuminate\Support\Facades\Cookie;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Http;
 

@@ -30,10 +30,12 @@ class CreateComponent extends Component
 
     public function mount($id)
     {
+        // dd($id);
         $this->token = Cookie::get('token');
         $this->user = Cookie::get('user_id');
         $this->user_id = Cookie::get('user_id');
         $this->depart_id = Cookie::get('dpart_id');
+        // dd($this->depart_id );
         $this->hiddenId = $id;
         $this->type_id = $id;
         $type = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/doc-type-id', [
@@ -71,6 +73,7 @@ class CreateComponent extends Component
         $this->departments = $all_depart['data'];
         $this->sectors = $all_sector['data'];
         $this->all_user = $response['data'];
+        // dd($this->all_user);
         $this->typename = $type['data'];
         $this->doc_groups = $group['data'];
         $this->doc_dpart = $dpart['data'];
@@ -125,7 +128,6 @@ class CreateComponent extends Component
 
     public function store()
     {
-
         if ($this->type_id == 1 || $this->type_id == 2) {
             $this->validate([
                 'doc_title' => 'required',
@@ -133,18 +135,18 @@ class CreateComponent extends Component
                 'doc_date' => 'required',
                 'docgroup_id' => 'required',
                 'dpart_id' => 'required',
-                'sh_id' => 'required',
-                'k_id' => 'required',
+                // 'sh_id' => 'required',
+                // 'k_id' => 'required',
                 'file' => 'required',
             ], [
                 'docgroup_id.required' => 'ກະລຸນາເລືອກ ປະເພດເອກະສານ ກ່ອນ!',
                 'dpart_id.required' => 'ກະລຸນາເລືອກ ພາກສ່ວນພາຍນອກ-ໃນ ກ່ອນ!',
-                'sh_id.required' => 'ກະລຸນາເລືອກ ຕູ້ເກັບເອກະສານ ກ່ອນ!',
-                'k_id.required' => 'ກະລຸນາເລືອກ ໂກໂລໂນ ກ່ອນ!',
+                // 'sh_id.required' => 'ກະລຸນາເລືອກ ຕູ້ເກັບເອກະສານ ກ່ອນ!',
+                // 'k_id.required' => 'ກະລຸນາເລືອກ ໂກໂລໂນ ກ່ອນ!',
                 'file.required' => 'ກະລຸນາເລືອກ ຟາຍເອກະສານ ກ່ອນ!',
             ]);
 
-            $file = fopen($this->file->getRealPath(), 'r');
+            $file = fopen($this->file->getRealPath(), 'rw+');
             $documents = Http::attach(
                 'file',
                 $file,
@@ -163,6 +165,7 @@ class CreateComponent extends Component
                 'type_id' => $this->type_id,
                 'depart_id' => $this->depart_id,
                 'user_id' => $this->user_id,
+                'status' => '1',
                 'note' => $this->note,
             ]);
 
@@ -252,7 +255,7 @@ class CreateComponent extends Component
                 'k_id.required' => 'ກະລຸນາເລືອກ ໂກໂລໂນ ກ່ອນ!',
                 'file.required' => 'ກະລຸນາເລືອກ ຟາຍເອກະສານ ກ່ອນ!',
             ]);
-            $file = fopen($this->file->getRealPath(), 'r');
+            $file = fopen($this->file->getRealPath(), 'rw+');
             $documents = Http::attach(
                 'file',
                 $file,
@@ -271,6 +274,7 @@ class CreateComponent extends Component
                 'type_id' => $this->type_id,
                 'depart_id' => $this->depart_id,
                 'user_id' => $this->user_id,
+                'status' => '1',
                 'note' => $this->note,
             ]);
 

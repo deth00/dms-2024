@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use Cookie;
+use Illuminate\Support\Facades\Cookie;
 use Livewire\Component;
 use App\Models\Docc;
 use App\Models\DocGroup;

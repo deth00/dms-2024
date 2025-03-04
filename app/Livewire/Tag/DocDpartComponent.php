@@ -21,6 +21,7 @@ class DocDpartComponent extends Component
     public $user, $token;
 
     public function mount(){
+        
         $this->token = Cookie::get('token');
         $this->user = Cookie::get('user_id');
         $this->valuedt = date('Y-m-d');
@@ -29,8 +30,11 @@ class DocDpartComponent extends Component
             'qty' => $this->dataQ,
             'search' => $this->search,
         ]);
+        // dd($response['data']);
         if($response['message'] == 'success'){
+            
             $this->data = $response['data'];
+            
             $this->count = count($response['data']);
         }
     }

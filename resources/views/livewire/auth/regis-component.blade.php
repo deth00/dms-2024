@@ -53,7 +53,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="name">ຢືນຢັນລະຫັດຜ່ານ :</label>
-                                <input type="password" class="form-control @error('confirm_password') is-invalid @enderror"
+                                <input type="password"
+                                    class="form-control @error('confirm_password') is-invalid @enderror"
                                     placeholder="ປ້ອນ ຢືນຢັນລະຫັດຜ່ານ" wire:model="confirm_password">
                             </div>
                         </div>
@@ -64,14 +65,15 @@
                                     <div class="input-group">
                                         <select class="form-control select2-multiple" multiple="multiple"
                                             data-placeholder="ເລືອກພະແນກການ || ສາຂາ || ໜ່ວຍບໍລິການ" id="dpart"
-                                            wire:model="dpart_id" wire:click="selectDpart">
+                                            wire:model="dpart_id" >
                                             @foreach ($departs as $item)
-                                            <option value="{{$item['id']}}">{{$item['name']}}</option>
+                                                <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
-                                @error('dpart_id') <span style="color: red" class="error">{{ $message }}</span>
+                                @error('dpart_id')
+                                    <span style="color: red" class="error">{{ $message }}</span>
                                 @enderror
                             </div>
 
@@ -82,14 +84,49 @@
                                         <select class="form-control select2-multiple" multiple="multiple"
                                             data-placeholder="ຂະແໜງການ" id="sector" wire:model="sector_id">
                                             @foreach ($sectors as $item)
-                                            <option value="{{$item['id']}}">{{$item['name']}}</option>
+                                                <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
-                                @error('sector_id') <span style="color: red" class="error">{{ $message }}</span>
+                                @error('sector_id')
+                                    <span style="color: red" class="error">{{ $message }}</span>
                                 @enderror
                             </div>
+                            {{-- <div class="row">
+                                <div class="col-md-3">
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <input wire:model="ori_id" type="checkbox" value="151">
+                                            <label for="name" style="color:black">ພັກ</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <input wire:model="ori_id" type="checkbox" value="152">
+                                            <label for="name" style="color:black">ກຳມະບານ</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <input wire:model="ori_id" type="checkbox" value="153">
+                                            <label for="name" style="color:black">ຊາວໜຸ່ມ</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <input wire:model="ori_id" type="checkbox" value="154">
+                                            <label for="name" style="color:black">ແມ່ຍິງ</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> --}}
                         </div>
                     </div>
                 </fieldset>
@@ -106,55 +143,55 @@
 
 
 @push('scripts')
-<!-- Init js-->
-<!-- <script src="{{asset('backend/assets/js/pages/form-advanced.init.js')}}"></script> -->
-<script>
-$(function() {
-    $("#dpart").select2({
-        maximumSelectionLength: 1,
-        width: 'resolve'
-    });
-    $('#dpart').on('change', function(e) {
-        var data = $('#dpart').select2("val");
-        @this.set('dpart_id', data);
-    });
-    $("#sector").select2({
-        maximumSelectionLength: 1,
-        width: 'resolve'
-    });
-    $('#sector').on('change', function(e) {
-        var data = $('#sector').select2("val");
-        @this.set('sector_id', data);
-    });
-});
+    <!-- Init js-->
+    <!-- <script src="{{ asset('backend/assets/js/pages/form-advanced.init.js') }}"></script> -->
+    <script>
+        $(function() {
+            $("#dpart").select2({
+                maximumSelectionLength: 1,
+                width: 'resolve'
+            });
+            $('#dpart').on('change', function(e) {
+                var data = $('#dpart').select2("val");
+                @this.set('dpart_id', data);
+            });
+            $("#sector").select2({
+                maximumSelectionLength: 1,
+                width: 'resolve'
+            });
+            $('#sector').on('change', function(e) {
+                var data = $('#sector').select2("val");
+                @this.set('sector_id', data);
+            });
+        });
 
-Livewire.on('g_id', postId => {
-    jQuery(document).ready(function() {
-        $("#dpart").select2({
-            maximumSelectionLength: 1,
-            width: 'resolve'
+        Livewire.on('g_id', postId => {
+            jQuery(document).ready(function() {
+                $("#dpart").select2({
+                    maximumSelectionLength: 1,
+                    width: 'resolve'
+                });
+                $('#dpart').on('change', function(e) {
+                    var data = $('#dpart').select2("val");
+                    @this.set('dpart_id', data);
+                });
+                $("#sector").select2({
+                    maximumSelectionLength: 1,
+                    width: 'resolve'
+                });
+                $('#sector').on('change', function(e) {
+                    var data = $('#sector').select2("val");
+                    @this.set('sector_id', data);
+                });
+                $("#unit").select2({
+                    maximumSelectionLength: 1,
+                    width: 'resolve'
+                });
+                $('#unit').on('change', function(e) {
+                    var data = $('#unit').select2("val");
+                    @this.set('sector_id', data);
+                });
+            });
         });
-        $('#dpart').on('change', function(e) {
-            var data = $('#dpart').select2("val");
-            @this.set('dpart_id', data);
-        });
-        $("#sector").select2({
-            maximumSelectionLength: 1,
-            width: 'resolve'
-        });
-        $('#sector').on('change', function(e) {
-            var data = $('#sector').select2("val");
-            @this.set('sector_id', data);
-        });
-        $("#unit").select2({
-            maximumSelectionLength: 1,
-            width: 'resolve'
-        });
-        $('#unit').on('change', function(e) {
-            var data = $('#unit').select2("val");
-            @this.set('sector_id', data);
-        });
-    });
-});
-</script>
+    </script>
 @endpush
