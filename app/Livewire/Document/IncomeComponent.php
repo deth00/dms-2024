@@ -40,6 +40,7 @@ class IncomeComponent extends Component
         $type = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/doc-type-id', [
             'type_id' => $this->hiddenId
         ]);
+
         $group = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/doc-group', [
             'qty' => 99,
             'search' => ''
@@ -49,6 +50,7 @@ class IncomeComponent extends Component
             'qty' => 99,
             'search' => ''
         ]);
+        
         $dpartment = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/doc-dpartment', [
             'qty' => 99,
             'search' => ''
@@ -58,19 +60,34 @@ class IncomeComponent extends Component
             'qty' => 99,
             'search' => ''
         ]);
+
         $dock = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/doc-dock', [
             'qty' => 99,
             'search' => ''
         ]);
+
         $response = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/all-user', [
             'search' => "",
         ]);
+
         $all_depart = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/all-depart', [
             'search' => "",
         ]);
+
         $all_sector = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/all-sector', [
             'search' => "",
         ]);
+        $tag_user = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-by-user', [
+            'id' => $id,
+        ]);
+        $tag_sector = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-by-sec', [
+            'id' => $id,
+        ]);
+        $tag_dep = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-by-dep', [
+            'id' => $id,
+        ]);
+
+
         $this->departments = $all_depart['data'];
         $this->sectors = $all_sector['data'];
         $this->all_user = $response['data'];
@@ -98,6 +115,16 @@ class IncomeComponent extends Component
         $c = array_push($this->k_id, $this->datas['k_id']);
         $d = array_push($this->dpart_id, $this->datas['dpart_id']);
         $e = array_push($this->doc_dpart_id, $this->datas['docdpart_id']);
+
+        if (!empty($tag_user['data'])) {
+            $this->tag_user = array_filter(array_column($tag_user['data'], 'id'));
+        }
+        if (!empty($tag_sector['data'])) {
+            $this->tag_sector = array_filter(array_column($tag_sector['data'], 'id'));
+        }
+        if (!empty($tag_dep['data'])) {
+            $this->tag_depart = array_filter(array_column($tag_dep['data'], 'id'));
+        }
     }
 
     public function render()

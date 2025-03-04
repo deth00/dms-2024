@@ -13,6 +13,9 @@
             </div>
         </div>
     </div>
+    {{-- <button wire:click='shouldApp'>
+        next to 
+    </button> --}}
     <!-- end page title -->
     <div class="row">
         @forelse ($doc as $item)

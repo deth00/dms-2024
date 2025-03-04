@@ -4,8 +4,6 @@ namespace App\Livewire\Document;
 
 use Illuminate\Support\Facades\Cookie;
 use Livewire\Component;
-use App\Models\Docc;
-use App\Models\DocGroup;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Http;
 
@@ -34,7 +32,8 @@ class DocumentComponent extends Component
         $doc = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/doc-it-type',[
             'qty'=>$this->dataQ,
             'search'=>$this->search,
-            'type_id'=>$this->hiddenId
+            'type_id'=>$this->hiddenId,
+            'status_id' => 1
         ]);
         $this->data = $doc['data'];
         $this->count = count($doc['data']);
@@ -45,7 +44,8 @@ class DocumentComponent extends Component
         $doc = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/doc-it-type',[
             'qty'=>$this->dataQ,
             'search'=>$this->search,
-            'type_id'=>$this->hiddenId
+            'type_id'=>$this->hiddenId,
+            'status_id' => 1
         ]);
         $this->data = $doc['data'];
         $this->count = count($doc['data']);
@@ -55,7 +55,8 @@ class DocumentComponent extends Component
         $doc = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/doc-it-type',[
             'qty'=>$this->dataQ,
             'search'=>$this->search,
-            'type_id'=>$this->hiddenId
+            'type_id'=>$this->hiddenId,
+            'status_id' => 1
         ]);
         $this->data = $doc['data'];
         $this->count = count($doc['data']);

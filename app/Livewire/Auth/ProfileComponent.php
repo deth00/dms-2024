@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Auth;
 
-use Cookie;
+use Illuminate\Support\Facades\Cookie;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;

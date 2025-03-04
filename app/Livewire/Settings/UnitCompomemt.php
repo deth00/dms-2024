@@ -38,6 +38,7 @@ class UnitCompomemt extends Component
             'qty' => $this->dataQ,
             'search' => $this->search,
         ]);
+  
         if ($response['message'] == 'success') {
             $this->data = $response['data'];
         }
@@ -79,7 +80,7 @@ class UnitCompomemt extends Component
             $response = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/unit-update', [
                 'id' => $this->editId,
                 'name' => $this->name,
-                'bran_id' => $this->br_id
+                'branch_id' => $this->br_id
             ]);
 
             if ($response['message'] == 'success') {
@@ -97,7 +98,7 @@ class UnitCompomemt extends Component
 
             $response = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/unit-store', [
                 'name' => $this->name,
-                'bran_id' => $this->br_id
+                'branch_id' => $this->br_id
             ]);
 
             if ($response['message'] == 'success') {
@@ -112,7 +113,7 @@ class UnitCompomemt extends Component
         $response = Http::withToken($this->token)->put('http://192.168.128.193:8080/api/unit-edit/'.$ids);
         $this->editId = $response['data']['id'];
         $this->name = $response['data']['name'];
-        $this->br_id = $response['data']['bran_id'];
+        $this->br_id = $response['data']['branch_id'];
     }
 
     public function delete($ids)

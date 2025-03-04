@@ -17,22 +17,25 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card-box">
-                <div class="row">
-                    <div class="col-md-12">
-                        <button class="btn btn-primary">
-                            <h5 class="card-title mb-0 text-white" wire:click="add"><i class="mdi mdi-plus"></i>
-                                ເພີ່ມຂໍ້ມູນ </h5>
-                        </button>
-                        <hr>
+                @if (!empty($data_role['ViewWide2-add']))
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button class="btn btn-primary">
+                                <h5 class="card-title mb-0 text-white" wire:click="add"><i class="mdi mdi-plus"></i>
+                                    ເພີ່ມຂໍ້ມູນ </h5>
+                            </button>
+                            <hr>
+                        </div>
                     </div>
-                </div>
+                @endif
                 <div class="row">
                     <div class="col-3">
                         <table width="100%">
                             <tr>
                                 <td style="vertical-align: center;" class="text-right">ສະແດງ &emsp;</td>
                                 <td>
-                                    <select wire:model="dataQ" wire:click="dataQS" name="Q" id="Q" class="form-control">
+                                    <select wire:model="dataQ" wire:click="dataQS" name="Q" id="Q"
+                                        class="form-control">
                                         <option value="0">0</option>
                                         <option value="15">15</option>/
                                         <option value="50">50</option>
@@ -53,8 +56,8 @@
                         <!-- <input type="date" name="date" id="date" wire:model="dateS" class="form-control"> -->
                     </div>
                     <div class="col-2">
-                        <input type="text" name="search" id="search" wire:model="search" wire:keydown.enter="searchData"
-                            class="form-control" placeholder="ຄົ້ນຫາ">
+                        <input type="text" name="search" id="search" wire:model="search"
+                            wire:keydown.enter="searchData" class="form-control" placeholder="ຄົ້ນຫາ">
                     </div>
                     <div class="col-1 ">
                         <button type="button" class="btn btn-primary" wire:click="searchData">
@@ -71,7 +74,7 @@
                                 <table border="1" width="100%">
                                     <thead>
                                         <tr class="text-center">
-                                            <th class="p-2">ລຳດັບ</th>
+                                            <th class="p-2">ລຳດັບ123</th>
                                             <th class="p-2">ວັນທີ</th>
                                             <th class="p-2">ຫົວຂໍ້</th>
                                             <th class="p-2">ຈາກພາກສ່ວນ</th>
@@ -82,32 +85,36 @@
                                     <tbody>
                                         @php $no = 1; @endphp
                                         @forelse ($data as $item)
-                                        <tr class="text-center">
-                                            <td class="p-2">{{$no++}}</td>
-                                            <td class="p-2">{{date('d/m/Y',strtotime($item['date']))}}</td>
-                                            <td class="text-left px-3">{{$item['title']}}</td>
-                                            <td class="p-2">{{$item['name']}}</td>
-                                            <td class="p-2"><button class="btn btn-primary"
-                                                    wire:click="view({{$item['id']}})"><i
-                                                        class="mdi mdi-eye-circle-outline"></i></button></td>
-                                            <td class="p-2">
-                                                <div class="btn-group btn-group-justified text-white mb-2">
-                                                    <a class="btn btn-warning waves-effect waves-light"
-                                                        wire:click="edit({{$item['id']}})"><i
-                                                            class="mdi mdi-pencil-remove-outline"></i></a>
-                                                    <a class="btn btn-danger waves-effect waves-light"
-                                                        wire:click="delete({{$item['id']}})"><i
-                                                            class="mdi mdi-window-close"></i></a>
-                                                    <a class="btn btn-info waves-effect waves-light"><i
-                                                            class="mdi mdi-send-circle"></i></a>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                            <tr class="text-center">
+                                                <td class="p-2">{{ $no++ }}</td>
+                                                <td class="p-2">{{ date('d/m/Y', strtotime($item['date'])) }}</td>
+                                                <td class="text-left px-3">{{ $item['title'] }}</td>
+                                                <td class="p-2">{{ $item['name'] }}</td>
+                                                <td class="p-2"><button class="btn btn-primary"
+                                                        wire:click="view({{ $item['id'] }})"><i
+                                                            class="mdi mdi-eye-circle-outline"></i></button></td>
+                                                <td class="p-2">
+                                                    <div class="btn-group btn-group-justified text-white mb-2">
+                                                        @if (!empty($data_role['ViewWide2-edit']))
+                                                            <a class="btn btn-warning waves-effect waves-light"
+                                                                wire:click="edit({{ $item['id'] }})"><i
+                                                                    class="mdi mdi-pencil-remove-outline"></i></a>
+                                                        @endif
+                                                        @if (!empty($data_role['ViewWide2-del']))
+                                                            <a class="btn btn-danger waves-effect waves-light"
+                                                                wire:click="delete({{ $item['id'] }})"><i
+                                                                    class="mdi mdi-window-close"></i></a>
+                                                        @endif
+                                                        <a class="btn btn-info waves-effect waves-light"><i
+                                                                class="mdi mdi-send-circle"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
                                         @empty
-                                        <tr>
-                                            <td colspan="13" class="text-center p-2">
-                                                ບໍ່ມີຂໍ້ມູນເອກະສານ</td>
-                                        </tr>
+                                            <tr>
+                                                <td colspan="13" class="text-center p-2">
+                                                    ບໍ່ມີຂໍ້ມູນເອກະສານ</td>
+                                            </tr>
                                         @endforelse
                                     </tbody>
                                 </table>
@@ -119,7 +126,7 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <span><br> ລວມຫຼັກຊັບທັງໝົດ <span class="text-danger">{{$count}}</span> ລາຍການ</span>
+                        <span><br> ລວມຫຼັກຊັບທັງໝົດ <span class="text-danger">{{ $count }}</span> ລາຍການ</span>
                     </div>
                 </div>
             </div>
@@ -145,27 +152,36 @@
                                     wire:model="docgroup_id">
                                     <option>ເລືອກປະເພດ</option>
                                     @foreach ($docgroups as $item)
-                                    <option value="{{$item['id']}}">{{$item['name']}}</option>
+                                        <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
                                     @endforeach
                                 </select>
                             </div>
 
-                            @error('docgroup_id') <span style="color: red" class="error">{{ $message }}</span> @enderror
+                            @error('docgroup_id')
+                                <span style="color: red" class="error">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="col-md-12 my-2">
                             <p>ເລກທີເອກະສານ</p>
-                            <input type="text" class="form-control" placeholder="ເລກທີເອກະສານ" wire:model="doc_no">
-                            @error('doc_no') <span style="color: red" class="error">{{ $message }}</span> @enderror
+                            <input type="text" class="form-control" placeholder="ເລກທີເອກະສານ"
+                                wire:model="doc_no">
+                            @error('doc_no')
+                                <span style="color: red" class="error">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="col-md-12 my-2">
                             <p>ວັນທີເອກະສານ</p>
                             <input type="date" class="form-control" wire:model="valuedt">
-                            @error('valuedt') <span style="color: red" class="error">{{ $message }}</span> @enderror
+                            @error('valuedt')
+                                <span style="color: red" class="error">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="col-md-12 my-2">
                             <p>ຫົວຂໍ້</p>
                             <input type="text" class="form-control" placeholder="ຫົວຂໍ້" wire:model="name">
-                            @error('name') <span style="color: red" class="error">{{ $message }}</span> @enderror
+                            @error('name')
+                                <span style="color: red" class="error">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="col-md-12 my-2">
                             <div class="form-group" wire:ignore>
@@ -175,7 +191,8 @@
                                     <div wire:loading wire:target="file">ອັບໂຫຼດ...</div>
                                 </form>
                             </div>
-                            @error('file') <span style="color: red" class="error">{{ $message }}</span>
+                            @error('file')
+                                <span style="color: red" class="error">{{ $message }}</span>
                             @enderror
                         </div>
                     </div>
@@ -212,27 +229,36 @@
                                     wire:model="docgroup_id">
                                     <option>ເລືອກປະເພດ</option>
                                     @foreach ($docgroups as $item)
-                                    <option value="{{$item['id']}}">{{$item['name']}}</option>
+                                        <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
                                     @endforeach
                                 </select>
                             </div>
 
-                            @error('docgroup_id') <span style="color: red" class="error">{{ $message }}</span> @enderror
+                            @error('docgroup_id')
+                                <span style="color: red" class="error">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="col-md-12 my-2">
                             <p>ເລກທີເອກະສານ</p>
-                            <input type="text" class="form-control" placeholder="ເລກທີເອກະສານ" wire:model="doc_no">
-                            @error('doc_no') <span style="color: red" class="error">{{ $message }}</span> @enderror
+                            <input type="text" class="form-control" placeholder="ເລກທີເອກະສານ"
+                                wire:model="doc_no">
+                            @error('doc_no')
+                                <span style="color: red" class="error">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="col-md-12 my-2">
                             <p>ວັນທີເອກະສານ</p>
                             <input type="date" class="form-control" wire:model="valuedt">
-                            @error('valuedt') <span style="color: red" class="error">{{ $message }}</span> @enderror
+                            @error('valuedt')
+                                <span style="color: red" class="error">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="col-md-12 my-2">
                             <p>ຫົວຂໍ້</p>
                             <input type="text" class="form-control" placeholder="ຫົວຂໍ້" wire:model="name">
-                            @error('name') <span style="color: red" class="error">{{ $message }}</span> @enderror
+                            @error('name')
+                                <span style="color: red" class="error">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="col-md-12 my-2">
                             <div class="form-group" wire:ignore>
@@ -242,7 +268,8 @@
                                     <div wire:loading wire:target="file">ອັບໂຫຼດ...</div>
                                 </form>
                             </div>
-                            @error('file') <span style="color: red" class="error">{{ $message }}</span>
+                            @error('file')
+                                <span style="color: red" class="error">{{ $message }}</span>
                             @enderror
                         </div>
                     </div>
@@ -272,7 +299,7 @@
                 </div>
                 <div class="modal-body">
                     <h3><b>ທ່ານຕ້ອງການລົບຂໍ້ມູນນີ້ ຫຼື ບໍ່ ?</b></h3>
-                    <p>ລາຍລະອຽດ: <span class="text-danger">{{$delName}}</span></p>
+                    <p>ລາຍລະອຽດ: <span class="text-danger">{{ $delName }}</span></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">ປິດ</button>
@@ -313,24 +340,27 @@
                             <tbody>
                                 @php $stt = 1; @endphp
                                 @foreach ($arr_view_docc as $item)
-                                <tr>
-                                    <td style="text-align: center">{{$stt++}}</td>
-                                    <td style="text-align: center">
-                                        {{date('d/m/Y H:i:s',strtotime($item['create_data']))}}</td>
-                                    <td style="text-align: center">{{$item['title']}}</td>
-                                    <td style="text-align: center">{{$item['username']}}</td>
-                                    <td style="text-align: center">@if ($item['del'] ==
-                                        1){{date('d/m/Y H:i:s',strtotime($item['update_data']))}}@endif</td>
-                                    <td style="text-align: center">{{$item['count']}}</td>
-                                    <td style="text-align: center">
-                                        @if ($item['del'] == 0)
-                                        <span class="badge badge-danger">ຍັງບໍ່ທັນດາວໂຫຼດ</span>
-                                        @else
-                                        <span class="badge badge-success">ດາວໂຫຼດສຳເລັດ</span>
-                                        @endif
-                                    </td>
+                                    <tr>
+                                        <td style="text-align: center">{{ $stt++ }}</td>
+                                        <td style="text-align: center">
+                                            {{ date('d/m/Y H:i:s', strtotime($item['create_data'])) }}</td>
+                                        <td style="text-align: center">{{ $item['title'] }}</td>
+                                        <td style="text-align: center">{{ $item['username'] }}</td>
+                                        <td style="text-align: center">
+                                            @if ($item['del'] == 1)
+                                                {{ date('d/m/Y H:i:s', strtotime($item['update_data'])) }}
+                                            @endif
+                                        </td>
+                                        <td style="text-align: center">{{ $item['count'] }}</td>
+                                        <td style="text-align: center">
+                                            @if ($item['del'] == 0)
+                                                <span class="badge badge-danger">ຍັງບໍ່ທັນດາວໂຫຼດ</span>
+                                            @else
+                                                <span class="badge badge-success">ດາວໂຫຼດສຳເລັດ</span>
+                                            @endif
+                                        </td>
 
-                                </tr>
+                                    </tr>
                                 @endforeach
 
                             </tbody>
@@ -347,53 +377,53 @@
 </div>
 
 @push('scripts')
-<script>
-window.addEventListener('show-view', event => {
-    $('#modal-view').modal('show');
-})
-window.addEventListener('show-add', event => {
-    $('#modal-add').modal('show');
-})
-window.addEventListener('hide-add', event => {
-    $('#modal-add').modal('hide');
-})
-window.addEventListener('show-edit', event => {
-    $('#modal-edit').modal('show');
+    <script>
+        window.addEventListener('show-view', event => {
+            $('#modal-view').modal('show');
+        })
+        window.addEventListener('show-add', event => {
+            $('#modal-add').modal('show');
+        })
+        window.addEventListener('hide-add', event => {
+            $('#modal-add').modal('hide');
+        })
+        window.addEventListener('show-edit', event => {
+            $('#modal-edit').modal('show');
 
-    jQuery(document).ready(function() {
-        $('#docgroup-edit').select2();
-        $('#docgroup-edit').on('change', function(e) {
-            var data = $('#docgroup-edit').select2("val");
-            @this.set('docgroup_id', data);
+            jQuery(document).ready(function() {
+                $('#docgroup-edit').select2();
+                $('#docgroup-edit').on('change', function(e) {
+                    var data = $('#docgroup-edit').select2("val");
+                    @this.set('docgroup_id', data);
+                });
+            });
+        })
+        window.addEventListener('hide-edit', event => {
+            $('#modal-edit').modal('hide');
+        })
+        window.addEventListener('show-del', event => {
+            $('#modal-del').modal('show');
+        })
+        window.addEventListener('show-del', event => {
+            $('#modal-del').modal('hide');
+        })
+
+        $(document).ready(function() {
+            $('#docgroup').select2();
+            $('#docgroup').on('change', function(e) {
+                var data = $('#docgroup').select2("val");
+                @this.set('docgroup_id', data);
+            });
         });
-    });
-})
-window.addEventListener('hide-edit', event => {
-    $('#modal-edit').modal('hide');
-})
-window.addEventListener('show-del', event => {
-    $('#modal-del').modal('show');
-})
-window.addEventListener('show-del', event => {
-    $('#modal-del').modal('hide');
-})
 
-$(document).ready(function() {
-    $('#docgroup').select2();
-    $('#docgroup').on('change', function(e) {
-        var data = $('#docgroup').select2("val");
-        @this.set('docgroup_id', data);
-    });
-});
-
-Livewire.on('g_id', postId => {
-    jQuery(document).ready(function() {
-        $('#docgroup').select2();
-        $('#docgroup').on('change', function(e) {
-            var data = $('#docgroup').select2("val");
-            @this.set('docgroup_id', data);
+        Livewire.on('g_id', postId => {
+            jQuery(document).ready(function() {
+                $('#docgroup').select2();
+                $('#docgroup').on('change', function(e) {
+                    var data = $('#docgroup').select2("val");
+                    @this.set('docgroup_id', data);
+                });
+            });
         });
-    });
-});
-</script>
+    </script>
 @endpush

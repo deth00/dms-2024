@@ -1,0 +1,481 @@
+<div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">ໜ້າຫຼັກ</a></li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">ຂາເຂົ້າ-ຂາອອກ</a></li>
+                        <li class="breadcrumb-item active">ເພີ່ມເອກະສານຂາເຂົ້າ-ຂາອອກ</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">ເພີ່ມເອກະສານຂາເຂົ້າ-ຂາອອກ</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-12 col-sm-12 col-lg-12">
+            <div class="card">
+                <div class="card-header bg-primary">
+                    <!-- <h3 class="card-title text-white mb-0">ເພີ່ມຂໍ້ມູນເອກະສານ</h3> -->
+                    <select class="selectpicker form-control " data-style="btn-primary" wire:model="type_id"
+                        wire:click="selectType">
+                        <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $data_doc_type; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($item['id']); ?>">ຮູບແບບເອກະສານ : <?php echo e($item['name']); ?></option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
+                    </select>
+                </div>
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">ເລກທີເອກະສານ</span>
+                                            </div>
+                                            <input type="text" id="example-input1-group1"
+                                                name="example-input1-group1" class="form-control"
+                                                placeholder="ປ້ອນເລກທີເອກະສານ" wire:model="doc_no">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">ວັນທີເອກະສານ</span>
+                                            </div>
+                                            <input type="date" id="example-input1-group1"
+                                                name="example-input1-group1" class="form-control" wire:model="doc_date">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style="display: <?php echo e($hiddenType1); ?>">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">ເລກທີ</span>
+                                            </div>
+                                            <input type="text" id="example-input1-group1"
+                                                name="example-input1-group1"
+                                                class="form-control <?php $__errorArgs = ['no'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
+                                                placeholder="ເລກທີ" wire:model="no">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style="display: <?php echo e($hiddenType1); ?>">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">ວັນທີເອກະສານ</span>
+                                            </div>
+                                            <input type="date" id="example-input1-group1"
+                                                name="example-input1-group1"
+                                                class="form-control <?php $__errorArgs = ['date_no'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
+                                                wire:model="date_no">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">ຫົວຂໍ້ເອກະສານ</span>
+                                            </div>
+                                            <input type="text" id="example-input1-group1"
+                                                name="example-input1-group1"
+                                                class="form-control <?php $__errorArgs = ['doc_title'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
+                                                placeholder="ຫົວຂໍ້ເອກະສານ" wire:model="doc_title">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group" wire:ignore>
+                                        <select class="form-control select2-multiple" multiple="multiple"
+                                            data-placeholder="ເລືອກປະເພດເອກະສານ" id="cate"
+                                            wire:model="docgroup_id">
+                                            <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $doc_groups; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($item['id']); ?>"><?php echo e($item['name']); ?></option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
+                                        </select>
+                                    </div>
+                                    <!--[if BLOCK]><![endif]--><?php $__errorArgs = ['docgroup_id'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <span style="color: red" class="error"><?php echo e($message); ?></span>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
+                                </div>
+
+                                <div class="col-md-6" style="display: <?php echo e($hiddenType3); ?>">
+                                    <div wire:key="select-field-model-version-<?php echo e($refresh_dpart); ?>"></div>
+                                    <div class="form-group" wire:ignore>
+                                        <select class="form-control select2-multiple" multiple="multiple"
+                                            style="width: 100%" data-placeholder="ເລືອກພາກສ່ວນພາຍໃນ" id="dpart"
+                                            wire:model="dpart_id">
+                                            <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $doc_dpart; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($item['id']); ?>"><?php echo e($item['name']); ?></option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
+                                        </select>
+                                    </div>
+                                    <!--[if BLOCK]><![endif]--><?php $__errorArgs = ['dpart_id'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <span style="color: red" class="error"><?php echo e($message); ?></span>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
+                                </div>
+
+                                <div class="col-md-6" style="display: <?php echo e($hiddenType2); ?>">
+                                    <div wire:key="select-field-model-version-<?php echo e($refresh_dpart); ?>"></div>
+                                    <div class="form-group" wire:ignore>
+                                        <select class="form-control select2-multiple" multiple="multiple"
+                                            style="width: 100%" data-placeholder="ພາກສ່ວນພາຍນອກ" id="docdpart"
+                                            wire:model="depart_id">
+                                            <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $doc_dpartment; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($item['id']); ?>"><?php echo e($item['name']); ?></option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
+                                        </select>
+                                    </div>
+                                    <!--[if BLOCK]><![endif]--><?php $__errorArgs = ['dpart_id'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <span style="color: red" class="error"><?php echo e($message); ?></span>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group" wire:ignore>
+                                        <select class="form-control select2-multiple" multiple="multiple"
+                                            data-placeholder="ເລືອກຕູ້ເອກະສານ" id="sheft" wire:model="sh_id">
+                                            <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $doc_sheft; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($item['id']); ?>"><?php echo e($item['name']); ?></option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
+                                        </select>
+                                    </div>
+                                    <!--[if BLOCK]><![endif]--><?php $__errorArgs = ['sh_id'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <span style="color: red" class="error"><?php echo e($message); ?></span>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group" wire:ignore>
+                                        <select class="form-control select2-multiple" multiple="multiple"
+                                            data-placeholder="ເລືອກໂກໂລໂນ" id="dock" wire:model="k_id">
+                                            <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $doc_dock; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($item['id']); ?>"><?php echo e($item['name']); ?></option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
+                                        </select>
+                                    </div>
+                                    <!--[if BLOCK]><![endif]--><?php $__errorArgs = ['k_id'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <span style="color: red" class="error"><?php echo e($message); ?></span>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
+                                </div>
+                                
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">ໝາຍເຫດ</span>
+                                            </div>
+                                            <input type="text" id="example-input1-group1"
+                                                name="example-input1-group1" class="form-control"
+                                                placeholder="ໝາຍເຫດ" wire:model="note">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 my-2">
+                                    <div class="form-group" wire:ignore>
+                                        <p>ຟາຍເອກະສານ</p>
+                                        <input type="file" class="filestyle" wire:model="file">
+                                        <div wire:loading wire:target="file">ອັບໂຫຼດ...</div>
+                                    </div>
+                                    <!--[if BLOCK]><![endif]--><?php $__errorArgs = ['file'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <span style="color: red" class="error"><?php echo e($message); ?></span>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="border-left-style: solid; border-left-color: #33cc99;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4 for="name" class="text-info"><i class="icon fas fa-info"></i>
+                                        ຕົວເລືອກເພີ່ມເຕີມ</h4>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="checkbox checkbox-success">
+                                        <input id="checkbox3" type="checkbox" <?php echo e($disabled); ?>
+
+                                            wire:model="check_docc">
+                                        <label for="checkbox3">
+                                            ອັບລົງແຈ້ງການທົ່ວລະບົບ
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="checkbox checkbox-success">
+                                        <input id="checkbox2" type="checkbox" <?php echo e($disabled); ?>
+
+                                            wire:model="check_mss" wire:click="check">
+                                        <label for="checkbox2">
+                                            ສົ່ງເຂົ້າກ່ອງຂໍ້ຄວາມ
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" style="display: <?php echo e($hiddenMss); ?>">
+                                    <div class="form-group" wire:ignore>
+                                        <select class="form-control select2-multiple" multiple="multiple"
+                                            style="width: 100%;" data-placeholder="ສົ່ງເຖິງ" id="inbox">
+                                            <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $all_user; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($item['id']); ?>"><?php echo e($item['emp_name']); ?>
+
+                                                    (<?php echo e($item['departname']); ?>)</option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <hr>
+                                </div>
+                                <div class="col-md-12" wire:ignore>
+                                    <div class="form-group">
+                                        <select class="form-control select2-multiple" multiple="multiple"
+                                            style="width: 100%;" data-placeholder="ສົ່ງເຖິງພະເເນກ" id="tag_depart">
+                                            <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $departments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($item['id']); ?>"><?php echo e($item['name']); ?></option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" wire:ignore>
+                                    <div class="form-group">
+                                        <select class="form-control select2-multiple" multiple="multiple"
+                                            style="width: 100%;" data-placeholder="ສົ່ງເຖິງຂະແໜງ" id="tag_sector">
+                                            <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $sectors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($item['id']); ?>"><?php echo e($item['name']); ?></option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" wire:ignore>
+                                    <div class="form-group">
+                                        <select class="form-control select2-multiple" multiple="multiple"
+                                            style="width: 100%;" data-placeholder="ສົ່ງເຖິງບຸກຄົນ" id="tag_alone">
+                                            <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $all_user; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($item['id']); ?>"><?php echo e($item['emp_name']); ?>
+
+                                                    (<?php echo e($item['departname']); ?>)</option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-success" wire:click="store">ບັນທຶກ</button>
+                    <a href="<?php echo e(route('document', $hiddenId)); ?>" class="btn btn-danger">ກັບຄືນ</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php $__env->startPush('scripts'); ?>
+    <!-- Init js-->
+    <!-- <script src="<?php echo e(asset('backend/assets/js/pages/form-advanced.init.js')); ?>"></script> -->
+    <script>
+        $(function() {
+            $("#inbox").select2({
+                maximumSelectionLength: 1,
+                width: 'resolve'
+            });
+            $('#inbox').on('change', function(e) {
+                var data = $('#inbox').select2("val");
+                window.Livewire.find('<?php echo e($_instance->getId()); ?>').set('mss_user', data);
+            });
+            $("#tag_depart").select2({
+                width: 'resolve'
+            });
+            $('#tag_depart').on('change', function(e) {
+                var data = $('#tag_depart').select2("val");
+                window.Livewire.find('<?php echo e($_instance->getId()); ?>').set('tag_depart', data);
+            });
+            $("#tag_sector").select2({
+                width: 'resolve'
+            });
+            $('#tag_sector').on('change', function(e) {
+                var data = $('#tag_sector').select2("val");
+                window.Livewire.find('<?php echo e($_instance->getId()); ?>').set('tag_sector', data);
+            });
+            $("#tag_alone").select2({
+                width: 'resolve'
+            });
+            $('#tag_alone').on('change', function(e) {
+                var data = $('#tag_alone').select2("val");
+                window.Livewire.find('<?php echo e($_instance->getId()); ?>').set('tag_user', data);
+            });
+            $("#dock").select2({
+                maximumSelectionLength: 1,
+                width: 'resolve'
+            });
+            $('#dock').on('change', function(e) {
+                var data = $('#dock').select2("val");
+                window.Livewire.find('<?php echo e($_instance->getId()); ?>').set('k_id', data);
+            });
+            $("#dpart").select2({
+                maximumSelectionLength: 1,
+                width: 'resolve'
+            });
+            $('#dpart').on('change', function(e) {
+                var data = $('#dpart').select2("val");
+                window.Livewire.find('<?php echo e($_instance->getId()); ?>').set('dpart_id', data);
+            });
+            $("#docdpart").select2({
+                maximumSelectionLength: 1,
+                width: 'resolve'
+            });
+            $('#docdpart').on('change', function(e) {
+                var data = $('#docdpart').select2("val");
+                window.Livewire.find('<?php echo e($_instance->getId()); ?>').set('doc_dpart_id', data);
+            });
+            $("#sheft").select2({
+                maximumSelectionLength: 1,
+                width: 'resolve'
+            });
+            $('#sheft').on('change', function(e) {
+                var data = $('#sheft').select2("val");
+                window.Livewire.find('<?php echo e($_instance->getId()); ?>').set('sh_id', data);
+            });
+            $("#cate").select2({
+                maximumSelectionLength: 1,
+                width: 'resolve'
+            });
+            $('#cate').on('change', function(e) {
+                var data = $('#cate').select2("val");
+                window.Livewire.find('<?php echo e($_instance->getId()); ?>').set('docgroup_id', data);
+            });
+
+            $("#ori").select2({
+                maximumSelectionLength: 1,
+                width: 'resolve'
+            });
+            $('#ori').on('change', function(e) {
+                var data = $('#ori').select2("val");
+                window.Livewire.find('<?php echo e($_instance->getId()); ?>').set('ori_id', data);
+            });
+        });
+
+        Livewire.on('g_id', postId => {
+            jQuery(document).ready(function() {
+                $("#inbox").select2({
+                    maximumSelectionLength: 1,
+                    width: 'resolve'
+                });
+                $('#inbox').on('change', function(e) {
+                    var data = $('#inbox').select2("val");
+                    window.Livewire.find('<?php echo e($_instance->getId()); ?>').set('mss_user', data);
+                });
+                $("#tag_depart").select2({
+                    width: 'resolve'
+                });
+                $('#tag_depart').on('change', function(e) {
+                    var data = $('#tag_depart').select2("val");
+                    window.Livewire.find('<?php echo e($_instance->getId()); ?>').set('tag_depart', data);
+                });
+                $("#tag_sector").select2({
+                    width: 'resolve'
+                });
+                $('#tag_sector').on('change', function(e) {
+                    var data = $('#tag_sector').select2("val");
+                    window.Livewire.find('<?php echo e($_instance->getId()); ?>').set('tag_sector', data);
+                });
+                $("#tag_alone").select2({
+                    width: 'resolve'
+                });
+                $('#tag_alone').on('change', function(e) {
+                    var data = $('#tag_alone').select2("val");
+                    window.Livewire.find('<?php echo e($_instance->getId()); ?>').set('tag_user', data);
+                });
+                $("#dpart").select2({
+                    maximumSelectionLength: 1,
+                    width: 'resolve'
+                });
+                $('#dpart').on('change', function(e) {
+                    var data = $('#dpart').select2("val");
+                    window.Livewire.find('<?php echo e($_instance->getId()); ?>').set('dpart_id', data);
+                });
+            });
+            $("#docdpart").select2({
+                maximumSelectionLength: 1,
+                width: 'resolve'
+            });
+            $('#docdpart').on('change', function(e) {
+                var data = $('#docdpart').select2("val");
+                window.Livewire.find('<?php echo e($_instance->getId()); ?>').set('doc_dpart_id', data);
+            });
+        })
+    </script>
+<?php $__env->stopPush(); ?>
+<?php /**PATH D:\Project\Web\Font-End\dms-2024\resources\views/livewire/document/h-q/hq-create-component.blade.php ENDPATH**/ ?>

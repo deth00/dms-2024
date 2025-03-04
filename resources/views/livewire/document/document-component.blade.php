@@ -17,15 +17,17 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card-box">
-                <div class="row">
-                    <div class="col-md-12">
-                        <a class="btn btn-primary" href="{{ route('document-create', $hiddenId) }}">
-                            <h5 class="card-title mb-0 text-white"><i class="mdi mdi-plus"></i>
-                                ເພີ່ມຂໍ້ມູນ </h5>
-                        </a>
-                        <hr>
+                @if (!empty($data_role['viewDocc1-add']))
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a class="btn btn-primary" href="{{ route('document-create', $hiddenId) }}">
+                                <h5 class="card-title mb-0 text-white"><i class="mdi mdi-plus"></i>
+                                    ເພີ່ມຂໍ້ມູນ </h5>
+                            </a>
+                            <hr>
+                        </div>
                     </div>
-                </div>
+                @endif
                 <div class="row">
                     <div class="col-3">
                         <table width="100%">
@@ -74,17 +76,20 @@
                                         <tr class="text-center">
                                             <th class="p-2">#</th>
                                             <th class="p-2">ລຳດັບ</th>
-                                            <th class="p-2">ວັນທີ</th>
-                                            <th class="p-2">ເລກທີ</th>
-                                            <th class="p-2">ຫົວຂໍ້</th>
                                             @if ($hiddenId == 1 || $hiddenId == 3)
                                                 <th class="p-2">ວັນທີເອກະສານ</th>
                                                 <th class="p-2">ເລກທີເອກະສານ</th>
                                             @endif
+                                            <th class="p-2">ຫົວຂໍ້</th>
+                                            <th class="p-2">ວັນທີ</th>
+                                            <th class="p-2">ເລກທີ</th>
                                             <th class="p-2">ປະເພດ</th>
                                             <th class="p-2">ໝາຍເຫດ</th>
                                             <!-- <th class="p-2">ການເຂົ້າເຖິງ</th> -->
-                                            <th class="p-2">ປູ່ມຄຳສັ່ງ</th>
+                                            @if (!empty($data_role['viewDocc1-edit']) || !empty($data_role['viewDocc1-del']))
+                                                <th class="p-2">ປູ່ມຄຳສັ່ງ</th>
+                                            @endif
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -97,7 +102,8 @@
                                                         target="_bank"><i class="mdi mdi-file-download-outline"></i></a>
                                                 </td>
                                                 <td class="p-2">{{ $no++ }}</td>
-                                                <td class="p-2">{{ date('d/m/Y', strtotime($item['doc_date'])) }}</td>
+                                                <td class="p-2">{{ date('d/m/Y', strtotime($item['doc_date'])) }}
+                                                </td>
                                                 <td class="px-3">{{ $item['doc_no'] }}</td>
                                                 <td class="text-left px-3">{{ $item['doc_title'] }}</td>
                                                 @if ($hiddenId == 1 || $hiddenId == 3)
@@ -108,18 +114,26 @@
                                                 <td class="px-3">{{ $item['groupname'] }}</td>
                                                 <td class="px-3">{{ $item['note'] }}</td>
                                                 <!-- <td class="p-2"></td> -->
-                                                <td class="p-2">
-                                                    <div class="btn-group-vertical mb-2">
-                                                        <div class="btn-group btn-group-justified text-white mb-2">
-                                                            <a class="btn btn-warning waves-effect waves-light"
-                                                                wire:click="edit({{ $item['id'] }})"><i
-                                                                    class="mdi mdi-pencil-remove-outline"></i></a>
-                                                            <a class="btn btn-danger waves-effect waves-light"
-                                                                wire:click="delete({{ $item['id'] }})"><i
-                                                                    class="mdi mdi-window-close"></i></a>
+
+                                                @if (!empty($data_role['viewDocc1-edit']) || !empty($data_role['viewDocc1-del']))
+                                                    <td class="p-2">
+                                                        <div class="btn-group-vertical mb-2">
+                                                            <div class="btn-group btn-group-justified text-white mb-2">
+                                                                @if (!empty($data_role['viewDocc1-edit']))
+                                                                    <a class="btn btn-warning waves-effect waves-light"
+                                                                        wire:click="edit({{ $item['id'] }})"><i
+                                                                            class="mdi mdi-pencil-remove-outline"></i></a>
+                                                                @endif
+                                                                @if (!empty($data_role['viewDocc1-del']))
+                                                                    <a class="btn btn-danger waves-effect waves-light"
+                                                                        wire:click="delete({{ $item['id'] }})"><i
+                                                                            class="mdi mdi-window-close"></i></a>
+                                                                @endif
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </td>
+                                                    </td>
+                                                @endif
+
                                             </tr>
                                         @empty
                                             <tr>

@@ -25,4 +25,9 @@ class DashboardComponent extends Component
 
         return view('livewire.dashboard-component');
     }
+
+    // public function shouldApp()
+    // {
+    //     return redirect('http://192.168.10.60:8099/user');
+    // }
 }
