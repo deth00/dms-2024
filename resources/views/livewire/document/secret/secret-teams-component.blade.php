@@ -5,7 +5,7 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">ໜ້າຫຼັກ</a></li>
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">ເອກະສານ ກວດກາ</a></li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">ເອກະສານ ສະເພາະ</a></li>
                         {{-- <li class="breadcrumb-item active">{{ $typename['name'] }}</li> --}}
                     </ol>
                 </div>
@@ -20,10 +20,10 @@
                 @if (!empty($data_CK0['CK-add']))
                     <div class="row">
                         <div class="col-md-12">
-                            <a class="btn btn-primary" href="{{ route('document-secret-add' , $hiddenId) }}">
-                                <h5 class="card-title mb-0 text-white"><i class="mdi mdi-plus"></i>
+                            <button class="btn btn-primary">
+                                <h5 class="card-title mb-0 text-white" wire:click="add"><i class="mdi mdi-plus"></i>
                                     ເພີ່ມຂໍ້ມູນ </h5>
-                            </a>
+                            </button>
                             <hr>
                         </div>
                     </div>
@@ -74,15 +74,9 @@
                                 <table border="1" width="100%">
                                     <thead>
                                         <tr class="text-center">
-                                            <th class="p-2">#</th>
                                             <th class="p-2">ລຳດັບ</th>
-                                            <th class="p-2">ວັນທີເອກະສານ</th>
-                                            <th class="p-2">ເລກທີເອກະສານ</th>
                                             <th class="p-2">ຫົວຂໍ້</th>
-                                            {{-- <th class="p-2">ວັນທີ</th>
-                                            <th class="p-2">ເລກທີ</th> --}}
-                                            <th class="p-2">ປະເພດ</th>
-                                            <th class="p-2">ໝາຍເຫດ</th>
+                                            <th class="p-2">ສະຖານະ</th>
                                             @if (!empty($data_CK0['CK-edit']) || !empty($data_CK0['CK-del']))
                                                 <th class="p-2">ປູ່ມຄຳສັ່ງ</th>
                                             @endif
@@ -91,34 +85,27 @@
                                     <tbody>
                                         @php $no = 1; @endphp
                                         @forelse ($data as $item)
-                                            <tr class="text-center">
-                                                <td class="p-2">
-                                                    <a class="btn btn-primary"
-                                                        href="http://192.168.128.193:8080/{{ $item['pathfile'] }}"
-                                                        target="_bank"><i class="mdi mdi-file-download-outline"></i></a>
-                                                </td>
+                                            <tr class="text-center" >
                                                 <td class="p-2">{{ $no++ }}</td>
-                                                <td class="p-2">{{ date('d/m/Y', strtotime($item['doc_date'])) }}
-                                                </td>
-                                                <td class="px-3">{{ $item['doc_no'] }}</td>
-                                                <td class="text-left px-3">{{ $item['doc_title'] }}</td>
-                                                <td class="px-3">{{ $item['groupname'] }}</td>
-                                                <td class="px-3">{{ $item['note'] }}</td>
-
-                                                @if (!empty($data_CK0['CK-edit']) || !empty($data_CK0['CK-edit']))
+                                                <td class="px-3" wire:click="docs({{ $item['id'] }})">{{ $item['name'] }}</td>
+                                                <td class="px-3">{{ $item['status'] }}</td>
+                                                @if (!empty($data_CK0['CK-edit']) || !empty($data_CK0['CK-del']))
                                                     <td class="p-2">
                                                         <div class="btn-group-vertical mb-2">
                                                             <div class="btn-group btn-group-justified text-white mb-2">
+                                                                {{-- <a class="btn btn-primary waves-effect waves-light"
+                                                                wire:click="docs({{ $item['id'] }})"><i
+                                                                    class="mdi mdi-pencil-remove-outline"></i></a> --}}
                                                                 @if (!empty($data_CK0['CK-edit']))
                                                                     <a class="btn btn-warning waves-effect waves-light"
                                                                         wire:click="edit({{ $item['id'] }})"><i
                                                                             class="mdi mdi-pencil-remove-outline"></i></a>
                                                                 @endif
-                                                                @if (!empty($data_CK0['CK-edit']))
+                                                                {{-- @if (!empty($data_CK0['CK-del']))
                                                                     <a class="btn btn-danger waves-effect waves-light"
-                                                                        wire:click="delete({{ $item['id'] }})"><i
+                                                                        wire:click="del({{ $item['id'] }})"><i
                                                                             class="mdi mdi-window-close"></i></a>
-                                                                @endif
+                                                                @endif --}}
                                                             </div>
                                                         </div>
                                                     </td>
@@ -147,6 +134,75 @@
             </div>
         </div>
     </div>
+
+    <div wire:ignore.self id="modal-add" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h5 class="modal-title mt-0 text-white">ເພີ່ມຂໍ້ມູນ</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12 my-2">
+                            <p>ຫົວຂໍ້</p>
+                            <input type="text" class="form-control" placeholder="ຫົວຂໍ້" wire:model="name">
+                            @error('name')
+                                <span style="color: red" class="error">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group" wire:ignore>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">ປິດ</button>
+                    <button type="button" class="btn btn-primary waves-effect waves-light"
+                        wire:click="store">ເພີ່ມຂໍ້ມູນ</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div wire:ignore.self id="modal-edit" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h5 class="modal-title mt-0 text-white">ເເກ້ໄຂຂໍ້ມູນ</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12 my-2">
+                            <p>ຫົວຂໍ້</p>
+                            <input type="text" class="form-control" placeholder="ຫົວຂໍ້" wire:model="name">
+                            @error('name')
+                                <span style="color: red" class="error">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group" wire:ignore>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">ປິດ</button>
+                    <button type="button" class="btn btn-primary waves-effect waves-light"
+                        wire:click="update">ແກ້ໄຂຂໍ້ມູນ</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
 
     <div id="modal-del" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -182,19 +238,17 @@
         window.addEventListener('hide-add', event => {
             $('#modal-add').modal('hide');
         })
+        window.addEventListener('show-edit', event => {
+            $('#modal-edit').modal('show');
+        })
+        window.addEventListener('hide-edit', event => {
+            $('#modal-edit').modal('hide');
+        })
         window.addEventListener('show-del', event => {
             $('#modal-del').modal('show');
         })
-        window.addEventListener('show-del', event => {
+        window.addEventListener('hide-del', event => {
             $('#modal-del').modal('hide');
         })
-
-        $(document).ready(function() {
-            $('#docgroup').select2();
-            $('#docgroup').on('change', function(e) {
-                var data = $('#docgroup').select2("val");
-                @this.set('docgroup_id', data);
-            });
-        });
     </script>
 @endpush

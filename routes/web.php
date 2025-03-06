@@ -52,8 +52,9 @@ Route::get('/document-create/hq/{id}', App\Livewire\Document\HQ\HqCreateComponen
 Route::get('/document-edit/hq/{id}', App\Livewire\Document\HQ\HqEditComponent::class)->name('document-hq-edit');
 
 //Secret
-Route::get('/secret', App\Livewire\Document\Secret\SecretDocComponent::class)->name('document-secret');
-Route::get('/secret-add', App\Livewire\Document\Secret\SecretAddComponent::class)->name('document-secret-add');
+Route::get('/secret/{id}', App\Livewire\Document\Secret\SecretDocComponent::class)->name('document-secret');
+Route::get('/secret-teams', App\Livewire\Document\Secret\SecretTeamsComponent::class)->name('document-secret-teams');
+Route::get('/secret-add/{id}', App\Livewire\Document\Secret\SecretAddComponent::class)->name('document-secret-add');
 Route::get('/secret/edit/{id}', App\Livewire\Document\Secret\SecretEditComponent::class)->name('document-secret-edit');
 Route::get('/secret-role', App\Livewire\Document\Secret\SecretRoledComponent::class)->name('document-secret-role');
 

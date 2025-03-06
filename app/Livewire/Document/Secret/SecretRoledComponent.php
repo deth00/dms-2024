@@ -11,9 +11,9 @@ class SecretRoledComponent extends Component
     public $data, $count;
     public $editId, $delId, $delName;
     public $search, $dataQ = 1000, $dateS, $dateE;
-    public $doc = [], $data_user = [];
+    public $doc = [], $data_user = [], $data_team = [];
     public $user, $token;
-    public $name, $user_id, $departs = [], $dpart_id = [];
+    public $name, $user_id, $departs = [], $dpart_id = [] , $tm_id = [];
 
     public function mount()
     {
@@ -32,11 +32,19 @@ class SecretRoledComponent extends Component
             $this->count = count($response['data']);
         }
         // dd($this->data);
+        $teams = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/teams');
+        if ($teams['message'] == 'success') {
+            $this->data_team = $teams['data'];
+        }
+
         $depart = Http::post('http://192.168.128.193:8080/api/all-departs', [
             'search' => ""
         ]);
+        if ($response['message'] == 'success') {
+            $this->departs = $depart['data'];
+            $this->count = count($response['data']);
+        }
 
-        $this->departs = $depart['data'];
 
         if ($this->dpart_id != []) {
             $res = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/dpart-user', [
@@ -63,7 +71,7 @@ class SecretRoledComponent extends Component
                 'name' => 'test',
                 'user_id' => $item,
                 'depart_id' => $this->dpart_id,
-                'type' => 1,
+                'team_id' => $this->tm_id,
             ]);
         }
         if ($res['message'] == 'success') {
