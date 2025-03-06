@@ -20,57 +20,26 @@
                 
 
                 <li class="dropdown notification-list">
-                    {{-- <div class="row mt-2"> --}}
-                        {{-- <div class="col-md-2 mt-2 waves-effect waves-light">
-                            <img src="{{asset('backend/assets/images/user-icon.png')}}" alt="user-image" height="37"
-                            class="rounded-circle">
-                        </div> --}}
-                        {{-- <div class="col-md-12"> --}}
-                            {{-- <div class="row"> --}}
-                                {{-- <label for="" class="text-white">{{$username}}</label> --}}
-                                {{-- <div class="row"> --}}
+                    
+                        
+                        
+                            
+                                
+                                
                                     
-                                    <h5  class="text-white">{{$username}}</h5>
+                                    <h5  class="text-white"><?php echo e($username); ?></h5>
                                 </n>
-                                    <h6  class="text-white">{{$dp_id['name']}}</h6>
-                                {{-- </div> --}}
+                                    <h6  class="text-white"><?php echo e($dp_id['name']); ?></h6>
+                                
                                
-                            {{-- <div class="row">
-                                <label for="" class="text-white"></label>
-                            </div> --}}
                             
                             
-                        {{-- </div> --}}
-                    {{-- </div> --}}
+                            
+                        
+                    
                    
-                    {{-- <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light"
-                        data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
-                        aria-expanded="false">
-                        <img src="{{asset('backend/assets/images/user-icon.png')}}" alt="user-image"
-                            class="rounded-circle">
-                            {{$username}}
-                    </a> --}}
-                    {{-- <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
-                        <!-- item-->
-                        <div class="dropdown-header noti-title text-center">
-                            <h6 class="text-overflow m-0"> admin </h6>
-                        </div>
-
-                        <!-- item-->
-                        <a href="{{route('profile')}}" class="dropdown-item notify-item">
-                            <i class="mdi mdi-account-outline"></i>
-                            <span>ໂປຣຟາຍ</span>
-                        </a>
-
-                        <div class="dropdown-divider"></div>
-
-                        <!-- item-->
-                        <a href="{{route('logout')}}" class="dropdown-item notify-item">
-                            <i class="mdi mdi-logout-variant"></i>
-                            <span>ອອກຈາກລະບົບ</span>
-                        </a>
-
-                    </div> --}}
+                    
+                    
                 </li>
 
 
@@ -87,7 +56,7 @@
                         </div>
 
                         <!-- item-->
-                        <a href="{{route('profile')}}" class="dropdown-item notify-item">
+                        <a href="<?php echo e(route('profile')); ?>" class="dropdown-item notify-item">
                             <i class="mdi mdi-account-outline"></i>
                             <span>ໂປຣຟາຍ</span>
                         </a>
@@ -95,7 +64,7 @@
                         <div class="dropdown-divider"></div>
 
                         <!-- item-->
-                        <a href="{{route('logout')}}" class="dropdown-item notify-item">
+                        <a href="<?php echo e(route('logout')); ?>" class="dropdown-item notify-item">
                             <i class="mdi mdi-logout-variant"></i>
                             <span>ອອກຈາກລະບົບ</span>
                         </a>
@@ -110,12 +79,12 @@
             <div class="logo-box">
                 <a href="index-1.html" class="logo text-center">
                     <span class="logo-lg">
-                        <img src="{{asset('backend/assets/images/Artboard.png')}}" alt="" height="45">
+                        <img src="<?php echo e(asset('backend/assets/images/Artboard.png')); ?>" alt="" height="45">
                         <span class="logo-lg-text-light"></span>
                     </span>
                     <span class="logo-sm">
                         <!-- <span class="logo-sm-text-dark">Z</span> -->
-                        <img src="{{asset('backend/assets/images/logo-sm.png')}}" alt="" height="22">
+                        <img src="<?php echo e(asset('backend/assets/images/logo-sm.png')); ?>" alt="" height="22">
                     </span>
                 </a>
             </div>
@@ -143,6 +112,6 @@
     </div>
     <!-- end Topbar -->
 
-    @include('components.layouts.navmenu')
+    <?php echo $__env->make('components.layouts.navmenu', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 </header>
-<!-- End Navigation Bar-->
+<!-- End Navigation Bar--><?php /**PATH D:\Project\Web\dms-2024\resources\views/components/layouts/headbar.blade.php ENDPATH**/ ?>

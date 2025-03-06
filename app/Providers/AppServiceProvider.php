@@ -26,15 +26,16 @@ class AppServiceProvider extends ServiceProvider
     {
         View::composer('*', function ($view) {
             $token = Cookie::get('token');
-            $organi = Cookie::get('organi_id');
             if ($token) {
+                $organi = Cookie::get('organi_id');
                 $count_doc_type = Http::get('http://192.168.128.193:8080/api/doc-type');
                 $data_doc_type = $count_doc_type['data'];
                 $username = Cookie::get('user_name');
                 $rolename = Cookie::get('role_id');
                 $user_id = Cookie::get('user_id');
+                $dep_id = Cookie::get('dpart_id');
                 $arr2 = explode(',', $rolename);
-                // dd($arr2);
+                // dd($dep_id);
                 $docc_count = Http::withToken($token)->get('http://192.168.128.193:8080/api/log-docc-count');
                 if ($docc_count['message'] == 'success') {
                     $count_docc = $docc_count['data'][0]['count'];
@@ -48,7 +49,10 @@ class AppServiceProvider extends ServiceProvider
                 } else {
                     $count_msg = 0;
                 }
-             
+
+                $dp_id = [];
+                $dp = Http::withToken($token)->post('http://192.168.128.193:8080/api/dpart/'. $dep_id);
+                $dp_id = $dp['data'];
 
                 $check = Http::withToken($token)->post('http://192.168.128.193:8080/api/roles-by-del', [
                     'id' => 1
@@ -176,8 +180,8 @@ class AppServiceProvider extends ServiceProvider
                         $data_GS = 'GS_User';
                     }
                 }
-
-                View::share(['data_CK0' => $data_CK0, 'data_GS' => $data_GS, 'data_ho' => $data_ho, 'data_ori' => $data_ori, 'data_role' => $data_role, 'data_doc_type' => $data_doc_type, 'username' => $username, 'rolename' => $rolename, 'count_docc' => $count_docc, 'count_msg' => $count_msg]);
+                // dd($data_CK0);
+                View::share(['dp_id'=>$dp_id,'data_CK0' => $data_CK0, 'data_GS' => $data_GS, 'data_ho' => $data_ho, 'data_ori' => $data_ori, 'data_role' => $data_role, 'data_doc_type' => $data_doc_type, 'username' => $username, 'rolename' => $rolename, 'count_docc' => $count_docc, 'count_msg' => $count_msg]);
             }
         });
     }

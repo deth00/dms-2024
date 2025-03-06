@@ -24,13 +24,14 @@ class SecretAddComponent extends Component
     public $check_docc, $check_mss;
     public $tag_depart = [], $tag_sector = [], $tag_user = [], $user_organi = [];
 
-    public function mount()
+    public function mount($id)
     {
 
         $this->token = Cookie::get('token');
         $this->user = Cookie::get('user_id');
         $this->user_id = Cookie::get('user_id');
         $this->depart_id = Cookie::get('dpart_id');
+        $this->hiddenId = $id;
         $role_id = Cookie::get('role_id');
         $arr = explode(',', $role_id);
 
@@ -141,6 +142,7 @@ class SecretAddComponent extends Component
             'type_id' => null, //ປະເພດເອກະສານ
             'depart_id' => $this->depart_id, 
             'user_id' => $this->user_id,
+            'team_id' => $this->hiddenId ,
             'note' => $this->note,
             'organi_type' => $this->ori_id
         ]);

@@ -15,10 +15,11 @@ class SecretDocComponent extends Component
     public $doc = [];
     public $user, $token;
 
-    public function mount()
+    public function mount($id)
     {
         $this->token = Cookie::get('token');
         $this->user = Cookie::get('user_id');
+        $this->hiddenId = $id;
     }
 
     public function render()
