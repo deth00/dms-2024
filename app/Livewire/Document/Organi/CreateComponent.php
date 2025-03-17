@@ -27,7 +27,7 @@ class CreateComponent extends Component
 
     public function mount($id)
     {
-        // dd($this->role_ori);
+
         $this->token = Cookie::get('token');
         $this->user = Cookie::get('user_id');
         $this->user_id = Cookie::get('user_id');

@@ -52,7 +52,7 @@ class LoginComponent extends Component
     }
 
     public function logout(){
-        $token = Cookie::get('token');;
+        $token = Cookie::get('token');
         $response = Http::withToken($token)->post('http://192.168.128.193:8080/api/logout');
         session()->flash('success', 'ອອກລະບົບສຳເລັດ');
         return redirect(route('login'));
@@ -74,11 +74,10 @@ class LoginComponent extends Component
         } catch (\Throwable $th) {
             $this->dispatch('alert', type: 'error', message: 'ເກີດຂໍ້ຜິດພາດກະລຸນາລອງໃໝ່!');
         }
-        
-       
     }
 
     public function register(){
         return redirect(route('regis'));
     }
+    
 }
