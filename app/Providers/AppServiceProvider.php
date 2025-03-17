@@ -5,9 +5,7 @@ namespace App\Providers;
 use View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Http;
-
 use Illuminate\Support\Facades\Cookie;
-
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
     {
         View::composer('*', function ($view) {
             $token = Cookie::get('token');
+            
             if ($token) {
                 $organi = Cookie::get('organi_id');
                 $count_doc_type = Http::get('http://192.168.128.193:8080/api/doc-type');
@@ -35,154 +34,86 @@ class AppServiceProvider extends ServiceProvider
                 $user_id = Cookie::get('user_id');
                 $dep_id = Cookie::get('dpart_id');
                 $arr2 = explode(',', $rolename);
-                // dd($dep_id);
+
                 $docc_count = Http::withToken($token)->get('http://192.168.128.193:8080/api/log-docc-count');
-                if ($docc_count['message'] == 'success') {
-                    $count_docc = $docc_count['data'][0]['count'];
-                } else {
-                    $count_docc = 0;
-                }
+                $count_docc = $docc_count['message'] == 'success' ? $docc_count['data'][0]['count'] : 0;
 
                 $msg_count = Http::withToken($token)->get('http://192.168.128.193:8080/api/inbox-count');
-                if ($msg_count['message'] == 'success') {
-                    $count_msg = $msg_count['data'][0]['count'];
-                } else {
-                    $count_msg = 0;
-                }
+                $count_msg = $msg_count['message'] == 'success' ? $msg_count['data'][0]['count'] : 0;
 
                 $dp_id = [];
-                $dp = Http::withToken($token)->post('http://192.168.128.193:8080/api/dpart/'. $dep_id);
-                $dp_id = $dp['data'];
-
-                $check = Http::withToken($token)->post('http://192.168.128.193:8080/api/roles-by-del', [
-                    'id' => 1
-                ]);
-
-                $check_ori = Http::withToken($token)->post('http://192.168.128.193:8080/api/roles-by-del', [
-                    'id' => 4
-                ]);
-
-                $check_ho = Http::withToken($token)->post('http://192.168.128.193:8080/api/roles-by-del', [
-                    'id' => 5
-                ]);
-                $check_ck = Http::withToken($token)->post('http://192.168.128.193:8080/api/roles-by-del', [
-                    'id' => 6
-                ]);
-
-                // ທົ່ວໄປ
-                foreach ($check['data'] as $item) {
-                    foreach ($arr2  as $items) {
-                        if ($item['id'] == $items) {
-                            $role = Http::withToken($token)->post('http://192.168.128.193:8080/api/roles-by-id', [
-                                'id' => $item['id'],
-                                'del' => 1
-                            ]);
-                        }
-                    }
-                }
-                
-                $ree = [];
-                if (!empty($role['data'][0]['value'])) {
-                    $ree  += explode(',', $role['data'][0]['value']);
-                } else {
-                    $ree = [];
-                }
-                $data_role = [];
-                foreach ($ree as $item) {
-                    $data_role += array($item => $item);
+                if (!empty($dep_id)) {
+                    $dp = Http::withToken($token)->post('http://192.168.128.193:8080/api/dpart/'. $dep_id);
+                    $dp_id = $dp['message'] == 'success' ? $dp['data'] : [];
                 }
 
-                // 3 ori
-                foreach ($check_ori['data'] as $item) {
-                    foreach ($arr2  as $items) {
-                        if ($item['id'] == $items) {
-                            $role_ori = Http::withToken($token)->post('http://192.168.128.193:8080/api/roles-by-id', [
-                                'id' => $item['id'],
-                                'del' => 4
-                            ]);
-                        }
-                    }
-                }
+                $check = Http::withToken($token)->post('http://192.168.128.193:8080/api/roles-by-del', ['id' => 1]);
+                $check_ori = Http::withToken($token)->post('http://192.168.128.193:8080/api/roles-by-del', ['id' => 4]);
+                $check_ho = Http::withToken($token)->post('http://192.168.128.193:8080/api/roles-by-del', ['id' => 5]);
+                $check_ck = Http::withToken($token)->post('http://192.168.128.193:8080/api/roles-by-del', ['id' => 6]);
 
-                $res_ori = [];
+                $role = $this->getRoleData($check, $arr2, $token, 1);
+                $data_role = $this->formatRoleData($role);
 
-                if (!empty($role_ori['data'][0]['value'])) {
-                    $res_ori  += explode(',', $role_ori['data'][0]['value']);
-                } else {
-                    $res_ori = [];
-                }
-                $data_ori = [];
-                foreach ($res_ori as $item) {
-                    $data_ori += array($item => $item);
-                }
+                $role_ori = $this->getRoleData($check_ori, $arr2, $token, 4);
+                $data_ori = $this->formatRoleData($role_ori);
 
-                //HO
-                foreach ($check_ho['data'] as $item) {
-                    foreach ($arr2  as $items) {
-                        if ($item['id'] == $items) {
-                            $role_ho = Http::withToken($token)->post('http://192.168.128.193:8080/api/roles-by-id', [
-                                'id' => $item['id'],
-                                'del' => 5
-                            ]);
-                        }
-                    }
-                }
+                $role_ho = $this->getRoleData($check_ho, $arr2, $token, 5);
+                $data_ho = $this->formatRoleData($role_ho);
 
-                $res_ho = [];
-                // dd($role_ho['data']);
-                if (!empty($role_ho['data'][0]['value'])) {
-                    $res_ho  += explode(',', $role_ho['data'][0]['value']);
-                } else {
-                    $res_ho = [];
-                }
+                $role_ck = $this->getRoleData($check_ck, $arr2, $token, 6);
+                $data_CK0 = $this->formatRoleData($role_ck);
 
-                $data_ho = [];
-                if (!empty($res_ho)) {
-                    foreach ($res_ho as $items) {
-                        $data_ho += array($items => $items);
-                    }
-                }
-
-                //CK
-                foreach ($check_ck['data'] as $item) {
-                    foreach ($arr2  as $items) {
-                        if ($item['id'] == $items) {
-                            $role_ck = Http::withToken($token)->post('http://192.168.128.193:8080/api/roles-by-id', [
-                                'id' => $item['id'],
-                                'del' => 6
-                            ]);
-                        }
-                    }
-                }
-
-                $res_ck = [];
-                if (!empty($role_ck['data'][0]['value'])) {
-                    $res_ck  += explode(',', $role_ck['data'][0]['value']);
-                } else {
-                    $res_ck = [];
-                }
-
-                $data_CK0 = [];
-                if (!empty($res_ck)) {
-                    foreach ($res_ck as $items) {
-                        $data_CK0 += array($items => $items);
-                    }
-                }
-                // dd($data_CK0);
-
-                //User GS
                 $data_GS = [];
-                $check_GS = Http::withToken($token)->post('http://192.168.128.193:8080/api/group-secret', [
-                    'qty' => 100,
-                ]);
+                $check_GS = Http::withToken($token)->post('http://192.168.128.193:8080/api/group-secret', ['qty' => 100]);
                 foreach ($check_GS['data'] as $item) {
                     if ($item['user_id'] == $user_id) {
                         $data_GS = 'GS_User';
                     }
                 }
-                // dd($data_CK0);
-                View::share(['dp_id'=>$dp_id,'data_CK0' => $data_CK0, 'data_GS' => $data_GS, 'data_ho' => $data_ho, 'data_ori' => $data_ori, 'data_role' => $data_role, 'data_doc_type' => $data_doc_type, 'username' => $username, 'rolename' => $rolename, 'count_docc' => $count_docc, 'count_msg' => $count_msg]);
+
+                View::share([
+                    'dp_id' => $dp_id,
+                    'data_CK0' => $data_CK0,
+                    'data_GS' => $data_GS,
+                    'data_ho' => $data_ho,
+                    'data_ori' => $data_ori,
+                    'data_role' => $data_role,
+                    'data_doc_type' => $data_doc_type,
+                    'username' => $username,
+                    'rolename' => $rolename,
+                    'count_docc' => $count_docc,
+                    'count_msg' => $count_msg
+                ]);
             }
         });
+    }
+
+    private function getRoleData($check, $arr2, $token, $del)
+    {
+        foreach ($check['data'] as $item) {
+            foreach ($arr2 as $items) {
+                if ($item['id'] == $items) {
+                    return Http::withToken($token)->post('http://192.168.128.193:8080/api/roles-by-id', [
+                        'id' => $item['id'],
+                        'del' => $del
+                    ]);
+                }
+            }
+        }
+        return [];
+    }
+
+    private function formatRoleData($role)
+    {
+        $res = [];
+        if (!empty($role['data'][0]['value'])) {
+            $res = explode(',', $role['data'][0]['value']);
+        }
+        $data = [];
+        foreach ($res as $item) {
+            $data[$item] = $item;
+        }
+        return $data;
     }
 }
