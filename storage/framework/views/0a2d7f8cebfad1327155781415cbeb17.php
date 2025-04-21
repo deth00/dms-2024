@@ -5,11 +5,19 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">ໜ້າຫຼັກ</a></li>
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">ເອກະສານ</a></li>
-                        <li class="breadcrumb-item active">ເອກະສານຕິດພັນກັບພະແນກ</li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">ເອກະສານທົ່ວລະບົບ</a></li>
+                        <li class="breadcrumb-item active">ເອກະສານແຈ້ງການ</li>
                     </ol>
                 </div>
-                <h4 class="page-title">ເອກະສານຕິດພັນກັບພະແນກ</h4>
+                <h4 class="page-title">
+                    <!--[if BLOCK]><![endif]--><?php if($hiddenId == 1): ?>
+                        ເອກະສານ 3 ອົງການຈັດຕັ້ງ
+                    <?php elseif($hiddenId == 2): ?>
+                        ເອກະສານສະເພາະ
+                    <?php else: ?>
+                        ແຈ້ງການທົ່ວລະບົບ
+                    <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
+                </h4>
             </div>
         </div>
     </div>
@@ -62,49 +70,42 @@
                                 <br>
                                 <table border="1" width="100%">
                                     <thead>
-                                        <tr class="text-center ">
+                                        <tr class="text-center">
                                             <th class="p-2">ລຳດັບ</th>
-                                            <th class="p-2">ເບິ່ງເອກະສານ</th>
-                                            <th class="p-2">ເລກທີເອກະສານ</th>
-                                            <th class="p-2">ວັນທີເອກະສານ</th>
-                                            <th class="p-2">ຫົວຂໍ້ເອກະສານ</th>
-                                            <th class="p-2">ປະເພດເອກະສານ</th>
-                                            <th class="p-2">ໝາຍເຫດ</th>
+                                            <th class="p-2">ວັນທີ</th>
+                                            <th class="p-2">ຫົວຂໍ້</th>
+                                            <th class="p-2">ຈາກພາກສ່ວນ</th>
+                                            <th class="p-2">ການເຂົ້າເຖິງ</th>
                                             <th class="p-2">ປູ່ມຄຳສັ່ງ</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @php $no = 1; @endphp
-                                        @forelse ($data as $item)
+                                        <?php $no = 1; ?>
+                                        <!--[if BLOCK]><![endif]--><?php $__empty_1 = true; $__currentLoopData = $data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                             <tr class="text-center">
-                                                <td class="p-2">{{ $no++ }}</td>
+                                                <td class="p-2"><?php echo e($no++); ?></td>
+                                                <td class="p-2"><?php echo e(date('d/m/Y', strtotime($item['date']))); ?></td>
+                                                <td class="p-2"><?php echo e($item['title']); ?></td>
+                                                <td class="p-2"><?php echo e($item['departname']); ?></td>
                                                 <td class="p-2">
-                                                    <a class="btn btn-primary"
-                                                        href="http://192.168.128.193:8080/{{ $item['pathfile'] }}"
+                                                    <!--[if BLOCK]><![endif]--><?php if($item['del'] == 0): ?>
+                                                        <span class="badge badge-danger">ຍັງບໍ່ທັນດາວໂຫຼດ</span>
+                                                    <?php else: ?>
+                                                        <span class="badge badge-success">ດາວໂຫຼດສຳເລັດ</span>
+                                                    <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
+                                                </td>
+                                                <td class="p-2">
+                                                    <a class="btn btn-primary" wire:click="view(<?php echo e($item['id']); ?>)"
+                                                        href="http://192.168.128.193:8080/<?php echo e($item['pathfile']); ?>"
                                                         target="_bank"><i class="mdi mdi-book-open-page-variant"></i></a>
                                                 </td>
-                                                <td class="p-2">{{ $item['doc_no'] }}</td>
-                                                <td class="p-2">{{ date('d/m/Y', strtotime($item['doc_date'])) }}</td>
-                                                <td class="p-2">{{ $item['doc_title'] }}</td>
-                                                <td class="p-2">{{ $item['groupname'] }}</td>
-                                                <td class="p-2">{{ $item['note'] }}</td>
-                                                <td class="p-2">
-                                                    <div class="btn-group-vertical mb-2">
-                                                        <div class="btn-group btn-group-justified text-white mb-2">
-                                                            <a class="btn btn-success waves-effect waves-light"
-                                                                wire:click="income({{ $item['id'] }})"><i
-                                                                    class="mdi mdi-file-plus" style="font-size: 20px;"></i></a>
-                                                        
-                                                        </div>
-                                                    </div>
-                                                </td>
                                             </tr>
-                                        @empty
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                             <tr>
                                                 <td colspan="13" class="text-center p-2">
                                                     ບໍ່ມີຂໍ້ມູນເອກະສານ</td>
                                             </tr>
-                                        @endforelse
+                                        <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                                     </tbody>
                                 </table>
 
@@ -115,10 +116,11 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <span><br> ລວມຂໍ້ມູນທັງໝົດ <span class="text-danger">{{ $count }}</span> ລາຍການ</span>
+                        <span><br> ລວມຫຼັກຊັບທັງໝົດ <span class="text-danger"><?php echo e($count); ?></span> ລາຍການ</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<?php /**PATH D:\Project\Web\dms-2024\resources\views/livewire/log-docc-component.blade.php ENDPATH**/ ?>

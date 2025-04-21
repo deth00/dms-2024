@@ -2,7 +2,8 @@
 
 namespace App\Providers;
 
-use View;
+// use View;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cookie;
@@ -24,11 +25,22 @@ class AppServiceProvider extends ServiceProvider
     {
         View::composer('*', function ($view) {
             $token = Cookie::get('token');
-            
+
             if ($token) {
                 $organi = Cookie::get('organi_id');
-                $count_doc_type = Http::get('http://192.168.128.193:8080/api/doc-type');
-                $data_doc_type = $count_doc_type['data'];
+
+                try {
+                    $response = Http::get('http://192.168.128.193:8080/api/doc-type');
+                    if ($response->successful() && $response['message'] == 'success') {
+                        $data_doc_type = $response['data'];
+                    } else {
+                        $data_doc_type = [];
+                    }
+                } catch (\Exception $e) {
+                    $data_doc_type = [];
+                    // Log the error or handle it as needed
+                }
+              
                 $username = Cookie::get('user_name');
                 $rolename = Cookie::get('role_id');
                 $user_id = Cookie::get('user_id');
@@ -38,12 +50,18 @@ class AppServiceProvider extends ServiceProvider
                 $docc_count = Http::withToken($token)->get('http://192.168.128.193:8080/api/log-docc-count');
                 $count_docc = $docc_count['message'] == 'success' ? $docc_count['data'][0]['count'] : 0;
 
+                $docc_count_1 = Http::withToken($token)->get('http://192.168.128.193:8080/api/log-docc-count', ['type' => 1]);
+                $count_docc_thr = $docc_count_1['message'] == 'success' ? $docc_count_1['data'][0]['count'] : 0;
+
+                $docc_count_2= Http::withToken($token)->get('http://192.168.128.193:8080/api/log-docc-count', ['type' => 2]);
+                $count_docc_private = $docc_count_2['message'] == 'success' ? $docc_count_2['data'][0]['count'] : 0;
+
                 $msg_count = Http::withToken($token)->get('http://192.168.128.193:8080/api/inbox-count');
                 $count_msg = $msg_count['message'] == 'success' ? $msg_count['data'][0]['count'] : 0;
-
+                // dd($count_docc_private );
                 $dp_id = [];
                 if (!empty($dep_id)) {
-                    $dp = Http::withToken($token)->post('http://192.168.128.193:8080/api/dpart/'. $dep_id);
+                    $dp = Http::withToken($token)->post('http://192.168.128.193:8080/api/dpart/' . $dep_id);
                     $dp_id = $dp['message'] == 'success' ? $dp['data'] : [];
                 }
 
@@ -83,6 +101,8 @@ class AppServiceProvider extends ServiceProvider
                     'username' => $username,
                     'rolename' => $rolename,
                     'count_docc' => $count_docc,
+                    'count_docc_thr' => $count_docc_thr,
+                    'count_docc_private' => $count_docc_private,
                     'count_msg' => $count_msg
                 ]);
             }

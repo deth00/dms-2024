@@ -11,13 +11,15 @@
                 @if (!empty($data_role['ViewWide1']) || !empty($data_role['ViewWide2']))
                     <li class="has-submenu">
                         <a href="#"> <i class="mdi mdi-surround-sound"></i>ເອກະສານແຈ້ງທົ່ວລະບົບ (
-                            {{ $count_docc }} )
+                            {{ $count_docc + $count_docc_private + $count_docc_thr }} )
                         </a>
                         <ul class="submenu">
                             @if (!empty($data_role['ViewWide1']))
-                                <li><a href="{{ route('log-docc') }}">ເອກະສານວີຊາສະເພາະ ( {{ $count_docc }} )</a></li>
+                                <li><a href="{{ route('log-docc', 2) }}">ເອກະສານວີຊາສະເພາະ ( {{ $count_docc_private }}
+                                        )</a></li>
                             @endif
-                            <li><a href="#">ເອກະສານ 3 ອົງການຈັດຕັ້ງ ( {{ $count_docc }} )</a></li>
+                            <li><a href="{{ route('log-docc', 1) }}">ເອກະສານ 3 ອົງການຈັດຕັ້ງ ( {{ $count_docc_thr }}
+                                    )</a></li>
                             @if (!empty($data_role['ViewWide2']))
                                 <li><a href="{{ route('docc') }}">ແຈ້ງການທົ່ວລະບົບ</a></li>
                             @endif
@@ -122,14 +124,14 @@
                     </li>
                 @endif
 
-                @if (!empty($data_CK0['CKView']) || !empty($data_GS == 'GS_User') )
+                @if (!empty($data_CK0['CKView']) || !empty($data_GS == 'GS_User'))
                     <li class="has-submenu">
                         <a href="#"> <i class="mdi mdi-file-document-box-multiple-outline"></i>ເອກະສານ ສະເພາະ
                         </a>
                         <ul class="submenu">
                             <li><a href="{{ route('document-secret-teams') }}">ເອກະສານ </a></li>
                             @if (!empty($data_CK0['RView']))
-                                <li><a href="{{ route('document-secret-role') }}">ກຳນົດສິດ </a></li>
+                                <li><a href="{{ route('document-secret-role') }}">ຕັ້ງຄ່າ </a></li>
                             @endif
 
                         </ul>
@@ -160,9 +162,9 @@
                             @if (!empty($data_role['viewOn']))
                                 <li><a href="{{ route('dpartment') }}">ພາກສ່ວນພາຍນອກ</a></li>
                             @endif
-                            @if (!empty($data_role['viewStyle']))
+                            {{-- @if (!empty($data_role['viewStyle']))
                                 <li><a href="{{ route('doctype') }}">ຮູບແບບເອກະສານ</a></li>
-                            @endif
+                            @endif --}}
                             @if (!empty($data_role['viewType']))
                                 <li><a href="{{ route('docgroup') }}">ປະເພດເອກະສານ</a></li>
                             @endif

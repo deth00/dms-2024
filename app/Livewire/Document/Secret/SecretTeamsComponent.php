@@ -29,7 +29,7 @@ class SecretTeamsComponent extends Component
             'user_id' =>  $this->user
         ]);
         if (!empty($check['data'])) {
-            $doc = Http::withToken($this->token)->put('http://192.168.128.193:8080/api/teams-edit/'.$check['data'][0]['team_id']);
+            $doc = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/teams-id/');
             $this->data = $doc['data'];
             // dd($this->data);
             $this->count = count($doc['data']);

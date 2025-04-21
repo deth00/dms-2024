@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Http;
 
 class SecretDocComponent extends Component
 {
-    public $data, $count, $typename;
+    public $data, $count, $typename, $dataTM;
     public $docgroup_id, $type, $group_id, $user_id, $doc_no, $valuedt, $name, $file, $files;
     public $hiddenId, $editId, $delId, $delName;
     public $search, $dataQ = 15, $dateS, $dateE;
@@ -20,17 +20,26 @@ class SecretDocComponent extends Component
         $this->token = Cookie::get('token');
         $this->user = Cookie::get('user_id');
         $this->hiddenId = $id;
+        // dd($this->hiddenId);
     }
 
     public function render()
     {
 
-        $doc = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/doc-ho', [
+        $doc = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/doc-ho-by-team', [
             'qty' => $this->dataQ,
             'search' => $this->search,
+            'teamId' => $this->hiddenId,
         ]);
-        $this->data = $doc['data'];
-        $this->count = count($doc['data']);
+        if ($doc['message'] == 'success') {
+            $this->data = $doc['data'];
+            $this->count = count($doc['data']);
+        }
+
+        $tm = Http::withToken($this->token)->put('http://192.168.128.193:8080/api/teams-edit/'.$this->hiddenId);
+        if ($tm['message'] == 'success') {
+            $this->dataTM = $tm['data'];
+        }
         return view('livewire.document.secret.secret-doc-component');
     }
 

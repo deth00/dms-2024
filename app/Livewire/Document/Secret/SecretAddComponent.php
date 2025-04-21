@@ -57,6 +57,18 @@ class SecretAddComponent extends Component
             'qty' => 99,
             'search' => ''
         ]);
+        $response = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/all-user', [
+            'search' => "",
+        ]);
+        $all_depart = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/all-depart', [
+            'search' => "",
+        ]);
+        $all_sector = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/all-sector', [
+            'search' => "",
+        ]);
+        $this->departments = $all_depart['data'];
+        $this->sectors = $all_sector['data'];
+        $this->all_user = $response['data'];
 
         $this->doc_groups = $group['data'];
         $this->doc_dpart = $dpart['data']; //ພາຍໃນ
@@ -105,24 +117,24 @@ class SecretAddComponent extends Component
 
     public function store()
     {
-        // dd($this->depart_id);
         $this->validate([
             'doc_title' => 'required',
             'doc_no' => 'required',
             'doc_date' => 'required',
             'docgroup_id' => 'required',
-            'doc_dpart_id' => 'required',
+            // 'doc_dpart_id' => 'required',
             // 'sh_id' => 'required',
             // 'k_id' => 'required',
             'file' => 'required',
 
         ], [
             'docgroup_id.required' => 'ກະລຸນາເລືອກ ປະເພດເອກະສານ ກ່ອນ!',
-            'doc_dpart_id.required' => 'ກະລຸນາເລືອກ ພາກສ່ວນພາຍນອກ-ໃນ ກ່ອນ!',
+            // 'doc_dpart_id.required' => 'ກະລຸນາເລືອກ ພາກສ່ວນພາຍນອກ-ໃນ ກ່ອນ!',
             // 'sh_id.required' => 'ກະລຸນາເລືອກ ຕູ້ເກັບເອກະສານ ກ່ອນ!',
             // 'k_id.required' => 'ກະລຸນາເລືອກ ໂກໂລໂນ ກ່ອນ!',
             'file.required' => 'ກະລຸນາເລືອກ ຟາຍເອກະສານ ກ່ອນ!',
         ]);
+        // dd($this->file);
         $file = fopen($this->file->getRealPath(), 'r');
         $documents = Http::attach(
             'file',
@@ -132,11 +144,11 @@ class SecretAddComponent extends Component
             'doc_no' => $this->doc_no,
             'doc_date' => $this->doc_date,
             'doc_title' => $this->doc_title,
-            'no' => 0,
-            'date_no' => 0,
+            'no' => null,
+            'date_no' => null,
             'docgroup_id' => $this->docgroup_id[0], //ປະເພດເອກະສານ
-            'dpart_id' => $this->dpart_id, //ພາກສ່ວນພາຍໃນ
-            'docdpart_id' => $this->doc_dpart_id[0], //ພາຍນອກ
+            'dpart_id' => null, //ພາກສ່ວນພາຍໃນ
+            'docdpart_id' => null, //ພາຍນອກ
             'sh_id' => $this->sh_id[0], //ເລືອກຕູ້ເອກະສານ
             'k_id' => $this->k_id[0], //ເລືອກໂກໂລໂນ
             'type_id' => null, //ປະເພດເອກະສານ
@@ -144,12 +156,63 @@ class SecretAddComponent extends Component
             'user_id' => $this->user_id,
             'team_id' => $this->hiddenId ,
             'note' => $this->note,
-            'organi_type' => $this->ori_id
+            'organi_type' => null
         ]);
+
+        if ($this->check_docc == true) {
+            // dd($this->docgroup_id[0], $this->doc_no, $this->doc_date, $this->doc_title, $this->file->getClientOriginalName());
+            $document = Http::attach(
+                'file',
+                $file,
+                $this->file->getClientOriginalName()
+            )->withToken($this->token)->post('http://192.168.128.193:8080/api/docc-store', [
+                'docgroup_id' => $this->docgroup_id[0],
+                'no' => $this->doc_no,
+                'date' => $this->doc_date,
+                'title' => $this->doc_title,
+                'type_id' => 2,
+            ]);
+        }
+
+        if ($this->tag_depart != []) {
+            foreach ($this->tag_depart as $item) {
+                $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
+                    'type_id' => 1,
+                    'doc_ho_id' => $documents['data']['id'],
+                    'department_id' => $item,
+                    'sector_id' => null,
+                    'user_id' => null,
+                ]);
+            }
+        }
+
+        if ($this->tag_sector != []) {
+            foreach ($this->tag_sector as $item) {
+                $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
+                    'type_id' => 1,
+                    'doc_ho_id' => $documents['data']['id'],
+                    'department_id' => null,
+                    'sector_id' => $item,
+                    'user_id' => null,
+                ]);
+            }
+        }
+
+        if ($this->tag_user != []) {
+            foreach ($this->tag_user as $item) {
+                $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
+                    'type_id' => 1,
+                    'doc_ho_id' => $documents['data']['id'],
+                    'department_id' => null,
+                    'sector_id' => null,
+                    'user_id' => $item,
+                ]);
+            }
+        }
 
         if ($documents['message'] == "success") {
             session()->flash('success', 'ເພີ່ມເອກະສານສຳເລັດ');
-            return redirect(route('secret'));
+            return redirect(route('document-secret', $this->hiddenId));
         } else {
             $this->dispatch('alert', type: 'danger', message: 'ເພີ່ມເອກະສານບໍ່ສຳເລັດ');
         }

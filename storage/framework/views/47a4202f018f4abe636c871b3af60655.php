@@ -6,30 +6,30 @@
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">ໜ້າຫຼັກ</a></li>
                         <li class="breadcrumb-item"><a href="javascript: void(0);">ຕັ້ງຄ່າ</a></li>
-                        <li class="breadcrumb-item active">ປະເພດເອກະສານ</li>
+                        <li class="breadcrumb-item active">ຂໍ້ມູນພາກສ່ວນພາຍໃນ</li>
                     </ol>
                 </div>
-                <h4 class="page-title">ປະເພດເອກະສານ</h4>
+                <h4 class="page-title">ຂໍ້ມູນພາກສ່ວນພາຍໃນ</h4>
             </div>
         </div>
     </div>
 
     <div class="row">
         <div class="col-4">
-            @if (!empty($data_role['viewIn-add']))
+            <!--[if BLOCK]><![endif]--><?php if(!empty($data_role['viewIn-add'])): ?>
                 <div class="card">
-                    @if ($editId)
+                    <!--[if BLOCK]><![endif]--><?php if($editId): ?>
                         <div class="card-header bg-warning py-3 text-white">
                             <h5 class="card-title mb-0 text-white"><i class="mdi mdi-pencil-remove-outline"></i>
                                 ແກ້ໄຂຂໍ້ມູນ
                             </h5>
                         </div>
-                    @else
+                    <?php else: ?>
                         <div class="card-header bg-info py-3 text-white">
                             <h5 class="card-title mb-0 text-white"><i class="mdi mdi-plus"></i> ເພີ່ມຂໍ້ມູນ </h5>
                         </div>
-                    @endif
-                    {{-- <div id="cardCollpase1" class="collapse show">
+                    <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
+                    <div id="cardCollpase1" class="collapse show">
                         <div wire:ignore.self>
                             <div class="card-body">
                                 <div class="row">
@@ -37,69 +37,45 @@
                                         <div class="form-group">
                                             <p>ຊື່ພາກສ່ວນພາຍໃນ</p>
                                             <input type="text"
-                                                class="form-control @error('name') is-invalid @enderror"
+                                                class="form-control <?php $__errorArgs = ['name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                                                 wire:model="name" placeholder="ຊື່ພາກສ່ວນພາຍໃນ"
                                                 wire:keydown.enter="store" require>
-                                            @error('name')
-                                                <span style="color: red" class="error">{{ $message }}</span>
-                                            @enderror
+                                            <!--[if BLOCK]><![endif]--><?php $__errorArgs = ['name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <span style="color: red" class="error"><?php echo e($message); ?></span>
+                                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-footer">
 
-                                @if ($editId)
+                                <!--[if BLOCK]><![endif]--><?php if($editId): ?>
                                     <button class="btn btn-warning" wire:click="store">ອັບເດດ</button>
-                                @else
+                                <?php else: ?>
                                     <button class="btn btn-success" wire:click="store">ບັນທຶກ</button>
-                                @endif
+                                <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
 
-                                <a href="{{ route('group') }}" class="btn btn-danger">ລ້າງຂໍ້ມູນ</a>
+                                <a href="<?php echo e(route('group')); ?>" class="btn btn-danger">ລ້າງຂໍ້ມູນ</a>
 
                             </div>
                         </div>
-                    </div> --}}
-
-                    <div class="col-md-12">
-                        <div class="form-group" wire:ignore>
-                            <select class="form-control select2-multiple" multiple="multiple"
-                                data-placeholder="ເລືອກປະເພດເອກະສານ" id="cate" wire:model="docgroup_id">
-                                @foreach ($doc_groups as $item)
-                                    <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        @error('docgroup_id')
-                            <span style="color: red" class="error">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group" wire:ignore>
-                            <select class="form-control select2-multiple" multiple="multiple"
-                                data-placeholder="ເລືອກປະເພດເອກະສານ" id="cates" wire:model="change_id">
-                                @foreach ($doc_groups as $item)
-                                    <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        @error('docgroup_id')
-                            <span style="color: red" class="error">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <div class="card-footer">
-
-
-                        <button class="btn btn-warning" wire:click="update">ອັບເດດ</button>
-
-                        <button class="btn btn-danger" wire:click="showdel">ລົບ</button>
-
-
-
-
                     </div>
                 </div>
-            @endif
+            <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
         </div>
         <div class="col-sm-8">
             <div class="card-box">
@@ -149,42 +125,42 @@
                                         <tr class="text-center">
                                             <th class="p-2"> ລຳດັບ </th>
                                             <th class="p-2"> ຊື່ກຸ່ມ </th>
-                                            @if (!empty($data_role['viewIn-edit']) || !empty($data_role['viewIn-del']))
+                                            <!--[if BLOCK]><![endif]--><?php if(!empty($data_role['viewIn-edit']) || !empty($data_role['viewIn-del'])): ?>
                                                 <th class="p-2">
                                                     ປຸ່ມກົດ </th>
-                                            @endif
+                                            <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @php $no = 1; @endphp
-                                        @forelse ($data as $key => $item)
+                                        <?php $no = 1; ?>
+                                        <!--[if BLOCK]><![endif]--><?php $__empty_1 = true; $__currentLoopData = $data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                             <tr class="text-center">
-                                                <td class="p-2">{{ $no++ }}</td>
-                                                <td class="p-2">{{ $item['doc_title'] }}</td>
+                                                <td class="p-2"><?php echo e($no++); ?></td>
+                                                <td class="p-2"><?php echo e($item['name']); ?></td>
 
-                                                @if (!empty($data_role['viewIn-edit']) || !empty($data_role['viewIn-del']))
+                                                <!--[if BLOCK]><![endif]--><?php if(!empty($data_role['viewIn-edit']) || !empty($data_role['viewIn-del'])): ?>
                                                     <td class="p-2">
                                                         <div class="btn-group btn-group-justified text-white mb-2">
-                                                            @if (!empty($data_role['viewIn-edit']))
+                                                            <?php if(!empty($data_role['viewIn-edit'])): ?>
                                                                 <a class="btn btn-warning waves-effect waves-light"
-                                                                    wire:click="edit({{ $item['id'] }})"><i
+                                                                    wire:click="edit(<?php echo e($item['id']); ?>)"><i
                                                                         class="mdi mdi-pencil-remove-outline"></i></a>
-                                                            @endif
-                                                            @if (!empty($data_role['viewIn-del']))
+                                                            <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
+                                                            <!--[if BLOCK]><![endif]--><?php if(!empty($data_role['viewIn-del'])): ?>
                                                                 <a class="btn btn-danger waves-effect waves-light"
-                                                                    wire:click="delete({{ $item['id'] }})"><i
+                                                                    wire:click="delete(<?php echo e($item['id']); ?>)"><i
                                                                         class="mdi mdi-window-close"></i></a>
-                                                            @endif
+                                                            <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                                                         </div>
                                                     </td>
-                                                @endif
+                                                <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                                             </tr>
-                                        @empty
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                             <tr class="text-center">
                                                 <td colspan="8" style="color: #787878;" class="p-2">ບໍ່ມີຂໍ້ມູນ
                                                 </td>
                                             </tr>
-                                        @endforelse
+                                        <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                                     </tbody>
                                 </table>
 
@@ -195,7 +171,7 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <span><br> ລວມທັງໝົດ <span class="text-danger">{{ $count }}</span> ລາຍການ</span>
+                        <span><br> ລວມທັງໝົດ <span class="text-danger"><?php echo e($count); ?></span> ລາຍການ</span>
                     </div>
                 </div>
             </div>
@@ -213,21 +189,22 @@
                 </div>
                 <div class="modal-body">
                     <h3><b>ທ່ານຕ້ອງການລົບຂໍ້ມູນນີ້ ຫຼື ບໍ່ ?</b></h3>
-                    <p>ລາຍລະອຽດ: <span class="text-danger">{{ $delName }}</span></p>
+                    <p>ລາຍລະອຽດ: <span class="text-danger"><?php echo e($delName); ?></span></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">ປິດ</button>
                     <button type="button" class="btn btn-danger waves-effect waves-light"
-                        wire:click="delete">ລົບຂໍ້ມູນ</button>
+                        wire:click="destroy">ລົບຂໍ້ມູນ</button>
                 </div>
             </div>
             <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
     </div>
+
 </div>
 
-@push('scripts')
+<?php $__env->startPush('scripts'); ?>
     <script>
         window.addEventListener('show-del', event => {
             $('#custom-modal').modal('show');
@@ -235,23 +212,6 @@
         window.addEventListener('show-del', event => {
             $('#custom-modal').modal('hide');
         })
-        $(function() {
-            $("#cates").select2({
-                maximumSelectionLength: 1,
-                width: 'resolve'
-            });
-            $('#cates').on('change', function(e) {
-                var data = $('#cates').select2("val");
-                @this.set('change_id', data);
-            });
-            $("#cate").select2({
-                maximumSelectionLength: 1,
-                width: 'resolve'
-            });
-            $('#cate').on('change', function(e) {
-                var data = $('#cate').select2("val");
-                @this.set('docgroup_id', data);
-            });
-        });
     </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php /**PATH D:\Project\Web\dms-2024\resources\views/livewire/settings/doc-dpart-component.blade.php ENDPATH**/ ?>

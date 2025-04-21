@@ -72,26 +72,26 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @php $no = 1; @endphp
-                                        @forelse ($data as $item)
+                                        <?php $no = 1; ?>
+                                        <!--[if BLOCK]><![endif]--><?php $__empty_1 = true; $__currentLoopData = $data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                         <tr class="text-center">
-                                            <td class="p-2">{{$no++}}</td>
+                                            <td class="p-2"><?php echo e($no++); ?></td>
                                             <td class="p-2">
-                                                <a class="btn btn-primary" href="http://192.168.128.193:8080/{{$item['pathfile']}}" target="_bank"><i
+                                                <a class="btn btn-primary" href="http://192.168.128.193:8080/<?php echo e($item['pathfile']); ?>" target="_bank"><i
                                                 class="mdi mdi-book-open-page-variant"></i></a>
                                             </td>
-                                            <td class="p-2">{{$item['doc_no']}}</td>
-                                            <td class="p-2">{{date('d/m/Y',strtotime($item['doc_date']))}}</td>
-                                            <td class="p-2">{{$item['doc_title']}}</td>
-                                            <td class="p-2">{{$item['groupname']}}</td>
-                                            <td class="p-2">{{$item['note']}}</td>
+                                            <td class="p-2"><?php echo e($item['doc_no']); ?></td>
+                                            <td class="p-2"><?php echo e(date('d/m/Y',strtotime($item['doc_date']))); ?></td>
+                                            <td class="p-2"><?php echo e($item['doc_title']); ?></td>
+                                            <td class="p-2"><?php echo e($item['groupname']); ?></td>
+                                            <td class="p-2"><?php echo e($item['note']); ?></td>
                                         </tr>
-                                        @empty
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                         <tr>
                                             <td colspan="13" class="text-center p-2">
                                                 ບໍ່ມີຂໍ້ມູນເອກະສານ</td>
                                         </tr>
-                                        @endforelse
+                                        <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                                     </tbody>
                                 </table>
 
@@ -102,10 +102,11 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <span><br> ລວມຂໍ້ມູນທັງໝົດ <span class="text-danger">{{$count}}</span> ລາຍການ</span>
+                        <span><br> ລວມຂໍ້ມູນທັງໝົດ <span class="text-danger"><?php echo e($count); ?></span> ລາຍການ</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<?php /**PATH D:\Project\Web\dms-2024\resources\views/livewire/tag/doc-sector-component.blade.php ENDPATH**/ ?>

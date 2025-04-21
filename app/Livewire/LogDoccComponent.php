@@ -17,21 +17,25 @@ class LogDoccComponent extends Component
     public $editId, $delId, $delName;
     public $search, $dataQ = 15, $dateS, $dateE;
     public $doc = [], $arr_view_docc = [];
-    public $user, $token;
+    public $user, $token, $hiddenId;
 
-    public function mount(){
+    public function mount($id)
+    {
+        $this->hiddenId = $id;
         $this->token = Cookie::get('token');
         $this->user = Cookie::get('user_id');
         $this->valuedt = date('Y-m-d');
-
+        // dd($this->hiddenId);
         $response = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/log-docc', [
+            'type_id' => $this->hiddenId,
             'qty' => $this->dataQ,
             'search' => $this->search,
         ]);
-        if($response['message'] == 'success'){
+        if ($response['message'] == 'success') {
             $this->data = $response['data'];
             $this->count = count($response['data']);
         }
+        // dd($this->data);
     }
 
     public function render()
@@ -39,30 +43,35 @@ class LogDoccComponent extends Component
         return view('livewire.log-docc-component');
     }
 
-    public function dataQS(){
+    public function dataQS()
+    {
         $response = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/log-docc', [
+            'type' => $this->hiddenId,
             'qty' => $this->dataQ,
             'search' => $this->search,
         ]);
-        if($response['message'] == 'success'){
+        if ($response['message'] == 'success') {
             $this->data = $response['data'];
             $this->count = count($response['data']);
         }
     }
 
-    public function searchData(){
+    public function searchData()
+    {
         $response = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/log-docc', [
+            'type' => $this->hiddenId,
             'qty' => $this->dataQ,
             'search' => $this->search,
         ]);
-        if($response['message'] == 'success'){
+        if ($response['message'] == 'success') {
             $this->data = $response['data'];
             $this->count = count($response['data']);
         }
     }
 
-    public function view($ids){
+    public function view($ids)
+    {
         // dd($ids);
-        $response = Http::withToken($this->token)->put('http://192.168.128.193:8080/api/docc-view/'.$ids);
+        $response = Http::withToken($this->token)->put('http://192.168.128.193:8080/api/docc-view/' . $ids);
     }
 }

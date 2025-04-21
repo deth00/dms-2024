@@ -17,17 +17,6 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card-box">
-                <!--[if BLOCK]><![endif]--><?php if(!empty($data_CK0['CK-add'])): ?>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <button class="btn btn-primary">
-                                <h5 class="card-title mb-0 text-white" wire:click="add"><i class="mdi mdi-plus"></i>
-                                    ເພີ່ມຂໍ້ມູນ </h5>
-                            </button>
-                            <hr>
-                        </div>
-                    </div>
-                <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                 <div class="row">
                     <div class="col-3">
                         <table width="100%">
@@ -88,17 +77,21 @@
                                             <tr class="text-center" >
                                                 <td class="p-2"><?php echo e($no++); ?></td>
                                                 <td class="px-3" wire:click="docs(<?php echo e($item['id']); ?>)"><?php echo e($item['name']); ?></td>
-                                                <td class="px-3"><?php echo e($item['status']); ?></td>
+                                                <td class="px-3">
+                                                    <!--[if BLOCK]><![endif]--><?php if($item['status'] == 'N'): ?>
+                                                    <span class="badge badge-success">ເປີດໃຊ້</span>
+                                                <?php else: ?>
+                                                    <span class="badge badge-danger">ປີດໃຊ້</span>
+                                                <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
+                                                </td>
                                                 <!--[if BLOCK]><![endif]--><?php if(!empty($data_CK0['CK-edit']) || !empty($data_CK0['CK-del'])): ?>
                                                     <td class="p-2">
                                                         <div class="btn-group-vertical mb-2">
                                                             <div class="btn-group btn-group-justified text-white mb-2">
+                                                                <a class="btn btn-primary waves-effect waves-light"
+                                                                wire:click="docs(<?php echo e($item['id']); ?>)"><i
+                                                                    class="mdi mdi-file-document"></i></a>
                                                                 
-                                                                <?php if(!empty($data_CK0['CK-edit'])): ?>
-                                                                    <a class="btn btn-warning waves-effect waves-light"
-                                                                        wire:click="edit(<?php echo e($item['id']); ?>)"><i
-                                                                            class="mdi mdi-pencil-remove-outline"></i></a>
-                                                                <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                                                                 
                                                             </div>
                                                         </div>

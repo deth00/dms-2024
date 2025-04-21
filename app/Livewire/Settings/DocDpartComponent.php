@@ -22,7 +22,7 @@ class DocDpartComponent extends Component
 
     public function render()
     {
-        $response = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/doc-dock', [
+        $response = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/doc-dpart', [
             'qty' => $this->dataQ,
             'search' => $this->search,
         ]);
@@ -34,7 +34,7 @@ class DocDpartComponent extends Component
     }
 
     public function dataQS(){
-        $response = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/doc-dock', [
+        $response = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/doc-dpart', [
             'qty' => $this->dataQ,
             'search' => $this->search,
         ]);
@@ -45,7 +45,7 @@ class DocDpartComponent extends Component
     }
 
     public function searchData(){
-        $response = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/doc-dock', [
+        $response = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/doc-dpart', [
             'qty' => $this->dataQ,
             'search' => $this->search,
         ]);
@@ -63,7 +63,7 @@ class DocDpartComponent extends Component
                 'name.required'=>'ກະລຸນາປ້ອນ ຊື່ກຸ່ມ ກ່ອນ!',
             ]);
     
-            $response = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/group-update', [
+            $response = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/doc-dpart-update', [
                 'id' => $this->editId,
                 'name' => $this->name,
             ]);
@@ -79,7 +79,7 @@ class DocDpartComponent extends Component
                 'name.required'=>'ກະລຸນາປ້ອນ ຊື່ກຸ່ມ ກ່ອນ!',
             ]);
     
-            $response = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/group-store', [
+            $response = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/doc-dpart-store', [
                 'name' => $this->name,
             ]);
     
@@ -92,7 +92,7 @@ class DocDpartComponent extends Component
     }
 
     public function edit($ids){
-        $response = Http::withToken($this->token)->put('http://192.168.128.193:8080/api/group-edit/'.$ids);
+        $response = Http::withToken($this->token)->put('http://192.168.128.193:8080/api/doc-dpart-edit/'.$ids);
 
         $this->editId = $response['data']['id'];
         $this->name = $response['data']['name'];
@@ -100,14 +100,14 @@ class DocDpartComponent extends Component
 
     public function delete($ids){
         $this->delId = $ids;
-        $response = Http::withToken($this->token)->put('http://192.168.128.193:8080/api/group-edit/'.$ids);
+        $response = Http::withToken($this->token)->put('http://192.168.128.193:8080/api/doc-dpart-edit/'.$ids);
         $this->delName = $response['data']['name'];
         $this->dispatch('show-del');
     }
 
     public function destroy()
     {
-        $response = Http::withToken($this->token)->delete('http://192.168.128.193:8080/api/group-del/'.$this->delId);
+        $response = Http::withToken($this->token)->delete('http://192.168.128.193:8080/api/doc-dpart-del/'.$this->delId);
 
         if($response['message'] == 'success'){
             session()->flash('success', 'ລົບຂໍ້ມູນສຳເລັດ');
