@@ -53,8 +53,8 @@ class AppServiceProvider extends ServiceProvider
                 $docc_count_1 = Http::withToken($token)->get('http://192.168.128.193:8080/api/log-docc-count', ['type' => 1]);
                 $count_docc_thr = $docc_count_1['message'] == 'success' ? $docc_count_1['data'][0]['count'] : 0;
 
-                $docc_count_2= Http::withToken($token)->get('http://192.168.128.193:8080/api/log-docc-count', ['type' => 2]);
-                $count_docc_private = $docc_count_2['message'] == 'success' ? $docc_count_2['data'][0]['count'] : 0;
+                $docc_count_2= Http::withToken($token)->get('http://192.168.128.193:8080/api/log-docc-count', ['type' => 3]);
+                $count_docc_other = $docc_count_2['message'] == 'success' ? $docc_count_2['data'][0]['count'] : 0;
 
                 $msg_count = Http::withToken($token)->get('http://192.168.128.193:8080/api/inbox-count');
                 $count_msg = $msg_count['message'] == 'success' ? $msg_count['data'][0]['count'] : 0;
@@ -102,7 +102,7 @@ class AppServiceProvider extends ServiceProvider
                     'rolename' => $rolename,
                     'count_docc' => $count_docc,
                     'count_docc_thr' => $count_docc_thr,
-                    'count_docc_private' => $count_docc_private,
+                    'count_docc_other' => $count_docc_other,
                     'count_msg' => $count_msg
                 ]);
             }

@@ -8,13 +8,15 @@
                 <div class="col-md-12">
                     <div class="mb-4">
                         <h1 style="font-family: 'Phetsarath OT';"> <strong>ລະບົບເກັບກຳເອກະສານອອນລາຍ</strong></h1>
-                        <p class="mb-4" style="font-size: 20px;font-family: 'Phetsarath OT';">ຈັດການຂໍ້ມູນ ແລະ ຕິດຕາມເອກະສານຂາເຂົ້າ-ຂາອອກ.</p>
+                        <p class="mb-4" style="font-size: 20px;font-family: 'Phetsarath OT';">ຈັດການຂໍ້ມູນ ແລະ
+                            ຕິດຕາມເອກະສານຂາເຂົ້າ-ຂາອອກ.</p>
                     </div>
                     <div class="form-group first">
                         <label for="username">
                             <h5 class="phetsarath-font">ອີເມວ</h5>
                         </label>
-                        <input type="email" class="form-control phetsarath-font <?php $__errorArgs = ['username'];
+                        <input type="email"
+                            class="form-control phetsarath-font <?php $__errorArgs = ['username'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -27,7 +29,9 @@ unset($__errorArgs, $__bag); ?>" id="username"
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> <span style="color: red" class="error"><?php echo e($message); ?></span><?php unset($message);
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span style="color: red" class="error"><?php echo e($message); ?></span>
+                        <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
@@ -49,7 +53,9 @@ unset($__errorArgs, $__bag); ?>"
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> <span style="color: red" class="error"><?php echo e($message); ?></span><?php unset($message);
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span style="color: red" class="error"><?php echo e($message); ?></span>
+                        <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
@@ -57,15 +63,17 @@ unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
                     <div class="mb-5 align-items-center">
                         <div class="row">
                             <div class="col-md-6">
-                            <a href="javascript:void(0)" wire:click="showReset">ລືມລະຫັດຜ່ານ ?</a>
+                                <a href="javascript:void(0)" wire:click="showReset">ລືມລະຫັດຜ່ານ ?</a>
                             </div>
                             <div class="col-md-6 text-right">
-                            <a href="javascript:void(0)" class="float-end" style="color: #000;" wire:click="register"> >>> ລົງທະບຽນ <<< </a>
+                                <a href="javascript:void(0)" class="float-end" style="color: #000;"
+                                    wire:click="register"> >>> ລົງທະບຽນ <<< </a>
                             </div>
                         </div>
                     </div>
-                    <buttom type="submit" class="btn text-white btn-block btn-primary"
-                        wire:click="login"> <h5 class="phetsarath-font p-2">ເຂົ້າລະບົບ</h5></buttom>
+                    <buttom type="submit" class="btn text-white btn-block btn-primary" wire:click="login">
+                        <h5 class="phetsarath-font p-2">ເຂົ້າລະບົບ</h5>
+                    </buttom>
                 </div>
             </div>
         </div>
@@ -83,7 +91,8 @@ unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="mail">ອີເມວ</label>
-                        <input type="text" class="form-control" wire:model="email" placeholder="ກະລຸນາປ້ອນເມວຂອງທ່ານ">
+                        <input type="text" class="form-control" wire:model="email"
+                            placeholder="ກະລຸນາປ້ອນເມວຂອງທ່ານ">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -100,11 +109,42 @@ unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
 </div>
 
 <?php $__env->startPush('scripts'); ?>
-<script>
+    <script>
+        window.addEventListener('show-reset', event => {
+            $('#modal-reset').modal('show');
+        })
 
-    window.addEventListener('show-reset', event => {
-        $('#modal-reset').modal('show');
-    })
+        // window.addEventListener('store-token', event => {
+        //     localStorage.setItem('token', event.detail[0].token);
+        //     localStorage.setItem('id', event.detail[1].id);
+        //     console.log('Token stored:', event.detail); // Debugging
+        // });
 
-</script>
-<?php $__env->stopPush(); ?><?php /**PATH D:\Project\Web\dms-2024\resources\views/livewire/auth/login-component.blade.php ENDPATH**/ ?>
+        // Share token via postMessage
+        window.addEventListener('message', (event) => {
+            const allowed = [
+                'https://bill.nbb.com.la',
+                // 'http://192.168.10.60:8099'
+            ];
+
+            // Check if the origin is allowed
+            if (!allowed.includes(event.origin)) {
+                // console.warn('Blocked message from unauthorized origin:', event.origin);
+                return;
+            }
+
+            // Check if the message data is a request for the token
+            if (event.data === 'request_token') {
+                const token = localStorage.getItem('token'); // Retrieve the token from localStorage
+
+                // Send the token back to the source
+                event.source.postMessage({
+                        token
+                    }, // Message payload
+                    event.origin // Target origin
+                );
+            }
+        });
+    </script>
+<?php $__env->stopPush(); ?>
+<?php /**PATH D:\Project\Web\dms-2024\resources\views/livewire/auth/login-component.blade.php ENDPATH**/ ?>

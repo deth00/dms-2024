@@ -164,6 +164,8 @@ class DoccComponent extends Component
         $this->dispatch('show-view');
     }
 
+
+
     public function sentToDoc($ids){
         session()->flash('doccId', $ids);
         return redirect(route('create-pawn'));

@@ -11,20 +11,18 @@
                 <?php if(!empty($data_role['ViewWide1']) || !empty($data_role['ViewWide2'])): ?>
                     <li class="has-submenu">
                         <a href="#"> <i class="mdi mdi-surround-sound"></i>ເອກະສານແຈ້ງທົ່ວລະບົບ (
-                            <?php echo e($count_docc + $count_docc_private + $count_docc_thr); ?> )
+                            <?php echo e($count_docc); ?> )
                         </a>
                         <ul class="submenu">
                             <?php if(!empty($data_role['ViewWide1'])): ?>
-                                <li><a href="<?php echo e(route('log-docc', 2)); ?>">ເອກະສານວີຊາສະເພາະ ( <?php echo e($count_docc_private); ?>
+                                <li><a href="<?php echo e(route('log-docc', 3)); ?>">ເອກະສານວີຊາສະເພາະ ( <?php echo e($count_docc_other); ?>
 
                                         )</a></li>
                             <?php endif; ?>
                             <li><a href="<?php echo e(route('log-docc', 1)); ?>">ເອກະສານ 3 ອົງການຈັດຕັ້ງ ( <?php echo e($count_docc_thr); ?>
 
                                     )</a></li>
-                            <?php if(!empty($data_role['ViewWide2'])): ?>
-                                <li><a href="<?php echo e(route('docc')); ?>">ແຈ້ງການທົ່ວລະບົບ</a></li>
-                            <?php endif; ?>
+                            
 
                         </ul>
                     </li>

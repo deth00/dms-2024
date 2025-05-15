@@ -177,15 +177,7 @@ unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
                             <h4 for="name" class="text-info"><i class="icon fas fa-info"></i>
                                 ຕົວເລືອກເພີ່ມເຕີມ</h4>
                         </div>
-                        <div class="col-md-12">
-                            <div class="checkbox checkbox-success">
-                                <input id="checkbox3" type="checkbox" 
-                                    wire:model="check_docc">
-                                <label for="checkbox3">
-                                    ອັບລົງແຈ້ງການທົ່ວລະບົບ
-                                </label>
-                            </div>
-                        </div>
+                        
                         
                         <div class="col-md-12">
                             <hr>

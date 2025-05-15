@@ -14,6 +14,7 @@ class LoginComponent extends Component
     public $param = [];
     public $username, $password;
     public $email;
+    public $token;
 
     public function render()
     {
@@ -47,7 +48,11 @@ class LoginComponent extends Component
                 $organi_cookie = Cookie::queue('organi_id', $response['user']['organi_id']);
                 $organi_type_cookie = Cookie::queue('organi_type', $response['user']['organi_type']);
                 session()->flash('success', 'ເຂົ້າສູ່ລະບົບສຳເລັດ');
-                return redirect(route('dashboard'));
+                $token = $response['access_token'];
+                $id = $response['user']['id'];
+                session()->put('auth_token', $token);
+                session()->put('id', $id);
+                return redirect(route('web-deshboard'));
         }
     }
 
