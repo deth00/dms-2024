@@ -81,7 +81,7 @@
                                                 <td class="p-2">
                                                     <a class="btn btn-primary"
                                                         href="http://192.168.128.193:8080/{{ $item['pathfile'] }}"
-                                                        target="_bank"><i class="mdi mdi-file-download-outline"></i></a>
+                                                        target="_bank"><i class="mdi mdi-book-open-page-variant"></i></a>
                                                 </td>
                                                 <td class="p-2">{{ $item['doc_no'] }}</td>
                                                 <td class="p-2">{{ date('d/m/Y', strtotime($item['doc_date'])) }}</td>
@@ -91,9 +91,9 @@
                                                 <td class="p-2">
                                                     <div class="btn-group-vertical mb-2">
                                                         <div class="btn-group btn-group-justified text-white mb-2">
-                                                            <a class="btn btn-warning waves-effect waves-light"
+                                                            <a class="btn btn-success waves-effect waves-light"
                                                                 wire:click="income({{ $item['id'] }})"><i
-                                                                    class="mdi mdi-pencil-remove-outline"></i></a>
+                                                                    class="mdi mdi-file-plus" style="font-size: 20px;"></i></a>
                                                         
                                                         </div>
                                                     </div>

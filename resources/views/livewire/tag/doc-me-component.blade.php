@@ -1,5 +1,5 @@
 <div>
-<div class="row">
+    <div class="row">
         <div class="col-12">
             <div class="page-title-box">
                 <div class="page-title-right">
@@ -23,7 +23,8 @@
                             <tr>
                                 <td style="vertical-align: center;" class="text-right">ສະແດງ &emsp;</td>
                                 <td>
-                                    <select wire:model="dataQ" wire:click="dataQS" name="Q" id="Q" class="form-control">
+                                    <select wire:model="dataQ" wire:click="dataQS" name="Q" id="Q"
+                                        class="form-control">
                                         <option value="0">0</option>
                                         <option value="15">15</option>/
                                         <option value="50">50</option>
@@ -44,8 +45,8 @@
                         <!-- <input type="date" name="date" id="date" wire:model="dateS" class="form-control"> -->
                     </div>
                     <div class="col-2">
-                        <input type="text" name="search" id="search" wire:model="search" wire:keydown.enter="searchData"
-                            class="form-control" placeholder="ຄົ້ນຫາ">
+                        <input type="text" name="search" id="search" wire:model="search"
+                            wire:keydown.enter="searchData" class="form-control" placeholder="ຄົ້ນຫາ">
                     </div>
                     <div class="col-1 ">
                         <button type="button" class="btn btn-primary" wire:click="searchData">
@@ -73,25 +74,55 @@
                                     </thead>
                                     <tbody>
                                         @php $no = 1; @endphp
-                                        @forelse ($data as $item)
-                                        <tr class="text-center">
-                                            <td class="p-2">{{$no++}}</td>
-                                            <td class="p-2">
-                                                <a class="btn btn-primary" href="http://192.168.128.193:8080/{{$item['pathfile']}}" target="_bank"><i
-                                                class="mdi mdi-file-download-outline"></i></a>
-                                            </td>
-                                            <td class="p-2">{{$item['doc_no']}}</td>
-                                            <td class="p-2">{{date('d/m/Y',strtotime($item['doc_date']))}}</td>
-                                            <td class="p-2">{{$item['doc_title']}}</td>
-                                            <td class="p-2">{{$item['groupname']}}</td>
-                                            <td class="p-2">{{$item['note']}}</td>
-                                        </tr>
-                                        @empty
-                                        <tr>
-                                            <td colspan="13" class="text-center p-2">
-                                                ບໍ່ມີຂໍ້ມູນເອກະສານ</td>
-                                        </tr>
-                                        @endforelse
+                                        @if (!empty($data))
+                                            @forelse ($data as $item)
+                                                <tr class="text-center">
+                                                    <td class="p-2">{{ $no++ }}</td>
+                                                    <td class="p-2">
+                                                        <a class="btn btn-primary"
+                                                            href="http://192.168.128.193:8080/{{ $item['pathfile'] }}"
+                                                            target="_bank"><i
+                                                                class="mdi mdi-book-open-page-variant"></i></a>
+                                                    </td>
+                                                    <td class="p-2">{{ $item['doc_no'] }}</td>
+                                                    <td class="p-2">{{ date('d/m/Y', strtotime($item['doc_date'])) }}
+                                                    </td>
+                                                    <td class="p-2">{{ $item['doc_title'] }}</td>
+                                                    <td class="p-2">{{ $item['groupname'] }}</td>
+                                                    <td class="p-2">{{ $item['note'] }}</td>
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="13" class="text-center p-2">
+                                                        ບໍ່ມີຂໍ້ມູນເອກະສານ</td>
+                                                </tr>
+                                            @endforelse
+                                        @endif
+                                        @if (!empty($data1))
+                                            @forelse ($data1 as $item)
+                                                <tr class="text-center">
+                                                    <td class="p-2">{{ $no++ }}</td>
+                                                    <td class="p-2">
+                                                        <a class="btn btn-primary"
+                                                            href="http://192.168.128.193:8080/{{ $item['pathfile'] }}"
+                                                            target="_bank"><i
+                                                                class="mdi mdi-book-open-page-variant"></i></a>
+                                                    </td>
+                                                    <td class="p-2">{{ $item['doc_no'] }}</td>
+                                                    <td class="p-2">
+                                                        {{ date('d/m/Y', strtotime($item['doc_date'])) }}
+                                                    </td>
+                                                    <td class="p-2">{{ $item['doc_title'] }}</td>
+                                                    <td class="p-2">{{ $item['groupname'] }}</td>
+                                                    <td class="p-2">{{ $item['note'] }}</td>
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="13" class="text-center p-2">
+                                                        ບໍ່ມີຂໍ້ມູນເອກະສານ</td>
+                                                </tr>
+                                            @endforelse
+                                        @endif
                                     </tbody>
                                 </table>
 
@@ -102,7 +133,7 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <span><br> ລວມຂໍ້ມູນທັງໝົດ <span class="text-danger">{{$count}}</span> ລາຍການ</span>
+                        <span><br> ລວມຂໍ້ມູນທັງໝົດ <span class="text-danger">{{ $count + $count1 }}</span> ລາຍການ</span>
                     </div>
                 </div>
             </div>

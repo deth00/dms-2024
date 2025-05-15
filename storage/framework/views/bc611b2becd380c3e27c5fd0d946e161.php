@@ -16,7 +16,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12 col-12 col-sm-12 col-lg-12">
+        <div class="col-md-8 col-8 col-sm-8 col-lg-8">
             <div class="card">
                 <div class="card-body">
 
@@ -90,29 +90,8 @@ endif;
 unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
                                 </div>
 
-                                <div class="col-md-6" >
-                                    <div wire:key="select-field-model-version-<?php echo e($refresh_dpart); ?>"></div>
-                                    <div class="form-group" wire:ignore>
-                                        <select class="form-control select2-multiple" multiple="multiple"
-                                            style="width: 100%" data-placeholder="ເລືອກພາກສ່ວນພາຍໃນ" id="dpart"
-                                            wire:model="dpart_id">
-                                            <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $doc_dpart; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <option value="<?php echo e($item['id']); ?>"><?php echo e($item['name']); ?></option>
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
-                                        </select>
-                                    </div>
-                                    <!--[if BLOCK]><![endif]--><?php $__errorArgs = ['dpart_id'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                        <span style="color: red" class="error"><?php echo e($message); ?></span>
-                                    <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
-                                </div>
-
+                                
+                                
 
                                 <div class="col-md-6">
                                     <div class="form-group" wire:ignore>
@@ -161,8 +140,8 @@ unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
                                                 <span class="input-group-text">ໝາຍເຫດ</span>
                                             </div>
                                             <input type="text" id="example-input1-group1"
-                                                name="example-input1-group1" class="form-control"
-                                                placeholder="ໝາຍເຫດ" wire:model="note">
+                                                name="example-input1-group1" class="form-control" placeholder="ໝາຍເຫດ"
+                                                wire:model="note">
                                         </div>
                                     </div>
                                 </div>
@@ -188,12 +167,62 @@ unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
                         </div>
                     </div>
                 </div>
-                <div class="card-footer">
-                    <button class="btn btn-success" wire:click="store">ບັນທຶກ</button>
-                    <a href="<?php echo e(route('document-secret', $hiddenId)); ?>" class="btn btn-danger">ກັບຄືນ</a>
+            </div>
+        </div>
+        <div class="col-md-4" style="border-left-style: solid; border-left-color: #33cc99;">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 for="name" class="text-info"><i class="icon fas fa-info"></i>
+                                ຕົວເລືອກເພີ່ມເຕີມ</h4>
+                        </div>
+                        
+                        
+                        <div class="col-md-12">
+                            <hr>
+                        </div>
+                        <div class="col-md-12" wire:ignore>
+                            <div class="form-group">
+                                <select class="form-control select2-multiple" multiple="multiple"
+                                    style="width: 100%;" data-placeholder="ສົ່ງເຖິງພະເເນກ" id="tag_depart">
+                                    <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $departments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($item['id']); ?>"><?php echo e($item['name']); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12" wire:ignore>
+                            <div class="form-group">
+                                <select class="form-control select2-multiple" multiple="multiple"
+                                    style="width: 100%;" data-placeholder="ສົ່ງເຖິງຂະແໜງ" id="tag_sector">
+                                    <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $sectors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($item['id']); ?>"><?php echo e($item['name']); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12" wire:ignore>
+                            <div class="form-group">
+                                <select class="form-control select2-multiple" multiple="multiple"
+                                    style="width: 100%;" data-placeholder="ສົ່ງເຖິງບຸກຄົນ" id="tag_alone">
+                                    <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $all_user; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($item['id']); ?>"><?php echo e($item['emp_name']); ?>
+
+                                            (<?php echo e($item['departname']); ?>)
+                                        </option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="card-footer">
+        <button class="btn btn-success" wire:click="store">ບັນທຶກ</button>
+        <a href="<?php echo e(route('document-secret', $hiddenId)); ?>" class="btn btn-danger">ກັບຄືນ</a>
     </div>
 </div>
 
@@ -240,7 +269,7 @@ unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
                 window.Livewire.find('<?php echo e($_instance->getId()); ?>').set('k_id', data);
             });
             $("#dpart").select2({
-                maximumSelectionLength: 1,
+                maximumSelectionLength: 5,
                 width: 'resolve'
             });
             $('#dpart').on('change', function(e) {
@@ -333,5 +362,4 @@ unset($__errorArgs, $__bag); ?><!--[if ENDBLOCK]><![endif]-->
         })
     </script>
 <?php $__env->stopPush(); ?>
-
 <?php /**PATH D:\Project\Web\dms-2024\resources\views/livewire/document/secret/secret-add-component.blade.php ENDPATH**/ ?>

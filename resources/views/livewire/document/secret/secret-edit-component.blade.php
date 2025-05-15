@@ -16,7 +16,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12 col-12 col-sm-12 col-lg-12">
+        <div class="col-md-8 col-8 col-sm-8 col-lg-8">
             <div class="card">
                 <div class="card-body">
 
@@ -46,7 +46,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6" style="display: {{ $hiddenType1 }}">
+                                {{-- <div class="col-md-6" style="display: {{ $hiddenType1 }}">
                                     <div class="form-group">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
@@ -71,7 +71,7 @@
                                                 wire:model="date_no">
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <div class="input-group">
@@ -100,7 +100,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-md-6" >
+                                {{-- <div class="col-md-6" >
                                     <div wire:key="select-field-model-version-{{ $refresh_dpart }}"></div>
                                     <div class="form-group" wire:ignore>
                                         <select class="form-control select2-multiple" multiple="multiple"
@@ -114,8 +114,8 @@
                                     @error('dpart_id')
                                         <span style="color: red" class="error">{{ $message }}</span>
                                     @enderror
-                                </div>
-{{-- 
+                                </div> --}}
+                                {{-- 
                                 <div class="col-md-6" >
                                     <div wire:key="select-field-model-version-{{ $refresh_dpart }}"></div>
                                     <div class="form-group" wire:ignore>
@@ -185,12 +185,89 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-footer">
-                    <button class="btn btn-success" wire:click="store">ບັນທຶກ</button>
-                    <a href="{{ route('document-secret') }}" class="btn btn-danger">ກັບຄືນ</a>
+            </div>
+        </div>
+        <div class="col-md-4" style="border-left-style: solid; border-left-color: #33cc99;">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 for="name" class="text-info"><i class="icon fas fa-info"></i>
+                                ຕົວເລືອກເພີ່ມເຕີມ</h4>
+                        </div>
+                        {{-- <div class="col-md-12">
+                            <div class="checkbox checkbox-success">
+                                <input id="checkbox3" type="checkbox" {{ $disabled }}
+                                    wire:model="check_docc">
+                                <label for="checkbox3">
+                                    ອັບລົງແຈ້ງການທົ່ວລະບົບ
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="checkbox checkbox-success">
+                                <input id="checkbox2" type="checkbox" {{ $disabled }}
+                                    wire:model="check_mss" wire:click="check">
+                                <label for="checkbox2">
+                                    ສົ່ງເຂົ້າກ່ອງຂໍ້ຄວາມ
+                                </label>
+                            </div>
+                        </div> --}}
+                        {{-- <div class="col-md-12" style="display: {{ $hiddenMss }}">
+                            <div class="form-group" wire:ignore>
+                                <select class="form-control select2-multiple" multiple="multiple"
+                                    style="width: 100%;" data-placeholder="ສົ່ງເຖິງ" id="inbox" wire:model="tag_user">
+                                    @foreach ($all_user as $item)
+                                        <option value="{{ $item['id'] }}">{{ $item['emp_name'] }}
+                                            ({{ $item['departname'] }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div> --}}
+                        <div class="col-md-12">
+                            <hr>
+                        </div>
+                        <div class="col-md-12" wire:ignore>
+                            <div class="form-group">
+                                <select class="form-control select2-multiple" multiple="multiple"
+                                    style="width: 100%;" data-placeholder="ສົ່ງເຖິງພະເເນກ" id="tag_depart" wire:model="tag_depart">
+                                    @foreach ($departments as $item)
+                                        <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12" wire:ignore>
+                            <div class="form-group">
+                                <select class="form-control select2-multiple" multiple="multiple"
+                                    style="width: 100%;" data-placeholder="ສົ່ງເຖິງຂະແໜງ" id="tag_sector" wire:model="tag_sector">
+                                    @foreach ($sectors as $item)
+                                        <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12" wire:ignore>
+                            <div class="form-group">
+                                <select class="form-control select2-multiple" multiple="multiple"
+                                    style="width: 100%;" data-placeholder="ສົ່ງເຖິງບຸກຄົນ" id="tag_alone" wire:model="tag_user">
+                                    @foreach ($all_user as $item)
+                                        <option value="{{ $item['id'] }}">{{ $item['emp_name'] }}
+                                            ({{ $item['departname'] }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="card-footer">
+        <button class="btn btn-success" wire:click="store">ບັນທຶກ</button>
+        <a href="{{ route('document-secret', $editId) }}" class="btn btn-danger">ກັບຄືນ</a>
     </div>
 </div>
 
@@ -330,4 +407,3 @@
         })
     </script>
 @endpush
-

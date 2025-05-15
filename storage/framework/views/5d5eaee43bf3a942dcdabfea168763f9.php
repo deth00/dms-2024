@@ -99,7 +99,7 @@
                                                 <td class="p-2">
                                                     <a class="btn btn-primary"
                                                         href="http://192.168.128.193:8080/<?php echo e($item['pathfile']); ?>"
-                                                        target="_bank"><i class="mdi mdi-file-download-outline"></i></a>
+                                                        target="_bank"><i class="mdi mdi-book-open-page-variant"></i></a>
                                                 </td>
                                                 <td class="p-2"><?php echo e($no++); ?></td>
                                                 <td class="p-2"><?php echo e(date('d/m/Y', strtotime($item['doc_date']))); ?>

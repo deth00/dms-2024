@@ -5,7 +5,7 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">ໜ້າຫຼັກ</a></li>
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">ເອກະສານ ກວດກາ</a></li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">ເອກະສານ ສະເພາະ</a></li>
                         
                     </ol>
                 </div>
@@ -19,14 +19,23 @@
             <div class="card-box">
                 <!--[if BLOCK]><![endif]--><?php if(!empty($data_CK0['CK-add'])): ?>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-3">
                             <a class="btn btn-primary" href="<?php echo e(route('document-secret-add' , $hiddenId)); ?>">
                                 <h5 class="card-title mb-0 text-white"><i class="mdi mdi-plus"></i>
                                     ເພີ່ມຂໍ້ມູນ </h5>
                             </a>
-                            <hr>
+                            
                         </div>
+                        <div class="col-md-6">
+                            <h4 for=""><?php echo e($dataTM['name']); ?></h4>
+                            
+                        </div>
+                        <div class="col-md-3">
+                            
+                        </div>
+                        
                     </div>
+                    <hr>
                 <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                 <div class="row">
                     <div class="col-3">
@@ -94,7 +103,7 @@
                                                 <td class="p-2">
                                                     <a class="btn btn-primary"
                                                         href="http://192.168.128.193:8080/<?php echo e($item['pathfile']); ?>"
-                                                        target="_bank"><i class="mdi mdi-file-download-outline"></i></a>
+                                                        target="_bank"><i class="mdi mdi-book-open-page-variant"></i></a>
                                                 </td>
                                                 <td class="p-2"><?php echo e($no++); ?></td>
                                                 <td class="p-2"><?php echo e(date('d/m/Y', strtotime($item['doc_date']))); ?>

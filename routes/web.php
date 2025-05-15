@@ -6,7 +6,12 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
+
 Route::get('/', App\Livewire\Auth\LoginComponent::class)->name('login');
+Route::get('/web-list', App\Livewire\WebDeshboardComponent::class)->name('web-deshboard');
+Route::get('/get-token', function () {
+    return response()->json(['token' => session('auth_token'), 'id' => session('id')]);
+});
 Route::get('/forgot_password/{id}', App\Livewire\Auth\ForgotPasswordComponent::class)->name('forgot-password');
 Route::get('/regis', App\Livewire\Auth\RegisComponent::class)->name('regis');
 Route::get('/regis-finish/{id}', App\Livewire\Auth\Regis2Component::class)->name('regis-finish');
@@ -14,7 +19,7 @@ Route::get('/regis-finish/{id}', App\Livewire\Auth\Regis2Component::class)->name
 Route::get('/dashboard', App\Livewire\DashboardComponent::class)->name('dashboard');
 
 Route::get('/docc', App\Livewire\DoccComponent::class)->name('docc');
-Route::get('/log-docc', App\Livewire\LogDoccComponent::class)->name('log-docc');
+Route::get('/log-docc/{id}', App\Livewire\LogDoccComponent::class)->name('log-docc');
 
 //Tag
 Route::get('/tag-me', App\Livewire\Tag\DocMeComponent::class)->name('tag-me');

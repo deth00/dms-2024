@@ -15,12 +15,14 @@
                         </a>
                         <ul class="submenu">
                             <?php if(!empty($data_role['ViewWide1'])): ?>
-                                <li><a href="<?php echo e(route('log-docc')); ?>">ເອກະສານວີຊາສະເພາະ ( <?php echo e($count_docc); ?> )</a></li>
+                                <li><a href="<?php echo e(route('log-docc', 3)); ?>">ເອກະສານວີຊາສະເພາະ ( <?php echo e($count_docc_other); ?>
+
+                                        )</a></li>
                             <?php endif; ?>
-                            <li><a href="#">ເອກະສານ 3 ອົງການຈັດຕັ້ງ ( <?php echo e($count_docc); ?> )</a></li>
-                            <?php if(!empty($data_role['ViewWide2'])): ?>
-                                <li><a href="<?php echo e(route('docc')); ?>">ແຈ້ງການທົ່ວລະບົບ</a></li>
-                            <?php endif; ?>
+                            <li><a href="<?php echo e(route('log-docc', 1)); ?>">ເອກະສານ 3 ອົງການຈັດຕັ້ງ ( <?php echo e($count_docc_thr); ?>
+
+                                    )</a></li>
+                            
 
                         </ul>
                     </li>
@@ -123,14 +125,14 @@
                     </li>
                 <?php endif; ?>
 
-                <?php if(!empty($data_CK0['CKView']) || !empty($data_GS == 'GS_User') ): ?>
+                <?php if(!empty($data_CK0['CKView']) || !empty($data_GS == 'GS_User')): ?>
                     <li class="has-submenu">
                         <a href="#"> <i class="mdi mdi-file-document-box-multiple-outline"></i>ເອກະສານ ສະເພາະ
                         </a>
                         <ul class="submenu">
                             <li><a href="<?php echo e(route('document-secret-teams')); ?>">ເອກະສານ </a></li>
                             <?php if(!empty($data_CK0['RView'])): ?>
-                                <li><a href="<?php echo e(route('document-secret-role')); ?>">ກຳນົດສິດ </a></li>
+                                <li><a href="<?php echo e(route('document-secret-role')); ?>">ຕັ້ງຄ່າ </a></li>
                             <?php endif; ?>
 
                         </ul>
@@ -161,9 +163,7 @@
                             <?php if(!empty($data_role['viewOn'])): ?>
                                 <li><a href="<?php echo e(route('dpartment')); ?>">ພາກສ່ວນພາຍນອກ</a></li>
                             <?php endif; ?>
-                            <?php if(!empty($data_role['viewStyle'])): ?>
-                                <li><a href="<?php echo e(route('doctype')); ?>">ຮູບແບບເອກະສານ</a></li>
-                            <?php endif; ?>
+                            
                             <?php if(!empty($data_role['viewType'])): ?>
                                 <li><a href="<?php echo e(route('docgroup')); ?>">ປະເພດເອກະສານ</a></li>
                             <?php endif; ?>

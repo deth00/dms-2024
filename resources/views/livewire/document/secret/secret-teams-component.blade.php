@@ -17,17 +17,6 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card-box">
-                @if (!empty($data_CK0['CK-add']))
-                    <div class="row">
-                        <div class="col-md-12">
-                            <button class="btn btn-primary">
-                                <h5 class="card-title mb-0 text-white" wire:click="add"><i class="mdi mdi-plus"></i>
-                                    ເພີ່ມຂໍ້ມູນ </h5>
-                            </button>
-                            <hr>
-                        </div>
-                    </div>
-                @endif
                 <div class="row">
                     <div class="col-3">
                         <table width="100%">
@@ -88,19 +77,25 @@
                                             <tr class="text-center" >
                                                 <td class="p-2">{{ $no++ }}</td>
                                                 <td class="px-3" wire:click="docs({{ $item['id'] }})">{{ $item['name'] }}</td>
-                                                <td class="px-3">{{ $item['status'] }}</td>
+                                                <td class="px-3">
+                                                    @if ($item['status'] == 'N')
+                                                    <span class="badge badge-success">ເປີດໃຊ້</span>
+                                                @else
+                                                    <span class="badge badge-danger">ປີດໃຊ້</span>
+                                                @endif
+                                                </td>
                                                 @if (!empty($data_CK0['CK-edit']) || !empty($data_CK0['CK-del']))
                                                     <td class="p-2">
                                                         <div class="btn-group-vertical mb-2">
                                                             <div class="btn-group btn-group-justified text-white mb-2">
-                                                                {{-- <a class="btn btn-primary waves-effect waves-light"
+                                                                <a class="btn btn-primary waves-effect waves-light"
                                                                 wire:click="docs({{ $item['id'] }})"><i
-                                                                    class="mdi mdi-pencil-remove-outline"></i></a> --}}
-                                                                @if (!empty($data_CK0['CK-edit']))
+                                                                    class="mdi mdi-file-document"></i></a>
+                                                                {{-- @if (!empty($data_CK0['CK-edit']))
                                                                     <a class="btn btn-warning waves-effect waves-light"
                                                                         wire:click="edit({{ $item['id'] }})"><i
                                                                             class="mdi mdi-pencil-remove-outline"></i></a>
-                                                                @endif
+                                                                @endif --}}
                                                                 {{-- @if (!empty($data_CK0['CK-del']))
                                                                     <a class="btn btn-danger waves-effect waves-light"
                                                                         wire:click="del({{ $item['id'] }})"><i

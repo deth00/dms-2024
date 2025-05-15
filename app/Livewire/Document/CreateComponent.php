@@ -179,6 +179,7 @@ class CreateComponent extends Component
                     'no' => $this->doc_no,
                     'date' => $this->doc_date,
                     'title' => $this->doc_title,
+                    'type_id' => 3,
                 ]);
             }
 
