@@ -123,13 +123,13 @@
                     </li>
                 <?php endif; ?>
 
-                <?php if(!empty($data_CK0['CKView']) || !empty($data_GS) ): ?>
+                <?php if(!empty($data_CK0['CKView']) || !empty($data_GS == 'GS_User') ): ?>
                     <li class="has-submenu">
-                        <a href="#"> <i class="mdi mdi-file-document-box-multiple-outline"></i>ເອກະສານ ກວດກາ
+                        <a href="#"> <i class="mdi mdi-file-document-box-multiple-outline"></i>ເອກະສານ ສະເພາະ
                         </a>
                         <ul class="submenu">
-                            <li><a href="<?php echo e(route('document-secret')); ?>">ເອກະສານ </a></li>
-                            <?php if(!empty($data_CK0['CK-add'])): ?>
+                            <li><a href="<?php echo e(route('document-secret-teams')); ?>">ເອກະສານ </a></li>
+                            <?php if(!empty($data_CK0['RView'])): ?>
                                 <li><a href="<?php echo e(route('document-secret-role')); ?>">ກຳນົດສິດ </a></li>
                             <?php endif; ?>
 

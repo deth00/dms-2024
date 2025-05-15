@@ -20,13 +20,34 @@
                 
 
                 <li class="dropdown notification-list">
-                    <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light"
-                        data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
-                        aria-expanded="false">
-                        <img src="<?php echo e(asset('backend/assets/images/user-icon.png')); ?>" alt="user-image"
-                            class="rounded-circle">
-                            <?php echo e($username); ?>
+                    
+                        
+                        
+                            
+                                
+                                
+                                    
+                                    <h5  class="text-white"><?php echo e($username); ?></h5>
+                                </n>
+                                    <h6  class="text-white"><?php echo e($dp_id['name']); ?></h6>
+                                
+                               
+                            
+                            
+                            
+                        
+                    
+                   
+                    
+                    
+                </li>
 
+
+                <li class="dropdown notification-list">
+                    <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light"
+                    data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
+                    aria-expanded="false">
+                        <i class="mdi mdi-settings-outline noti-icon"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
                         <!-- item-->
@@ -50,14 +71,6 @@
 
                     </div>
                 </li>
-
-
-                <li class="dropdown notification-list">
-                    <a href="#"
-                        class="nav-link right-bar-toggle waves-effect waves-light">
-                        <i class="mdi mdi-settings-outline noti-icon"></i>
-                    </a>
-                </li>
        
 
             </ul>
@@ -66,7 +79,7 @@
             <div class="logo-box">
                 <a href="index-1.html" class="logo text-center">
                     <span class="logo-lg">
-                        <img src="<?php echo e(asset('backend/assets/images/Artboard.png')); ?>" alt="" height="30">
+                        <img src="<?php echo e(asset('backend/assets/images/Artboard.png')); ?>" alt="" height="45">
                         <span class="logo-lg-text-light"></span>
                     </span>
                     <span class="logo-sm">
