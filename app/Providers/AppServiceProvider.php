@@ -35,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
                 $dep_id = Cookie::get('dpart_id');
                 $arr2 = explode(',', $rolename);
 
+
                 $docc_count = Http::withToken($token)->get('http://192.168.128.193:8080/api/log-docc-count');
                 $count_docc = $docc_count['message'] == 'success' ? $docc_count['data'][0]['count'] : 0;
 

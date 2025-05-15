@@ -19,15 +19,16 @@ class BookmarkComponent extends Component
     public $doc = [], $arr_view_docc = [];
     public $user, $token;
 
-    public function mount(){
+    public function mount()
+    {
         $this->token = Cookie::get('token');
-        $this->user = Cookie::get('user_id');
+        $this->user =  Cookie::get('user_id');
         $this->valuedt = date('Y-m-d');
 
         $response = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/book-user', [
             'search' => $this->search,
         ]);
-        if($response['message'] == 'success'){
+        if ($response['message'] == 'success') {
             $this->data = $response['data'];
             $this->count = count($response['data']);
         }
@@ -38,18 +39,21 @@ class BookmarkComponent extends Component
         return view('livewire.message.bookmark-component');
     }
 
-    public function read($ids){
-        return redirect(route('read',$ids));
+    public function read($ids)
+    {
+        return redirect(route('read', $ids));
     }
 
-    public function book($ids){
-        $response = Http::withToken($this->token)->put('http://192.168.128.193:8080/api/message-book-user/'.$ids);
+    public function book($ids)
+    {
+        $response = Http::withToken($this->token)->put('http://192.168.128.193:8080/api/message-book-user/' . $ids);
         session()->flash('success', 'ເພີ່ມຂໍ້ຄວາມຖືກໃຈສຳເລັດ!');
         return redirect(route('inbox'));
     }
 
-    public function remove($ids){
-        $response = Http::withToken($this->token)->put('http://192.168.128.193:8080/api/message-remove-user/'.$ids);
+    public function remove($ids)
+    {
+        $response = Http::withToken($this->token)->put('http://192.168.128.193:8080/api/message-remove-user/' . $ids);
         session()->flash('success', 'ລົບສຳເລັດ!');
         return redirect(route('inbox'));
     }
