@@ -96,7 +96,7 @@
         window.addEventListener('message', (event) => {
             const allowed = [
                 'https://bill.nbb.com.la',
-                // 'http://192.168.10.60:8099'
+                'http://127.0.0.1:8900/'
             ];
 
             // Check if the origin is allowed

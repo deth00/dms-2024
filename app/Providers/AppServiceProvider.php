@@ -40,7 +40,7 @@ class AppServiceProvider extends ServiceProvider
                     $data_doc_type = [];
                     // Log the error or handle it as needed
                 }
-              
+
                 $username = Cookie::get('user_name');
                 $rolename = Cookie::get('role_id');
                 $user_id = Cookie::get('user_id');
@@ -54,7 +54,7 @@ class AppServiceProvider extends ServiceProvider
                 $docc_count_1 = Http::withToken($token)->get('http://192.168.128.193:8080/api/log-docc-count', ['type' => 1]);
                 $count_docc_thr = $docc_count_1['message'] == 'success' ? $docc_count_1['data'][0]['count'] : 0;
 
-                $docc_count_2= Http::withToken($token)->get('http://192.168.128.193:8080/api/log-docc-count', ['type' => 3]);
+                $docc_count_2 = Http::withToken($token)->get('http://192.168.128.193:8080/api/log-docc-count', ['type' => 3]);
                 $count_docc_other = $docc_count_2['message'] == 'success' ? $docc_count_2['data'][0]['count'] : 0;
 
                 $msg_count = Http::withToken($token)->get('http://192.168.128.193:8080/api/inbox-count');
@@ -67,12 +67,20 @@ class AppServiceProvider extends ServiceProvider
                 }
 
                 $check = Http::withToken($token)->post('http://192.168.128.193:8080/api/roles-by-del', ['id' => 1]);
+                $check_rol = Http::withToken($token)->post('http://192.168.128.193:8080/api/roles-by-del', ['id' => 2]);
+                $check_bai = Http::withToken($token)->post('http://192.168.128.193:8080/api/roles-by-del', ['id' => 3]);
                 $check_ori = Http::withToken($token)->post('http://192.168.128.193:8080/api/roles-by-del', ['id' => 4]);
                 $check_ho = Http::withToken($token)->post('http://192.168.128.193:8080/api/roles-by-del', ['id' => 5]);
                 $check_ck = Http::withToken($token)->post('http://192.168.128.193:8080/api/roles-by-del', ['id' => 6]);
 
                 $role = $this->getRoleData($check, $arr2, $token, 1);
                 $data_role = $this->formatRoleData($role);
+
+                $role_rol = $this->getRoleData($check_rol, $arr2, $token, 2);
+                $data_rol = $this->formatRoleData($role_rol);
+
+                $role_bai = $this->getRoleData($check_bai, $arr2, $token, 3);
+                $data_bai = $this->formatRoleData($role_bai);
 
                 $role_ori = $this->getRoleData($check_ori, $arr2, $token, 4);
                 $data_ori = $this->formatRoleData($role_ori);
@@ -90,9 +98,10 @@ class AppServiceProvider extends ServiceProvider
                         $data_GS = 'GS_User';
                     }
                 }
-
                 View::share([
                     'dp_id' => $dp_id,
+                    'data_rol' => $data_rol,
+                    'data_bai' => $data_bai,
                     'data_CK0' => $data_CK0,
                     'data_GS' => $data_GS,
                     'data_ho' => $data_ho,

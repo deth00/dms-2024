@@ -97,28 +97,55 @@
                     </a>
                 </div>
             </div>
-            @foreach ($data as $item)
-                <!-- Earnings (Monthly) Card Example -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-success shadow h-100 py-2">
-                        <a data-link="{{ $item['link'] }}" class="go-to-app3">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+            @if (!empty($data_bai) )
+                @foreach ($data2 as $item)
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <a data-link="{{ $item['link'] }}" class="go-to-app3">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $item['name'] }}
+                                            </div>
                                         </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $item['name'] }}</div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                        </div>
                                     </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
 
-                            </div>
-                        </a>
+                                </div>
+                            </a>
+                        </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+                @endif
+            @if (!empty($data_rol))
+                @foreach ($data as $item)
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <a data-link="{{ $item['link'] }}" class="go-to-app3">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $item['name'] }}
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                @endforeach
+            @endif
+
             {{-- <button id="go-to-app3">Go to App 3</button> --}}
 
             {{-- <!-- Earnings (Annual) Card Example -->
@@ -194,13 +221,34 @@
 
 @push('scripts')
     <script>
-        let app3Window = null;
-        let token = localStorage.getItem('token');
-        let id = localStorage.getItem('id');
+        // let app3Window = null;
+        // const token = localStorage.getItem('token');
+        // const id = localStorage.getItem('id');
         let openedWindows = {}; // Object to track opened windows by their link
+        // console.log('Token:', token);
+        // console.log('ID:', id);
 
-        function openApp3AndSendToken(link) {
+        function fetchTokenAndOpenApp(link) {
+            // Fetch the token and ID from the /get-token route
+            fetch('/get-token')
+                .then(response => response.json())
+                .then(data => {
+                    const token = data.token;
+                    const id = data.id;
 
+                    console.log('Fetched Token:', token);
+                    console.log('Fetched ID:', id);
+
+                    // Proceed to open the app and send the token
+                    openApp3AndSendToken(link, token, id);
+                })
+                .catch(error => {
+                    console.error('Error fetching token:', error);
+                });
+        }
+
+
+        function openApp3AndSendToken(link, token, id) {
             // Extract the origin from the link
             const url = new URL(link);
             const origin = url.origin;
@@ -216,14 +264,14 @@
 
             // Wait a moment to let it load
             setTimeout(() => {
-                sendTokenToApp3(origin);
+                sendTokenToApp3(openedWindows[link], origin, token, id);
             }, 1000);
         }
 
-        function sendTokenToApp3(origin) {
-            if (app3Window && !app3Window.closed && token && id) {
+        function sendTokenToApp3(windowInstance, origin, token, id) {
+            if (windowInstance && !windowInstance.closed && token && id) {
                 console.log('Sending token to App 3 ===>', token, id);
-                app3Window.postMessage({
+                windowInstance.postMessage({
                     token,
                     id
                 }, origin);
@@ -239,7 +287,7 @@
         document.querySelectorAll('.go-to-app3').forEach(button => {
             button.addEventListener('click', function() {
                 const link = this.getAttribute('data-link'); // Get the link from the data-link attribute
-                openApp3AndSendToken(link);
+                fetchTokenAndOpenApp(link);
             });
         });
     </script>
