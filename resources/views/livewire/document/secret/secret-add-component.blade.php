@@ -6,8 +6,8 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">ໜ້າຫຼັກ</a></li>
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">ຂາເຂົ້າ-ຂາອອກ</a></li>
-                        <li class="breadcrumb-item active">ເພີ່ມເອກະສານຂາເຂົ້າ-ຂາອອກ</li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">ເອກະສານສະເພາະ</a></li>
+                        <li class="breadcrumb-item active">{{$dataTM['name']}}</li>
                     </ol>
                 </div>
                 <h4 class="page-title">ເພີ່ມເອກະສານຂາເຂົ້າ-ຂາອອກ</h4>

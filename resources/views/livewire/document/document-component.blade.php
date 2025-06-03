@@ -85,6 +85,7 @@
                                             <th class="p-2">ເລກທີ</th>
                                             <th class="p-2">ປະເພດ</th>
                                             <th class="p-2">ໝາຍເຫດ</th>
+                                            <th class="p-2">ສະຖານະ</th>
                                             <!-- <th class="p-2">ການເຂົ້າເຖິງ</th> -->
                                             @if (!empty($data_role['viewDocc1-edit']) || !empty($data_role['viewDocc1-del']))
                                                 <th class="p-2">ປູ່ມຄຳສັ່ງ</th>
@@ -113,6 +114,7 @@
                                                 @endif
                                                 <td class="px-3">{{ $item['groupname'] }}</td>
                                                 <td class="px-3">{{ $item['note'] }}</td>
+                                                <td class="px-3"></td>
                                                 <!-- <td class="p-2"></td> -->
 
                                                 @if (!empty($data_role['viewDocc1-edit']) || !empty($data_role['viewDocc1-del']))

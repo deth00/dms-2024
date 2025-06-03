@@ -10,7 +10,7 @@ use Livewire\Component;
 class SecretAddComponent extends Component
 {
     use WithFileUploads;
-    public $data, $count, $typename;
+    public $data, $count, $typename, $dataTM;
     public $hiddenId, $editId, $delId, $delName;
     public $search, $dataQ = 15, $dateS, $dateE;
     public $doc = [];
@@ -106,12 +106,16 @@ class SecretAddComponent extends Component
         }
         if (!empty($data_ori['Phuk-add'])) {
             $this->ori_id = 156;
-        } 
+        }
         // dd($check_ori['data']);
     }
 
     public function render()
     {
+        $tm = Http::withToken($this->token)->put('http://192.168.128.193:8080/api/teams-edit/' . $this->hiddenId);
+        if ($tm['message'] == 'success') {
+            $this->dataTM = $tm['data'];
+        }
         return view('livewire.document.secret.secret-add-component');
     }
 
@@ -134,87 +138,90 @@ class SecretAddComponent extends Component
             // 'k_id.required' => 'ກະລຸນາເລືອກ ໂກໂລໂນ ກ່ອນ!',
             'file.required' => 'ກະລຸນາເລືອກ ຟາຍເອກະສານ ກ່ອນ!',
         ]);
-        // dd($this->file);
-        $file = fopen($this->file->getRealPath(), 'r');
-        $documents = Http::attach(
-            'file',
-            $file,
-            $this->file->getClientOriginalName()
-        )->withToken($this->token)->post('http://192.168.128.193:8080/api/doc-ho-store', [
-            'doc_no' => $this->doc_no,
-            'doc_date' => $this->doc_date,
-            'doc_title' => $this->doc_title,
-            'no' => null,
-            'date_no' => null,
-            'docgroup_id' => $this->docgroup_id[0], //ປະເພດເອກະສານ
-            'dpart_id' => null, //ພາກສ່ວນພາຍໃນ
-            'docdpart_id' => null, //ພາຍນອກ
-            'sh_id' => $this->sh_id[0], //ເລືອກຕູ້ເອກະສານ
-            'k_id' => $this->k_id[0], //ເລືອກໂກໂລໂນ
-            'type_id' => null, //ປະເພດເອກະສານ
-            'depart_id' => $this->depart_id, 
-            'user_id' => $this->user_id,
-            'team_id' => $this->hiddenId ,
-            'note' => $this->note,
-            'organi_type' => null
-        ]);
-
-        if ($this->check_docc == true) {
-            // dd($this->docgroup_id[0], $this->doc_no, $this->doc_date, $this->doc_title, $this->file->getClientOriginalName());
-            $document = Http::attach(
+        if ($this->file->getfilename() == 'livewire-tmp') {
+            $this->dispatch('alert', type: 'error', message: 'ຊື່ຟາຍຍາວເກິນໄປ, ກະລຸນາເລືອກໃໝ່!');
+        } else {
+            $file = fopen($this->file->getRealPath(), 'r');
+            $documents = Http::attach(
                 'file',
                 $file,
                 $this->file->getClientOriginalName()
-            )->withToken($this->token)->post('http://192.168.128.193:8080/api/docc-store', [
-                'docgroup_id' => $this->docgroup_id[0],
-                'no' => $this->doc_no,
-                'date' => $this->doc_date,
-                'title' => $this->doc_title,
-                'type_id' => 2,
+            )->withToken($this->token)->post('http://192.168.128.193:8080/api/doc-ho-store', [
+                'doc_no' => $this->doc_no,
+                'doc_date' => $this->doc_date,
+                'doc_title' => $this->doc_title,
+                'no' => null,
+                'date_no' => null,
+                'docgroup_id' => $this->docgroup_id[0], //ປະເພດເອກະສານ
+                'dpart_id' => null, //ພາກສ່ວນພາຍໃນ
+                'docdpart_id' => null, //ພາຍນອກ
+                'sh_id' => $this->sh_id[0], //ເລືອກຕູ້ເອກະສານ
+                'k_id' => $this->k_id[0], //ເລືອກໂກໂລໂນ
+                'type_id' => null, //ປະເພດເອກະສານ
+                'depart_id' => $this->depart_id,
+                'user_id' => $this->user_id,
+                'team_id' => $this->hiddenId,
+                'note' => $this->note,
+                'organi_type' => null
             ]);
-        }
 
-        if ($this->tag_depart != []) {
-            foreach ($this->tag_depart as $item) {
-                $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
-                    'type_id' => 1,
-                    'doc_ho_id' => $documents['data']['id'],
-                    'department_id' => $item,
-                    'sector_id' => null,
-                    'user_id' => null,
+            if ($this->check_docc == true) {
+                // dd($this->docgroup_id[0], $this->doc_no, $this->doc_date, $this->doc_title, $this->file->getClientOriginalName());
+                $document = Http::attach(
+                    'file',
+                    $file,
+                    $this->file->getClientOriginalName()
+                )->withToken($this->token)->post('http://192.168.128.193:8080/api/docc-store', [
+                    'docgroup_id' => $this->docgroup_id[0],
+                    'no' => $this->doc_no,
+                    'date' => $this->doc_date,
+                    'title' => $this->doc_title,
+                    'type_id' => 2,
                 ]);
             }
-        }
 
-        if ($this->tag_sector != []) {
-            foreach ($this->tag_sector as $item) {
-                $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
-                    'type_id' => 1,
-                    'doc_ho_id' => $documents['data']['id'],
-                    'department_id' => null,
-                    'sector_id' => $item,
-                    'user_id' => null,
-                ]);
+            if ($this->tag_depart != []) {
+                foreach ($this->tag_depart as $item) {
+                    $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
+                        'type_id' => 1,
+                        'doc_ho_id' => $documents['data']['id'],
+                        'department_id' => $item,
+                        'sector_id' => null,
+                        'user_id' => null,
+                    ]);
+                }
             }
-        }
 
-        if ($this->tag_user != []) {
-            foreach ($this->tag_user as $item) {
-                $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
-                    'type_id' => 1,
-                    'doc_ho_id' => $documents['data']['id'],
-                    'department_id' => null,
-                    'sector_id' => null,
-                    'user_id' => $item,
-                ]);
+            if ($this->tag_sector != []) {
+                foreach ($this->tag_sector as $item) {
+                    $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
+                        'type_id' => 1,
+                        'doc_ho_id' => $documents['data']['id'],
+                        'department_id' => null,
+                        'sector_id' => $item,
+                        'user_id' => null,
+                    ]);
+                }
             }
-        }
 
-        if ($documents['message'] == "success") {
-            session()->flash('success', 'ເພີ່ມເອກະສານສຳເລັດ');
-            return redirect(route('document-secret', $this->hiddenId));
-        } else {
-            $this->dispatch('alert', type: 'danger', message: 'ເພີ່ມເອກະສານບໍ່ສຳເລັດ');
+            if ($this->tag_user != []) {
+                foreach ($this->tag_user as $item) {
+                    $document = Http::withToken($this->token)->post('http://192.168.128.193:8080/api/tag-store', [
+                        'type_id' => 1,
+                        'doc_ho_id' => $documents['data']['id'],
+                        'department_id' => null,
+                        'sector_id' => null,
+                        'user_id' => $item,
+                    ]);
+                }
+            }
+
+            if ($documents['message'] == "success") {
+                session()->flash('success', 'ເພີ່ມເອກະສານສຳເລັດ');
+                return redirect(route('document-secret', $this->hiddenId));
+            } else {
+                $this->dispatch('alert', type: 'danger', message: 'ເພີ່ມເອກະສານບໍ່ສຳເລັດ');
+            }
         }
     }
 }

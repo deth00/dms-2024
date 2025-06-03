@@ -6,7 +6,7 @@
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">ໜ້າຫຼັກ</a></li>
                         <li class="breadcrumb-item"><a href="javascript: void(0);">ເອກະສານ ສະເພາະ</a></li>
-                        {{-- <li class="breadcrumb-item active">{{ $typename['name'] }}</li> --}}
+                        {{-- <li class="breadcrumb-item active">{{ 0 }}</li> --}}
                     </ol>
                 </div>
                 {{-- <h4 class="page-title">{{ $typename['name'] }}</h4> --}}
